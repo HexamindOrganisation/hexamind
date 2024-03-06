@@ -13,7 +13,7 @@
 - llm
     - llm 
         - llmagent.py
-    - adaptateurs/
+    - adaptaters/
         - openAI.py
         - mistral.py
 - retriever/
