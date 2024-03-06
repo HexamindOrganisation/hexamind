@@ -7,7 +7,7 @@ import os
 import logging
 from dotenv import load_dotenv
 import chromadb
-        
+
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)
 
@@ -48,5 +48,3 @@ class Initializer:
 
 
 
-tst = Initializer()
-tst.initialize_database()
