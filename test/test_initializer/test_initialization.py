@@ -1,69 +1,69 @@
 import os
-from unittest.mock import MagicMock
 import pytest
 import chromadb 
-import sys
+from unittest.mock import patch, MagicMock
 import os
-from dotenv import load_dotenv
 
+# import intialization module from hexs_rag directory
 from hexs_rag.initializer.initializer import Initializer
 
-DATABASE_PATH = os.getenv('DATABASE_PATH')
-COLLECTION_NAME = os.getenv('COLLECTION_NAME')
+# Mock the environment variables for the test
+@pytest.fixture
+def mock_env(monkeypatch):
+    monkeypatch.setenv('DATABASE_PATH', './database_test')
+    monkeypatch.setenv('COLLECTION_NAME', 'test_collection')
 
-def test_intialization():
-    tst = Initializer()
-    tst.initialize_database()
-    directory_created = os.path.exists(str(DATABASE_PATH))
-    assert directory_created == True
+@pytest.fixture
+def mock_chromadb():
+    """
+    Creates a mock version of the chromadb client
+    """
+    with patch('chromadb.PersistentClient') as mock:
+        yield mock
+
+def test_collection_creation(mock_chromadb):
+    mock_client = MagicMock()
+    mock_client.get_or_create_collection.return_value = MagicMock(name="test_collection")
+    mock_chromadb.return_value = mock_client
+    database_path = os.getenv('DATABASE_PATH')
+    
+    initializer = Initializer()
+    _, collection = initializer.initialize_database()
+    # Verify the PersistentClient was initialized with the correct path
+    mock_chromadb.assert_called_once_with(database_path)
+    # Verify get_or_create_collection was called with the correct collection name
+    mock_client.get_or_create_collection.assert_called_once_with(os.getenv('COLLECTION_NAME'))
 
 
-# @pytest.fixture
-# def filesystem_mock(mocker):
-#     """
-#     Mocks filesystem operations to avoid actual file system interaction during the test.
-#     Specifically, it mocks 'os.path.exists' to always return False, simulating a non-existing path,
-#     and 'os.makedirs' to do nothing (avoiding directory creation).
-#     """
-#     mocker.patch("os.path.exists", return_value=False)
-#     mocker.patch("os.makedirs")
+def test_create_directory(fs):
+    # `fs` is the fake filesystem provided by pyfakefs
+    # DATABASE_PATH and COLLECTION_NAME are read from the environment
+    database_path = os.getenv('DATABASE_PATH')
+    # Ensure the directory does not exist before calling the function
+    assert not fs.exists(database_path)
+    # Instantiate the class and call the method to initialize the database
+    initializer = Initializer()
+    client_db, collection = initializer.initialize_database()
+    assert fs.exists(database_path)
 
-# @pytest.fixture
-# def chromadb_mock(mocker):
-#     """
-#     Mocks the 'chromadb.PersistentClient' and its method 'get_or_create_collection'.
-#     This avoids initializing a real database connection and instead uses a mock object.
-#     """
-#     collection_mock = MagicMock()
-#     client_mock = MagicMock()
-#     client_mock.get_or_create_collection.return_value = collection_mock
-#     mocker.patch("your_module.chromadb.PersistentClient", return_value=client_mock)
-#     return client_mock, collection_mock
+# Test to check the correct initialization of the database client and collection
+def test_database_client_and_collection_initialization(mock_chromadb):
+    # Create a mock client and mock collection, configuring their behavior
+    mock_client = MagicMock()
+    mock_client.get_or_create_collection.return_value = MagicMock(name="initialized_collection")
+    mock_chromadb.return_value = mock_client
+    
+    # Instantiate the Initializer and initialize the database
+    initializer = Initializer()
+    client_db, collection = initializer.initialize_database()
+    
+    # Assert that both the database client and collection are not None 
+    assert client_db is not None
+    assert collection is not None
 
-# def test_initialize_database(chromadb_mock):
-#     """
-#     Tests the 'initialize_database' method of the 'Initializer' class.
-#     It checks that the database path is correctly checked and created if necessary,
-#     and that the database client and collection are correctly initialized and returned.
-#     """
-#     # Instantiate the Initializer 
-#     initializer = Initializer()
 
-#     # Call the method under test
-#     client_db, collection = initializer.initialize_database()
 
-#     # Verify os.path.exists was called with the correct path
-#     os.path.exists.assert_called_once_with(DATABASE_PATH)
-#     # Verify os.makedirs was called with the correct path, simulating directory creation
-#     os.makedirs.assert_called_once_with(DATABASE_PATH)
-#     # Verify chromadb.PersistentClient was instantiated with the correct database path
-#     chromadb.PersistentClient.assert_called_once_with(DATABASE_PATH)
-#     # Verify the correct collection was retrieved/created
-#     client_db.get_or_create_collection.assert_called_once_with(COLLECTION_NAME)
 
-#     # Assert the returned client_db and collection match the mocked objects
-#     assert client_db == chromadb_mock[0]
-#     assert collection == chromadb_mock[1]
 
 
 
