@@ -60,8 +60,9 @@ class WordReader:
         except Exception as e:
             raise ValueError(f"Error reading the .docx file. Original error: {str(e)}")
 
-        
-    def determine_predominant_style(self, styles):
+    
+    @staticmethod
+    def determine_predominant_style(styles):
         # Count the occurrences of each style
         style_counts = {}
         for style in styles:
@@ -76,10 +77,12 @@ class WordReader:
             predominant_style = "Body Text"
         return predominant_style
 
-    def estimate_page_number(self, total_characters):
+    @staticmethod
+    def estimate_page_number(total_characters):
         avg_chars_per_page = 2000  
         return total_characters // avg_chars_per_page + 1
 
+    @staticmethod
     def extract_paragraph_info(self, paragraph):
         # Check if paragraph is empty
         if not paragraph.text.strip():
@@ -114,6 +117,7 @@ class WordReader:
             'style': paragraph_style,
             'runs': runs
         }
+    
     def table_to_paragraph(self, table):
         table_text = ""
         table_styles = set()
