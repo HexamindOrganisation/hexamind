@@ -11,6 +11,27 @@ from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 
 class WordReader:
+    """
+    A class that extrats content from a .docx file and returns a list of Paragraph objects. 
+    The behavio is straightforward: it iterates through the paragraphs and tables of the document,
+    extracting the text and the style of each one. The style is determined by the style of the paragraph 
+    or the predominant style of the table. The text is extracted from the paragraphs and the tables are
+    converted to a string. The class also estimates the page number of each paragraph based on the total
+    number of characters in the document.
+
+    Attributes:
+    path (str): The path to the .docx file.
+    paragraphs (list[ParagraphHexa]): A list of Paragraph objects.
+
+    Methods:
+    iter_block_items(parent): Iterates through the paragraphs and tables of the document.
+    get_paragraphs(): Extracts the paragraphs and tables from the document.
+    determine_predominant_style(styles): Determines the predominant style of a list of styles.
+    estimate_page_number(total_characters): Estimates the page number of a paragraph based on the total number of characters.
+    extract_paragraph_info(paragraph): Extracts the text and style of a paragraph.
+    table_to_paragraph(table): Converts a table to a string and determines the predominant style.
+    print_paragraphs_and_tables(): Prints the paragraphs and tables of the document.
+    """
 
     def __init__(self, path):
         self.path = path
