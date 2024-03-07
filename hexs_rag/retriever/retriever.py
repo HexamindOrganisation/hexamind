@@ -14,12 +14,13 @@ class Retriever:
     - doc: doc.container # TODO
     - collection: # TODO
     - llmagent: # TODO
-
+    - model: # TODO 
     """
-    def __init__(self, doc: Doc = None, collection=None, llmagent: LlmAgent = None):
+    def __init__(self, doc: Doc = None, collection=None, llmagent: LlmAgent = None, model = "mistral-embed"):
         self.doc = doc
         self.collection = collection
         self.llmagent = llmagent 
+        self.model = model
         if self.doc:
             self.process_document()
 
@@ -56,6 +57,12 @@ class Retriever:
             self.summarize_and_store(block)
 
     def summarize_and_store(self, block):
+        """
+        Creates a summary of the chunk content using the llmagent,
+        then stores in the collection
+
+        
+        """
         summary = self.llmagent.summarize_paragraph_v2(prompt=block.content, 
                                                        title_doc=self.doc.title, 
                                                        title_para=block.title)
@@ -64,10 +71,16 @@ class Retriever:
         self.store_summary(summary, embedded_summary, block)
 
     def get_embedding(self, text):
-        embeddings_batch_response = self.llmagent.client.embeddings(model="mistral-embed", input=[text])
+        """
+        Returns text sembeddings 
+        """
+        embeddings_batch_response = self.llmagent.client.embeddings(model= self.model, input=[text]) # TODO this needs to be generalizable.
         return embeddings_batch_response.data[0].embedding
 
     def store_summary(self, summary, embedding, block):
+        """
+        adds summaries to collection
+        """
         print(block.to_dict())
         self.collection.add(documents=[summary],
                             embeddings=[embedding],
