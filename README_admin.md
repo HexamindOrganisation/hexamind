@@ -1,24 +1,24 @@
 # Library architecture
 
-- model /
-    -` __init__.py
-    -  model /
+- model/
+    -__init__.py
+    -  model/
         - __init__.py
         - block.py
         - doc.py
         - paragraph.py 
         - container.py
-    - readers 
+    - readers/
         - __init__.py
-- llm
-    - llm 
+- llm/
+    - llm/
         - llmagent.py
     - adaptaters/
         - openAI.py
         - mistral.py
 - retriever/
     - retriever.py
-- Initializer
+- Initializer/
     - initializer.py
 - tools/
     - utils.py 
