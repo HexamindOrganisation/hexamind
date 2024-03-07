@@ -14,6 +14,37 @@ from hexs_rag.utils.utils.table_converter import table_converter
 from hexs_rag.utils.model.pdfreader import *
 
 class PdfReader:
+    """
+    A class for reading and parsing PDF files content. First it opens the PDF and extract the text and tables from the page. 
+    It also detects images and extract the text from them. After getting the text from the page it creates the list of paragraphs.
+
+    Attributes:
+    path : str
+        The path to the PDF file
+    paragraphs : list[Paragraph]
+        The list of paragraphs extracted from the PDF
+
+    Methods:
+    most_occuring_fonts(line_formats : list) -> list
+        Returns the most occuring font sizes in the list of formats
+    text_extraction(element) -> tuple
+        Extracts the text from the in line text element
+    extract_table(pdf_path, page_num, table_num) -> list
+        Extracts the table from the page
+    is_element_inside_any_table(element, page ,tables) -> bool
+        Checks if the element is inside any table present in the page
+    find_table_for_element(element, page ,tables) -> int
+        Finds the table for a given element in the page
+    crop_image(element, pageObj) -> None
+        Crops the image from the PDF
+    convert_to_images(input_file) -> None
+        Converts the PDF to images
+    image_to_text(image_path) -> str
+        Reads text from images and returns it
+    pdf_manager(pdf_path, actual_first_page=0, include_images=True) -> list
+        This is the main method of the class. It manages the extraction of the text and tables from the PDF. 
+        This is the method that finally creates the list of paragraphs. 
+    """
     def __init__(self, path,actual_first_page_=0, include_images=True):
         self.path = path
         self.paragraphs = self.pdf_manager(path, actual_first_page_, include_images=include_images)
