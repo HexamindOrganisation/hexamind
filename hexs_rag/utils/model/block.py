@@ -2,7 +2,7 @@
 Utility functions related to the block class but not directly related to the class itself
 """
 import math
-from hexs_rag.model.model.Block import Block 
+from hexs_rag.model.model.block import Block 
 
 def separate_1_block_in_n(block : Block, max_size=3000) -> list[Block]:
     """
