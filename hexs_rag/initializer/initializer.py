@@ -1,5 +1,6 @@
 # Description: Initialization class that instantiates the database.
 # TODO connector for databases
+# TODO initialization might need a redesign for the library
 
 
 
