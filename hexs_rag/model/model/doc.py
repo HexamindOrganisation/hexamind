@@ -1,11 +1,20 @@
-from hexs_rag.model.model import Container, Block, Paragraph
-from hexs_rag.utils.utils.index_creation import set_indexes
-from hexs_rag.model.readers import WordReader
+#Description: doc class that initializes a document object, 
+# processes it based on its file type, and structures its 
+# content into a form that is more manageable and accessible 
 
+from hexs_rag.model.model.container import Container
+from hexs_rag.model.model.paragraph import Paragraph
+from hexs_rag.utils.utils.index_creation import set_indexes
+from hexs_rag.model.readers.WordReader import WordReader
+from hexs_rag.model.readers.PdfReader import PdfReader
+from hexs_rag.model.readers.HTMLreader import Reader_HTML
+from hexs_rag.model.readers.ExcelReader import ReaderExcel
 
 
 class Doc:
+    """
 
+    """
     def __init__(self, path='', original_file_name='', include_images=True, actual_first_page=1):
         self.title = self.get_title(original_file_name)  # Use original file name for title
         self.extension = original_file_name.split('.')[-1]  # Extract extension from original file name
@@ -16,9 +25,10 @@ class Doc:
             paragraphs = WordReader(path).paragraphs
         elif self.extension == 'pdf':
             if "ilumio" in self.title:
-                paragraphs = Reader_illumio(path).paragraphs
+                pass
+                # paragraphs = Reader_illumio(path).paragraphs
             else:
-                paragraphs = Reader(path, actual_first_page, include_images).paragraphs
+                paragraphs = PdfReader(path, actual_first_page, include_images).paragraphs
         elif self.extension == 'html':
             paragraphs = Reader_HTML(path).paragraphs
         
