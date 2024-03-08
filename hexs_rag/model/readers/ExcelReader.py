@@ -4,6 +4,8 @@ import os
 import pandas as pd
 from hexs_rag.model.model.paragraph import Paragraph
 
+# TODO handle case where there are multiple sheets for ingestion
+
 class ReaderExcel:
     """
     -----------------------
@@ -92,8 +94,8 @@ class ReaderExcel:
         
         # gets top row information in the format: 
         # Colname1: Col1Row1Val | colName2: Col2Row1Val| colName3: Col3Row1Val 
-        first_row_text = ' | '.join([f"{col}: {df.iloc[0][col]}" 
-                        for col in df.columns 
+        first_row_text = ' | '.join([f"{col}: {df.iloc[0][col]}" \
+                        for col in df.columns \
                         if pd.notnull(df.iloc[0][col])])
         paragraphs.append(Paragraph(first_row_text, 'Normal', 1, 1))  # Append the first row as a separate paragraph
         
