@@ -1,5 +1,5 @@
-from .Block import Block
-from .Paragraph import Paragraph
+from .block import Block
+from .paragraph import Paragraph
 
 INFINITE = 99999
 
