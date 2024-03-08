@@ -8,6 +8,10 @@ class OpenAiClientAdaptater(ILlmClient):
     Attributes:
     client : OpenAIClient
         The client to use for the LLM.
+    model : str
+        The model to use for the LLM. (e.g. "gpt-3.5-turbo" if using OpenAI)
+    embed_model : str
+        The model to use for the embeddings. (e.g. "text-embedding-3-large" if using OpenAI)
     
     Methods: 
     chat(self, model, messages, temperature=0)
@@ -15,12 +19,14 @@ class OpenAiClientAdaptater(ILlmClient):
     create_chat_message(self, role, content)
         Create a chat message according to the client's message format. Here is the specific format for OpenAI.
     """
-    def __init__(self, client):
+    def __init__(self, client, model="gpt-3.5-turbo", embed_model = 'text-embedding-3-large'):
         self.client = client
+        self.model = model
+        self.embed_model = embed_model
     
-    def chat(self, model, messages, temperature=0):
+    def chat(self, messages, temperature=0):
         chat_response = self.client.chat.completion.create(
-            model=model,
+            model=self.model,
             messages=[messages],
         )
         return chat_response.choices[0].message.content
@@ -31,3 +37,9 @@ class OpenAiClientAdaptater(ILlmClient):
             "content": content
         }
         return message
+    
+    def embeddings(self, input):
+        return self.client.embeddings.create(
+            model=self.embed_model,
+            inputs=input
+        )
