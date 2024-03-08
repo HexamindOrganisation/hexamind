@@ -15,7 +15,7 @@ class LlmAdapterFactory:
         Create the proper adaptater for the LLM client according to the configuration.
     """
 
-    def create_adaptater(config_path='hexs_rag/config/config.json'):
+    def create_adapter(config_path='hexs_rag/config/config.json'):
         llm_name = os.getenv('LLM_NAME')
 
         if llm_name == 'mistral':

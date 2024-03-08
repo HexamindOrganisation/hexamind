@@ -58,7 +58,7 @@ class Initializer:
     def initialize_llm(self) -> LlmAgent:
         """Initializes the LLM client."""
         try:
-            llm_adapter = LlmAdaptaterFactory.create_adapter()
+            llm_adapter = LlmAdapterFactory.create_adapter()
             return LlmAgent(llm_adapter)
         
         except Exception as e:
