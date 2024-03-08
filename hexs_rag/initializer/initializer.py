@@ -8,6 +8,8 @@ import os
 import logging
 from dotenv import load_dotenv
 import chromadb
+from hexs_rag.llm.llm import LlmAgent
+from hexs_rag.llm.adapters import LlmAdapterFactory
 
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)
@@ -22,6 +24,12 @@ class Initializer:
     - None currently, but utilizes environment variables:
       - DATABASE_PATH: Path to the database directory.
       - COLLECTION_NAME: Name of the collection to use or create.
+    
+    Methods:
+    - initialize_database: Initializes the database and collection.
+    - initialize_llm: Initializes the LLM client.
+
+    Note: This class can be inherited to add a method for initializing your custom controller or any other initialization logic.
     """
 
     def __init__(self):
@@ -46,6 +54,17 @@ class Initializer:
         except Exception as e:
             logging.error(f"Failed to initialize the database: {e}")
             raise
+    
+    def initialize_llm(self) -> LlmAgent:
+        """Initializes the LLM client."""
+        try:
+            llm_adapter = LlmAdapterFactory.create_adapter()
+            return LlmAgent(llm_adapter)
+        
+        except Exception as e:
+            logging.error(f"Failed to initialize the LLM client: {e}")
+            raise
+
 
 
 

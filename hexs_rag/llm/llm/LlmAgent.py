@@ -2,24 +2,36 @@ import os
 from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 
 class LlmAgent:
-    def __init__(self, llm_model: str, client : ILlmClient):
+    def __init__(self, client : ILlmClient):
         """
         Constructor for the LLM agent. 
 
         Attributes:
-        llm_model : str
-            The model to use for the LLM. (e.g. "gpt-3.5-turbo" if using OpenAI) 
         client : ILlmClient
             The client to use for the LLM.
+        
+        Methods:
+        send_request_to_llm(self, messages)
+            Send a request to the LLM and get the response.
+        generate_paragraph(self, query, context, histo, language)
+            Generate a paragraph based on the query, context, and history.
+        translate(self, text)
+            Translate the text to English.
+        generate_answer(self, query, answer, histo, context, language)
+            Generate an answer in the specified language based on the query and answer.
+        summarize_paragraph(self, prompt, title_doc, title_para)
+            Summarize the paragraph.
+        detect_language(self, text)
+            Detect the language of the text.
+        
 
         """
-        self.llm = llm_model
         self.client = client
     
     def send_request_to_llm(self, messages):
-        return self.client.chat(model=self.llm, messages=messages)
+        return self.client.chat(messages=messages)
     
-    def generate_paragraph(self, query: str, context: {}, histo: [(str, str)], language='fr') -> str:
+    def generate_paragraph(self, query: str, context: dict, histo: list[(str, str)], language='fr') -> str:
         template = (f"You are a conversation bot designed to answer to the query from users."
                     f"Your answer is based on the context delimited by triple backticks :\n ``` {context} ```\n"
                     f"You are consistent and avoid redundancies with the rest of the initial conversation delimited by triple backticks :\n ``` {histo} ```\n"
@@ -34,7 +46,7 @@ class LlmAgent:
         print("----")
         return str(response)
 
-    def generate_paragraph_v2(self, query: str, context: {}, histo: [(str, str)], language='fr') -> str:
+    def generate_paragraph_v2(self, query: str, context: dict, histo: list[(str, str)], language='fr') -> str:
         """generates the  answer"""
         template = (f"You are a conversation bot designed to answer to the query from users."
                     f"Here is the query to answer : {query} in french"

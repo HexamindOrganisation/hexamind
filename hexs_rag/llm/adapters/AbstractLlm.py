@@ -14,3 +14,7 @@ class ILlmClient(ABC):
     @abstractmethod
     def create_chat_message(self, role :str, content:str):
         pass
+
+    @abstractmethod
+    def embeddings(self, input):
+        pass
