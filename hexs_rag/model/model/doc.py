@@ -46,9 +46,9 @@ class Doc:
         self.id_ = id(self)
         self.path = path  # Path of the temporary file for processing
         self.sheet_name = sheet_name
-        paragraphs = self.read_document(self.path, self.extension, include_images, actual_first_page, self.sheet_name)
+        self.paragraphs = self.read_document(self.path, self.extension, include_images, actual_first_page, self.sheet_name)
 
-        self.container = Container(paragraphs, father=self, title=self.set_first_container_title(self.title, self.extension))
+        self.container = Container(self.paragraphs, father=self, title=self.set_first_container_title(self.title, self.extension))
         set_indexes(self.container)
         self.blocks = self.get_blocks()
 
@@ -66,19 +66,17 @@ class Doc:
         Returns:
             list: A list of paragraphs extracted from the document.
         """
-        try:
-            if self.extension == '.docx':
-                paragraphs = WordReader(path).paragraphs
-            elif self.extension == '.pdf':
-                paragraphs = PdfReader(path, actual_first_page, include_images).paragraphs
-            elif self.extension == '.html':
-                paragraphs = Reader_HTML(path).paragraphs
-            else:
-                paragraphs = ReaderExcel(path, sheet_name = self.sheet_name).paragraphs
-            return paragraphs
-        except: # return empty list if error occurs
-            print('Error in Doc class, read_document function')
-            return []
+
+        if self.extension == '.docx':
+            paragraphs = WordReader(path).paragraphs
+        elif self.extension == '.pdf':
+            paragraphs = PdfReader(path, actual_first_page, include_images).paragraphs
+        elif self.extension == '.html':
+            paragraphs = Reader_HTML(path).paragraphs
+        else:
+            paragraphs = ReaderExcel(path, sheet_name = self.sheet_name).paragraphs
+        return paragraphs
+ 
 
     @property
     def structure(self):

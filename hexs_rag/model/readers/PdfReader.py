@@ -306,16 +306,14 @@ class PdfReader:
                     actual_format = "content"
                 if len(page[4][j]) > 150 and "title" in actual_format:
                     actual_format = "content"
-                print(actual_format)
                 paragraph = Paragraph(text=page[4][j],font_style=actual_format,id_=j,page_id=index)
                 paragraphs.append(paragraph)
                 j+=1
 
         paragraphs = self.concatenate_paragraphs(paragraphs, pdf_path.split('/')[-1]) if '/' in pdf_path else self.concatenate_paragraphs(paragraphs, pdf_path.split('\\')[-1])
-        print("@*"*50)  
-        for paragraph in paragraphs:
-            print(f"Level: {paragraph.level}, Font Style: {paragraph.font_style}")
-        print("@*"*50)  
+        # for paragraph in paragraphs:
+        #     print(f"Level: {paragraph.level}, Font Style: {paragraph.font_style}")
+        # print("@*"*50)  
 
         return paragraphs
  
