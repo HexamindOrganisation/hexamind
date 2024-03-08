@@ -7,6 +7,7 @@ from unittest.mock import patch, MagicMock
 @pytest.fixture(params=["mistral", "chatgpt", "unsupported"])
 def llm_name_env(request, monkeypatch):
     monkeypatch.setenv("LLM_NAME", request.param)
+    monkeypatch.setenv("LLM_API_KEY", "test")
     if request.param == "mistral":
         return request.param, MistralClientAdapter
     elif request.param == "chatgpt":
