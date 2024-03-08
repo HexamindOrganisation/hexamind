@@ -9,7 +9,7 @@ import logging
 from dotenv import load_dotenv
 import chromadb
 from hexs_rag.llm.llm import LlmAgent
-from hexs_rag.llm.adapters.LlmAdaptaterFactory import LlmAdaptaterFactory
+from hexs_rag.llm.adapters import LlmAdaptaterFactory
 
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)
