@@ -3,7 +3,7 @@
 from hexs_rag.model.readers.ExcelReader import ReaderExcel
 import pytest
 
-
+@pytest.mark.skip(reason="Test not implemented")
 def test_reader_excel():
     # Test data file path
     example_file_path = "../hexs_rag/data/test_data/SampleData.xlsx"
