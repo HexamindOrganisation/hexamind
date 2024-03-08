@@ -38,7 +38,7 @@ def test_collection_creation(mock_env):
         initializer = Initializer()
         _, collection = initializer.initialize_database()
 
-        logging.info(f"Database directory created at: {initializer}")
+        print(f"Database directory created at: {initializer}")
         # Verify the PersistentClient was initialized with the correct path
         mock_chromadb.assert_called_once_with(database_path)
     # Verify get_or_create_collection was called with the correct collection name

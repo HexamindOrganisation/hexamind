@@ -1,11 +1,11 @@
 import json
 import os
 from mistralai.client import MistralClient
-from hexs_rag.llm.adapters.MistralAdaptater import MistralClientAdaptater
-from hexs_rag.llm.adapters.OpenAiAdaptater import OpenAiClientAdaptater
+from hexs_rag.llm.adapters.MistralAdapter import MistralClientAdapter
+from hexs_rag.llm.adapters.OpenAiAdapter import OpenAiClientAdapter
 from openai import OpenAI
 
-class LlmAdaptaterFactory:
+class LlmAdapterFactory:
     """
     This factory class is used to create the adaptater for the LLM client.
     Depending on the configuration, it will create the adaptater for the right LLM client.

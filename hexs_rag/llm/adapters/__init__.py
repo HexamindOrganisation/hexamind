@@ -1,5 +1,5 @@
-from .MistralAdaptater import MistralClientAdaptater
-from .OpenAiAdaptater import OpenAiClientAdaptater
+from .MistralAdapter import MistralClientAdapter
+from .OpenAiAdapter import OpenAiClientAdapter
 from .AbstractLlm import ILlmClient
-from .LlmAdaptaterFactory import LlmAdaptaterFactory
+from .LlmAdapterFactory import LlmAdapterFactory
 
