@@ -19,8 +19,8 @@ class LlmAdapterFactory:
         llm_name = os.getenv('LLM_NAME')
 
         if llm_name == 'mistral':
-            return MistralClientAdaptater(MistralClient(api_key = os.getenv('LLM_API_KEY')))
+            return MistralClientAdapter(MistralClient(api_key = os.getenv('LLM_API_KEY')))
         elif llm_name == 'chatgpt':
-            return OpenAiClientAdaptater(OpenAI(api_key = os.getenv('LLM_API_KEY')))
+            return OpenAiClientAdapter(OpenAI(api_key = os.getenv('LLM_API_KEY')))
         else:
             raise ValueError(f"Unsupported llm name: {llm_name}")
