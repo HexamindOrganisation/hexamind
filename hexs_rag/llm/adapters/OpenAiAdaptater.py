@@ -23,7 +23,7 @@ class OpenAiClientAdaptater(ILlmClient):
             model=model,
             messages=[messages],
         )
-        return chat_response.choices[0].message
+        return chat_response.choices[0].message.content
     
     def create_chat_message(self, role, content):
         message = {
