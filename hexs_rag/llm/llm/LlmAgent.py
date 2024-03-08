@@ -1,7 +1,18 @@
 import os
+from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 
 class LlmAgent:
-    def __init__(self, llm_model: str, client):
+    def __init__(self, llm_model: str, client : ILlmClient):
+        """
+        Constructor for the LLM agent. 
+
+        Attributes:
+        llm_model : str
+            The model to use for the LLM. (e.g. "gpt-3.5-turbo" if using OpenAI) 
+        client : ILlmClient
+            The client to use for the LLM.
+
+        """
         self.llm = llm_model
         self.client = client
     
