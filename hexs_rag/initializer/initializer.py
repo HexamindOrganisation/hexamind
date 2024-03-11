@@ -6,7 +6,6 @@
 
 import os
 import logging
-from dotenv import load_dotenv
 import chromadb
 from hexs_rag.llm.llm import LlmAgent
 from hexs_rag.llm.adapters import LlmAdapterFactory
