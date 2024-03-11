@@ -40,16 +40,16 @@ class Paragraph:
         font_style = font_style.lower().strip()
         accepted_styles = ["heading", "title", "subtitle", "titre", "sous-titre"]
 
-        if font_style.startswith("title"):
+        if font_style.startswith("title"): # TODO implement more robust method (  re.findall(r'\d+', s) )
             try:
                 level = int(font_style.replace('title', ''))
-                return level
+                return level if level > 0 else INFINITE
             except ValueError:
                 return INFINITE
 
         elif any(font_style.startswith(style) for style in accepted_styles):
             try:
-                level = int(font_style.split(' ')[-1])
+                level = int(font_style.split(' ')[-1]) # TODO implement more robust method (  re.findall(r'\d+', s) )
                 return level
             except ValueError:
                 return INFINITE
