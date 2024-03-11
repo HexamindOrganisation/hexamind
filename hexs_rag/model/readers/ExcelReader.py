@@ -50,8 +50,11 @@ class ReaderExcel:
         filename, file_extension = os.path.splitext(self.path)
         # Check the file extension and read the file into a DataFrame accordingly
         if file_extension == '.xlsx':
-            # For Excel files, use the pd.read_excel function
-            df = pd.read_excel(self.path, sheet_name=self.sheet_name)
+            if self.sheet_name is None:
+                # For Excel files, use the pd.read_excel function
+                df = pd.read_excel(self.path, sheet_name=1)
+            else:
+                df = pd.read_excel(self.path, sheet_name=self.sheet_name)
         elif file_extension == '.csv':
             # For CSV files, use the pd.read_csv function
             df = pd.read_csv(self.path)
@@ -89,7 +92,7 @@ class ReaderExcel:
         `rows_per_page` row is processed.
         """
         df = self.read_dataframe()
-
+        
         paragraphs = [] # empty list to recieve paragraph info
         
         # gets top row information in the format: 
