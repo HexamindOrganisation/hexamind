@@ -7,12 +7,13 @@ from hexs_rag.model.model.container import Container
 from hexs_rag.utils.utils.index_creation import set_indexes
 from hexs_rag.model.readers import ReaderExcel, HtmlReader, PdfReader, WordReader
 import os
+from typing import List
 
 class Doc:
     """
     A class for abstracting the processing and handling of documents across various formats.
     
-    This class supports reading documents in DOCX, PDF, HTML, and Excel formats,
+    This class supports reading documents in DOCX, PDF, HTML, and Excel/CSV formats,
     extracting their textual content into a structured format for further processing or analysis.
     
     Attributes:
@@ -34,48 +35,40 @@ class Doc:
     def __init__(self, 
                 path: str ='', 
                 include_images: bool =True, 
-                actual_first_page: int =1,
+                actual_first_page: int = 1,
                 sheet_name: int = 0):
 
         file_name = os.path.basename(path) # get file and ext from path
         self.title, self.extension = os.path.splitext(file_name) # separate file and ext
         self.extension = self.extension.lower()
+        self.actual_first_page = actual_first_page
+        self.include_images = include_images 
         self.id_ = id(self)
         self.path = path  # Path of the temporary file for processing
         self.sheet_name = sheet_name
-        paragraphs = self.read_document(self.path, self.extension, include_images, actual_first_page, self.sheet_name)
-
-        self.container = Container(paragraphs, father=self, title=self.set_first_container_title(self.title, self.extension))
+        self.paragraphs = self.read_document()
+        self.container = Container(self.paragraphs, father=self, title=self.set_first_container_title(self.title, self.extension))
         set_indexes(self.container)
         self.blocks = self.get_blocks()
 
-    def read_document(self, path, extension, include_images, actual_first_page, sheet_name):
+    def read_document(self) -> List[Paragraph]:
         """
         Reads the document using the appropriate reader based on the document's extension.
-        
-        Parameters:
-            path (str): The path of the document to be read.
-            extension (str): The extension of the file, indicating the format.
-            include_images (bool): Specifies whether to include images (for PDFs).
-            actual_first_page (int): The actual first page number (for PDFs).
-            sheet_name (str): The name of the Excel sheet to read.
-        
         Returns:
             list: A list of paragraphs extracted from the document.
         """
-        try:
-            if self.extension == '.docx':
-                paragraphs = WordReader(path).paragraphs
-            elif self.extension == '.pdf':
-                paragraphs = PdfReader(path, actual_first_page, include_images).paragraphs
-            elif self.extension == '.html':
-                paragraphs = Reader_HTML(path).paragraphs
-            else:
-                paragraphs = ReaderExcel(path, sheet_name = self.sheet_name).paragraphs
-            return paragraphs
-        except: # return empty list if error occurs
-            print('Error in Doc class, read_document function')
-            return []
+        if self.extension == '.docx':
+            paragraphs = WordReader(self.path).paragraphs
+        elif self.extension == '.pdf':
+            paragraphs = PdfReader(self.path, self.actual_first_page, self.include_images).paragraphs
+        elif self.extension == '.html':
+            paragraphs = HtmlReader(self.path).paragraphs
+        elif self.extension == '.xlsx' or self.extension == '.csv':
+            paragraphs = ReaderExcel(self.path, sheet_name = self.sheet_name).paragraphs
+        else:
+            raise ValueError(f"Unsupported file format: {self.extension}. Supported formats are: \n .docx, .pdf, .html, .xlsx, .csv")
+        return paragraphs
+ 
 
     @property
     def structure(self):
@@ -102,7 +95,9 @@ class Doc:
             block.index = from_list_to_str(block.index)
         return blocks
     
-    def set_first_container_title(self,title,extension) -> Paragraph:
+    def set_first_container_title(self,
+                                  title,
+                                  extension) -> Paragraph:
         """
         Sets the initial container title based on the document's title and extension.
         
