@@ -31,7 +31,7 @@ def doc_word_instance():
     return Doc(path=docx_file_path,
           include_images=True,
           actual_first_page=1)
-        
+
 
 @pytest.fixture 
 def doc_pdf_instance():
@@ -39,5 +39,5 @@ def doc_pdf_instance():
     pdf_file_path = "../hexs_rag/data/test_data/pdf-test.pdf"
     # Create an instance of Reader_HTML
     return Doc(path=pdf_file_path,
-          include_images=True,
+          include_images=False,
           actual_first_page=1)
