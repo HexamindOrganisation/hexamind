@@ -2,6 +2,38 @@
 
 import pytest
 from hexs_rag.model.model.doc import Doc
+from hexs_rag.model.readers.HTMLreader import HtmlReader
+
+
+@pytest.fixture
+def html_reader_instance(): # real html file example
+    html_file_path = "../hexs_rag/data/test_data/HTML5 Test Page.html"
+    return HtmlReader(html_file_path)
+
+@pytest.fixture
+def sample_html_file(tmp_path): # sample html file example
+    content = """
+    <!DOCTYPE html>
+    <html>
+    <head><title>Test Document</title></head>
+    <body>
+        <h1>Document Heading</h1>
+        <p>This is a sample paragraph.</p>
+        <ul>
+            <li>List item 1</li>
+            <li>List item 2</li>
+        </ul>
+        <table>
+            <tr><th>Header 1</th><th>Header 2</th></tr>
+            <tr><td>Data 1</td><td>Data 2</td></tr>
+        </table>
+    </body>
+    </html>
+    """
+    file = tmp_path / "sample.html"
+    file.write_text(content, encoding='utf-8')
+    return str(file)
+
 
 @pytest.fixture 
 def doc_excel_instance():

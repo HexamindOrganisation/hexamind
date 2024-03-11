@@ -6,6 +6,7 @@ import bs4
 from hexs_rag.model.model.paragraph import Paragraph
 from hexs_rag.utils.utils.table_converter import table_converter
 from typing import List, Tuple
+import os
 
 
 class HtmlReader:
@@ -64,9 +65,8 @@ class HtmlReader:
                 paragraphs = self.extract_paragraphs(leaf_elements)
                 paragraphs = self.concatenate_paragraphs_with_same_font_style(paragraphs)
                 return [p.rearrange_paragraph() for p in paragraphs]
-        except Exception as e:
-            print(f"An error occurred while parsing the HTML file: {e}")
-            return []
+        except:
+            raise Exception(f"Error in html read. \n file_path : {self.path}")
 
     def remove_unwanted_tags(self, soup: BeautifulSoup):
         """Removes script, style, and other non-content tags from the soup object."""
@@ -82,7 +82,7 @@ class HtmlReader:
         return [Paragraph(text=elem.get_text(strip=True, separator='\n'), 
                           font_style=elem.name, id_=index, page_id=1)
                 for index, elem in enumerate(elements) if elem.get_text(strip=True)]
-
+     
     def concatenate_paragraphs_with_same_font_style(self, paragraphs: List[Paragraph]) -> List[Paragraph]:
         """Merges adjacent Paragraphs with the same font style into single Paragraphs."""
         concatenated_paragraphs = []
