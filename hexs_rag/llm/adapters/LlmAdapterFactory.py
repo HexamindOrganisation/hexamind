@@ -23,8 +23,14 @@ class LlmAdapterFactory:
         """
 
         if llm_name == 'mistral':
-            return MistralClientAdapter(MistralClient(api_key = llm_api_key))
+            try:
+                return MistralClientAdapter(MistralClient(api_key = llm_api_key))
+            except Exception as e:
+                raise ValueError(f"Could not create MistralClientAdapter: {e}")
         elif llm_name == 'openai':
-            return OpenAiClientAdapter(OpenAI(api_key = llm_api_key))
+            try:
+                return OpenAiClientAdapter(OpenAI(api_key = llm_api_key))
+            except Exception as e:
+                raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
         else:
             raise ValueError(f"Unsupported llm name: {llm_name}")
