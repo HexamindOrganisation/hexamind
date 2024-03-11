@@ -8,6 +8,8 @@ import os
 import logging
 from dotenv import load_dotenv
 import chromadb
+from hexs_rag.llm.llm import LlmAgent
+from hexs_rag.llm.adapters import LlmAdapterFactory
 
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)
@@ -22,16 +24,27 @@ class Initializer:
     - None currently, but utilizes environment variables:
       - DATABASE_PATH: Path to the database directory.
       - COLLECTION_NAME: Name of the collection to use or create.
+    
+    Methods:
+    - initialize_database: Initializes the database and collection.
+    - initialize_llm: Initializes the LLM client.
+
+    Note: This class can be inherited to add a method for initializing your custom controller or any other initialization logic.
     """
 
-    def __init__(self):
+    def __init__(self, database_path = None, collection_name = None, llm_name=None, llm_api_key=None):
         """Loads environment variables and initializes instance attributes."""
-        load_dotenv(dotenv_path=".env")
-        self.database_path = os.getenv('DATABASE_PATH')
-        self.collection_name = os.getenv('COLLECTION_NAME')
+        self.database_path = database_path or os.getenv('DATABASE_PATH')
+        self.collection_name = collection_name or os.getenv('COLLECTION_NAME')
         if not self.database_path or not self.collection_name:
             logging.error('DATABASE_PATH or COLLECTION_NAME environment variables are not set.')
             raise ValueError('Missing environment variables for database initialization.')
+        
+        self.llm_name = llm_name or os.getenv('LLM_NAME')
+        self.llm_api_key = llm_api_key or os.getenv('LLM_API_KEY')
+        if not self.llm_api_key:
+            logging.error('LLM_API_KEY variable is not set.')
+            raise ValueError('Missing variable for LLM API key.')
 
     def initialize_database(self):
         """Initializes and returns the database and collection."""
@@ -46,6 +59,13 @@ class Initializer:
         except Exception as e:
             logging.error(f"Failed to initialize the database: {e}")
             raise
-
-
-
+    
+    def initialize_llm(self) -> LlmAgent:
+        """Initializes the LLM client."""
+        try:
+            llm_adapter = LlmAdapterFactory.create_adapter(self.llm_name, self.llm_api_key)
+            return LlmAgent(llm_adapter)
+        
+        except Exception as e:
+            logging.error(f"Failed to initialize the LLM client: {e}")
+            raise

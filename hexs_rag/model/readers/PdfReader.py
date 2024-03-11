@@ -1,5 +1,5 @@
 import json
-import PyPDF2
+import pypdf
 # To analyze the PDF layout and extract text
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextContainer, LTChar, LTFigure
@@ -124,7 +124,7 @@ class PdfReader:
         pageObj.mediabox.lower_left = (image_left, image_bottom)
         pageObj.mediabox.upper_right = (image_right, image_top)
         # Save the cropped page to a new PDF
-        cropped_pdf_writer = PyPDF2.PdfWriter()
+        cropped_pdf_writer = pypdf.PdfWriter()
         cropped_pdf_writer.add_page(pageObj)
         # Save the cropped PDF to a new file
         with open('cropped_image.pdf', 'wb') as cropped_pdf_file:
@@ -149,7 +149,7 @@ class PdfReader:
         # create a PDF file object
         pdfFileObj = open(pdf_path, 'rb')
         # create a PDF reader object
-        pdfReaded = PyPDF2.PdfReader(pdfFileObj)
+        pdfReaded = pypdf.PdfReader(pdfFileObj)
         number_of_pages = len(pdfReaded.pages)
         # Create the dictionary to extract text from each image
         text_per_page = {}
@@ -356,92 +356,3 @@ class PdfReader:
             paragraphs[i] = paragraphs[i].rearrange_paragraph()
             i+=1
         return paragraphs
-
-class PdfReaderIllumio:
-    """
-    Same as PdfReader but for PDF files from the Illumio_Core_REST_API_Developer_Guide_23.3.pdf
-    """
-    def __init__(self, path):
-        self.path = path
-        self.paragraphs = self.get_pdf_paragraphs(path)
-
-    def skip_header(self, dictionary):
-        i = 0
-        if "Illumio_Core_REST_API_Developer_Guide_23.3" in self.path and not (dictionary[i]["chars"][0]["size"] > 19 and dictionary[i]["chars"][0]["size"] < 30):
-            i+=2
-        return i
-
-
-    def get_pdf_paragraphs(self,path):
-        pdf_to_read = self.extract_all_lines_from_the_doc(path)
-        paragraphs = []
-        j = 0
-        while j < len(pdf_to_read):
-            dictionary = pdf_to_read[j]["content"]
-            tables = pdf_to_read[j]["tables"]
-            i = self.skip_header(dictionary)
-            table_count = 0
-            while i < len(dictionary):
-                # print(f"{dictionary[i]['chars'][0]}")
-                if(dictionary[i]["text"].startswith("RESTAPIDeveloperGuide")):
-                    i+=1
-                    continue
-                if (self.check_if_already_in_table(dictionary[i]['chars'][0],tables) == False):
-                    p = Paragraph(dictionary[i]["text"],font_style=get_style_of_line(dictionary[i]["chars"][0]["size"],dictionary[i]["chars"][0]["fontname"]),id_=i,page_id=pdf_to_read[j]["page_number"])
-                    if(i != len(dictionary)-1):
-                        while((dictionary[i+1]["chars"][0]["size"] == dictionary[i]["chars"][-1]["size"] and dictionary[i+1]["chars"][0]["fontname"] == dictionary[i]["chars"][-1]["fontname"]) and self.check_if_already_in_table(dictionary[i+1]['chars'][0],tables) == False):
-                            p.text += " " + dictionary[i+1]["text"]
-                            i += 1
-                    else:
-                        p.text = dictionary[i]["text"]
-                    #print(f"{dictionary[i]['chars'][0]} : {dictionary[i]['text']}")
-                    i += 1
-                    # print(f'{p.page_id} : {p.font_style} ->>>>> {p.text}')
-                    paragraphs.append(p)
-                else:
-                    p = Paragraph(table_converter(tables[table_count].extract()),font_style="table",id_=i,page_id=pdf_to_read[j]["page_number"])
-                    paragraphs.append(p)
-                    i = self.skip_out_table(dictionary,i,tables[table_count])
-                    table_count += 1
-            j += 1
-        paragraphs = self.rearrange_paragraphs(paragraphs)
-        return paragraphs
-    
-    def rearrange_paragraphs(self, paragraphs : list[Paragraph]):
-        #associate paragraphs with the same font style
-        i = 0
-        while i < len(paragraphs):
-            paragraphs[i] = paragraphs[i].rearrange_paragraph()
-            i+=1
-        return paragraphs
-
-    def extract_all_lines_from_the_doc(self,path):
-        lines_of_doc = []
-        with open(path, 'rb') as f:
-            reader = pdfp.PDF(f)
-            if "Illumio_Core_REST_API_Developer_Guide_23.3" in path:
-                skip_table_of_contents = reader.pages[8:]
-                j = 0
-                while j < len(skip_table_of_contents):
-                    lines_of_doc.append({"page_number": j+9, "content": skip_table_of_contents[j].extract_text_lines(), "tables": skip_table_of_contents[j].find_tables()})
-                    j += 1
-            else:
-                for page in reader.pages:
-                    lines_of_doc.append({"page_number": page.page_number, "content": page.extract_text_lines(), "tables": page.find_tables()})
-        return lines_of_doc
-
-    def check_if_already_in_table(self,line,tables):
-        for table in tables:
-            if table.bbox[1] <= line["top"] <= table.bbox[3]:
-                return True
-        return False
-
-    def skip_out_table(self,dictionary,index,table):
-        i = index
-        while i < len(dictionary):
-            if self.check_if_already_in_table(dictionary[i]['chars'][0],tables=[table]) == True:
-                i += 1
-            else:
-                break
-        return i
-    

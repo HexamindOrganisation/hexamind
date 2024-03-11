@@ -8,7 +8,7 @@ from hexs_rag.utils.utils.table_converter import table_converter
 from typing import List, Tuple
 
 
-class Reader_HTML:
+class HtmlReader:
     """
     A class for reading and parsing HTML content to extract structured text data
     into a defined Paragraph format. The class processes HTML files, removing

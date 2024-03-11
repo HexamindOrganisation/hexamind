@@ -8,6 +8,8 @@
 #  Sortir les éléments de configuration et d’environnement dans des fichiers .config et .env
 # Créer un dossier Tools
 # typer les arguments et les outputs
+# Error handling
+# Tutorials
 
 
 

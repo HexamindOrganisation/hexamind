@@ -74,7 +74,7 @@ class Retriever:
         """
         Returns text sembeddings 
         """
-        embeddings_batch_response = self.llmagent.client.embeddings(model= self.model, input=[text]) # TODO this needs to be generalizable.
+        embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) # TODO this needs to be generalizable. DONE
         return embeddings_batch_response.data[0].embedding
 
     def store_summary(self, summary, embedding, block):
@@ -161,9 +161,7 @@ class Retriever:
             # Handle document-based search
             if documents:
                 condition = {"doc": {"$in": documents}}
-        embed_query = self.llmagent.client.embeddings(
-            model="mistral-embed",
-            input=[queries])
+        embed_query = self.llmagent.client.embeddings(input=[queries])
         embed_query = embed_query.data[0].embedding
 
         res = self.collection.query(query_embeddings=embed_query, n_results=5, where=condition)
@@ -210,9 +208,7 @@ class Retriever:
             if documents:
                 condition = {"doc": {"$in": documents},}
                 
-        embed_query = self.llmagent.client.embeddings(
-            model="mistral-embed",
-            input=[queries])
+        embed_query = self.llmagent.client.embeddings(input=[queries])
         embed_query = embed_query.data[0].embedding
         blocks = []
 

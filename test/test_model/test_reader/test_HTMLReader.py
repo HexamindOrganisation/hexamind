@@ -1,5 +1,5 @@
 
-from hexs_rag.model.readers.HTMLreader import Reader_HTML
+from hexs_rag.model.readers.HTMLreader import HtmlReader
 import pytest
 
 
@@ -10,7 +10,7 @@ def reader_instance():
     # Test data file paths
     example_file_path = "../hexs_rag/data/test_data/HTML5 Test Page.html"
     # Create an instance of Reader_HTML
-    reader = Reader_HTML(example_file_path)
+    reader = HtmlReader(example_file_path)
     return reader
 
 
@@ -49,7 +49,7 @@ def test_incorrect_file_format():
     """
     Check to break code
     """
-    reader = Reader_HTML('../hexs_rag/data/test_data/business-financial-data-december-2023-quarter-csv.csv')
+    reader = HtmlReader('../hexs_rag/data/test_data/business-financial-data-december-2023-quarter-csv.csv')
     # if an error occurs the reader simply sets the paragraphs attribute to an empty list
     assert reader.paragraphs == []
 

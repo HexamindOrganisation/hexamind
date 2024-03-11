@@ -2,14 +2,10 @@
 # processes it based on its file type, and structures its 
 # content into a form that is more manageable and accessible 
 
-from hexs_rag.model.model.container import Container
 from hexs_rag.model.model.paragraph import Paragraph
+from hexs_rag.model.model.container import Container
 from hexs_rag.utils.utils.index_creation import set_indexes
-from hexs_rag.model.readers.WordReader import WordReader
-from hexs_rag.model.readers.PdfReader import PdfReader
-from hexs_rag.model.readers.HTMLreader import Reader_HTML
-from hexs_rag.model.readers.ExcelReader import ReaderExcel
-
+from hexs_rag.model.readers import ReaderExcel, HtmlReader, PdfReader, WordReader
 import os
 from typing import List
 
@@ -66,7 +62,7 @@ class Doc:
         elif self.extension == '.pdf':
             paragraphs = PdfReader(self.path, self.actual_first_page, self.include_images).paragraphs
         elif self.extension == '.html':
-            paragraphs = Reader_HTML(self.path).paragraphs
+            paragraphs = HtmlReader(self.path).paragraphs
         elif self.extension == '.xlsx' or self.extension == '.csv':
             paragraphs = ReaderExcel(self.path, sheet_name = self.sheet_name).paragraphs
         else:

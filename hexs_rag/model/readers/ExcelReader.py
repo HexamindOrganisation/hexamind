@@ -21,14 +21,38 @@ class ReaderExcel:
         Integers are used in zero-indexed sheet positions 
         (chart sheets do not count as a sheet position). 
         Lists of strings/integers are used to request multiple sheets.
-        
+    paragraphs: list
+        List of paragraphs created from the excel file
+    sheet_number: int
+        Number of sheets in the Excel file
+    filename: str
+        Name of the file
+    file_extension: str
+        File extension of the file
 
+    Methods:
+    read_dataframe()
+        Read data from an Excel or CSV file into a DataFrame.
+    get_paragraphs()
+        Extracts paragraphs of text from a DataFrame which is read from an Excel or CSV file.
+    get_sheet_number()
+        Returns the number of sheets in the Excel file.
+
+    Raises:
+    ValueError: Unsupported file extension
     """
     def __init__(self, 
                 path: str, 
                 sheet_name = None):
         self.path = path
         self.sheet_name = sheet_name
+        self.sheet_number = None
+        self.filename, self.file_extension = os.path.splitext(self.path)
+        if self.file_extension not in ['.xlsx', '.csv']:
+            raise ValueError(f"Unsupported file extension: {self.file_extension}")
+        if self.file_extension == ".xlsx":
+            self.sheet_number = self.get_sheet_number()
+
         self.paragraphs = self.get_paragraphs()
 
   
@@ -42,22 +66,20 @@ class ReaderExcel:
 
         Returns:
             DataFrame: The data from the file as a pandas DataFrame.
-
-        Raises:
-            ValueError: If the file extension is neither '.xlsx' nor '.csv'.
         """
-        # Split the file path into the filename and the file extension
-        filename, file_extension = os.path.splitext(self.path)
         # Check the file extension and read the file into a DataFrame accordingly
-        if file_extension == '.xlsx':
-            # For Excel files, use the pd.read_excel function
-            df = pd.read_excel(self.path, sheet_name=self.sheet_name)
-        elif file_extension == '.csv':
+        if self.file_extension == '.xlsx':
+            if self.sheet_name is None:
+                # For Excel files, use the pd.read_excel function
+                df = pd.read_excel(self.path, sheet_name=0)
+            else:
+                try:
+                    df = pd.read_excel(self.path, sheet_name=self.sheet_name)
+                except:
+                    raise ValueError(f"Sheet name {self.sheet_name} not found in the file")
+        elif self.file_extension == '.csv':
             # For CSV files, use the pd.read_csv function
             df = pd.read_csv(self.path)
-        else:
-            # If the file extension is not supported, raise a ValueError
-            raise ValueError(f"Unsupported file extension: {file_extension}")
         return df
 
     def get_paragraphs(self, 
@@ -126,5 +148,14 @@ class ReaderExcel:
                 current_page_id += 1
 
         return paragraphs
+    
+    def get_sheet_number(self):
+        """
+        Returns the number of sheets in the Excel file.
+        
+        Returns:
+        int: The number of sheets in the Excel file.
+        """
+        return len(pd.ExcelFile(self.path).sheet_names)
     
     
