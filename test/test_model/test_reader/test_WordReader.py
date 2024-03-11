@@ -3,8 +3,6 @@ import pytest
 from unittest.mock import MagicMock
 from docx.shared import Pt
 from unittest.mock import patch
-from io import StringIO
-import sys
 
 
 # Test Initialization
@@ -125,8 +123,6 @@ def test_table_to_paragraph_complex_structure(word_reader):
     assert "Row 1, Cell 1 | Row 1, Cell 2\nRow 2, Cell 1 | " in text
     expected_style = "Body Text"  # Assuming Body Text is considered predominant for this test
     assert style == expected_style
-
-
 
 def test_get_paragraphs_file_not_found():
     with pytest.raises(FileNotFoundError):
