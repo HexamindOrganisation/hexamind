@@ -35,7 +35,24 @@ class Block:
         """
         Creates a block from a dictionary
         """
-        assert type(data) == dict, 'data must be a dictionary'
+        expected_keys = {'doc' : str,
+                        'title' : str,
+                        'content' : str,
+                        'index' : str,
+                        'rank' : int,
+                        'level' : int,
+                        'distance' : float}
+        
+        if not isinstance(data, dict):
+            raise AssertionError('data should be a dictionary')
+        
+        if set(data.keys()) != expected_keys.keys():
+            raise AssertionError('data should contain the following keys: {}'.format(expected_keys.keys()))
+        
+        for key, expected_type in expected_keys.items():
+            if not isinstance(data[key], expected_type):
+                raise AssertionError('data[{}] should be of type {}'.format(key, expected_type))
+        
 
         return cls(doc=data.get('doc', ''),
                    title=data.get('title', ''),
