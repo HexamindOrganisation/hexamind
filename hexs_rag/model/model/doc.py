@@ -2,13 +2,10 @@
 # processes it based on its file type, and structures its 
 # content into a form that is more manageable and accessible 
 
-from hexs_rag.model.model.container import Container
 from hexs_rag.model.model.paragraph import Paragraph
+from hexs_rag.model.model.container import Container
 from hexs_rag.utils.utils.index_creation import set_indexes
-from hexs_rag.model.readers.WordReader import WordReader
-from hexs_rag.model.readers.PdfReader import PdfReader
-from hexs_rag.model.readers.HTMLreader import Reader_HTML
-from hexs_rag.model.readers.ExcelReader import ReaderExcel
+from hexs_rag.model.readers import ReaderExcel, HtmlReader, PdfReader, WordReader
 import os
 
 class Doc:
@@ -106,6 +103,7 @@ class Doc:
         return blocks
     
     def set_first_container_title(self,title,extension) -> Paragraph:
+        from hexs_rag.model.model import Paragraph
         """
         Sets the initial container title based on the document's title and extension.
         
