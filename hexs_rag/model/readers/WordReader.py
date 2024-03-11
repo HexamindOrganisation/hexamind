@@ -129,10 +129,6 @@ class WordReader:
                     'underline': run.underline
                 }
                 runs.append(run_details)
-        # print("-----------")
-        # print(paragraph.text)
-        # print("-----------")
-# DEBUG
         return {
             'text': paragraph.text,
             'style': paragraph_style,
@@ -163,7 +159,7 @@ class WordReader:
 
     def print_paragraphs_and_tables(self):
         try:
-            print("start")
+           
             doc_items = self.get_paragraphs()
             for item in doc_items:
                 if 'paragraph' in item:
