@@ -26,12 +26,12 @@ def doc_html_instance():
 @pytest.fixture 
 def doc_word_instance():
     # Test data file paths
-    docx_file_path = "../hexs_rag/data/test_data/sample_doc.docx'"
+    docx_file_path = "../hexs_rag/data/test_data/sample_doc.docx"
     # Create an instance of Reader_HTML
     return Doc(path=docx_file_path,
           include_images=True,
           actual_first_page=1)
-
+        
 
 @pytest.fixture 
 def doc_pdf_instance():
