@@ -15,6 +15,21 @@ class Block:
 
     def __init__(self, doc: str= '',title: str = '', content: str = '',
                 index: str = '', rank: int = 0, level: int = 0, distance: float = 99999):
+        if not isinstance(doc, str):
+            raise TypeError("doc should be a string")
+        if not isinstance(title, str):
+            raise TypeError("title should be a string")
+        if not isinstance(content, str):
+            raise TypeError("content should be a string")
+        if not isinstance(index, str):
+            raise TypeError("index should be a string")
+        if not isinstance(rank, int):
+            raise TypeError("rank should be an int")
+        if not isinstance(level, int):
+            raise TypeError("level should be an int")
+        if not isinstance(distance, float):
+            raise TypeError("distance should be a float")
+        
         self.doc = doc
         self.title = title
         self.content = content
