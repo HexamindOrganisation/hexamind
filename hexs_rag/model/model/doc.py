@@ -103,7 +103,6 @@ class Doc:
         return blocks
     
     def set_first_container_title(self,title,extension) -> Paragraph:
-        from hexs_rag.model.model import Paragraph
         """
         Sets the initial container title based on the document's title and extension.
         
