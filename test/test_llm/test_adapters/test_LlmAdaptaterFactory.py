@@ -4,6 +4,7 @@ from hexs_rag.llm.adapters.LlmAdapterFactory import LlmAdapterFactory
 from hexs_rag.llm.adapters.OpenAiAdapter import OpenAiClientAdapter
 from hexs_rag.llm.adapters.MistralAdapter import MistralClientAdapter
 from unittest.mock import patch, MagicMock
+from unittest.mock import create_autospec
 
 @pytest.fixture(params=["mistral", "openai", "unsupported"])
 def llm_name_env(request, monkeypatch):
@@ -15,6 +16,10 @@ def llm_name_env(request, monkeypatch):
         return request.param, OpenAiClientAdapter
     else:
         return request.param, None
+
+@pytest.fixture
+def mistral_client_mock():
+    mock = create_autospec(IL)
 
 @patch('mistralai.client.MistralClient', MagicMock())
 @patch('openai.OpenAI', MagicMock())
