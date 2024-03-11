@@ -17,10 +17,6 @@ def llm_name_env(request, monkeypatch):
     else:
         return request.param, None
 
-@pytest.fixture
-def mistral_client_mock():
-    mock = create_autospec(IL)
-
 @patch('mistralai.client.MistralClient', MagicMock())
 @patch('openai.OpenAI', MagicMock())
 def test_create_adapter(llm_name_env):
