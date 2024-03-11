@@ -1,5 +1,5 @@
 import json
-import PyPDF2
+import pypdf
 # To analyze the PDF layout and extract text
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextContainer, LTChar, LTFigure

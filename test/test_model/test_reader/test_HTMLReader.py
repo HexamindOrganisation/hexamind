@@ -1,5 +1,5 @@
 
-from hexs_rag.model.readers.HTMLreader import Reader_HTML
+from hexs_rag.model.readers.HTMLreader import HtmlReader
 import pytest
 
 

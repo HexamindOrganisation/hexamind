@@ -75,6 +75,7 @@ pydantic==2.6.3
 pydantic_core==2.16.3
 pyfakefs==5.3.5
 PyPDF2==3.0.1
+pypdf==4.1.0
 pypdfium2==4.27.0
 PyPika==0.48.9
 pyproject_hooks==1.0.0
