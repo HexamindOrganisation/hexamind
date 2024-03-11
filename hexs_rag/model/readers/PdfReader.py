@@ -124,7 +124,7 @@ class PdfReader:
         pageObj.mediabox.lower_left = (image_left, image_bottom)
         pageObj.mediabox.upper_right = (image_right, image_top)
         # Save the cropped page to a new PDF
-        cropped_pdf_writer = PyPDF2.PdfWriter()
+        cropped_pdf_writer = pypdf.PdfWriter()
         cropped_pdf_writer.add_page(pageObj)
         # Save the cropped PDF to a new file
         with open('cropped_image.pdf', 'wb') as cropped_pdf_file:
@@ -149,7 +149,7 @@ class PdfReader:
         # create a PDF file object
         pdfFileObj = open(pdf_path, 'rb')
         # create a PDF reader object
-        pdfReaded = PyPDF2.PdfReader(pdfFileObj)
+        pdfReaded = pypdf.PdfReader(pdfFileObj)
         number_of_pages = len(pdfReaded.pages)
         # Create the dictionary to extract text from each image
         text_per_page = {}
@@ -306,16 +306,14 @@ class PdfReader:
                     actual_format = "content"
                 if len(page[4][j]) > 150 and "title" in actual_format:
                     actual_format = "content"
-                print(actual_format)
                 paragraph = Paragraph(text=page[4][j],font_style=actual_format,id_=j,page_id=index)
                 paragraphs.append(paragraph)
                 j+=1
 
         paragraphs = self.concatenate_paragraphs(paragraphs, pdf_path.split('/')[-1]) if '/' in pdf_path else self.concatenate_paragraphs(paragraphs, pdf_path.split('\\')[-1])
-        print("@*"*50)  
-        for paragraph in paragraphs:
-            print(f"Level: {paragraph.level}, Font Style: {paragraph.font_style}")
-        print("@*"*50)  
+        # for paragraph in paragraphs:
+        #     print(f"Level: {paragraph.level}, Font Style: {paragraph.font_style}")
+        # print("@*"*50)  
 
         return paragraphs
  

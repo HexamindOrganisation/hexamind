@@ -13,7 +13,7 @@ from docx.text.paragraph import Paragraph
 class WordReader:
     """
     A class that extrats content from a .docx file and returns a list of Paragraph objects. 
-    The behavio is straightforward: it iterates through the paragraphs and tables of the document,
+    The behaviour is straightforward: it iterates through the paragraphs and tables of the document,
     extracting the text and the style of each one. The style is determined by the style of the paragraph 
     or the predominant style of the table. The text is extracted from the paragraphs and the tables are
     converted to a string. The class also estimates the page number of each paragraph based on the total
@@ -36,7 +36,7 @@ class WordReader:
     def __init__(self, path):
         self.path = path
         self.paragraphs = self.get_paragraphs()
-        
+
     def iter_block_items(self, parent):
         if isinstance(parent, _Document):
             parent_elm = parent.element.body
@@ -66,14 +66,14 @@ class WordReader:
                     if paragraph_info:  # Only append if paragraph is not empty
                         page_id = self.estimate_page_number(total_characters)
                         p_obj = ParagraphHexa(text=paragraph_info['text'], font_style=paragraph_info['style'], id_=paragraph_id, page_id=page_id)
-                        print(f"Found paragraph: {paragraph_info['style']}...")  # DEBUG
+                        # print(f"Found paragraph: {paragraph_info['style']}...")  # DEBUG
                         paragraph_objects.append(p_obj)
                         paragraph_id += 1
                         total_characters += len(paragraph_info['text'])
                 elif isinstance(block, Table):
                     table_paragraph, table_style = self.table_to_paragraph(block)
                     if table_paragraph.strip():  # Check if table paragraph is not empty
-                        print(f"Found table. Predominant style: {table_style}")  # DEBUG
+                        # print(f"Found table. Predominant style: {table_style}")  # DEBUG
                         p_obj = ParagraphHexa(text=table_paragraph, font_style=table_style, id_=paragraph_id, page_id=page_id)
                         paragraph_objects.append(p_obj)
                         paragraph_id += 1
@@ -104,7 +104,7 @@ class WordReader:
         return total_characters // avg_chars_per_page + 1
 
     @staticmethod
-    def extract_paragraph_info(self, paragraph):
+    def extract_paragraph_info(paragraph):
         # Check if paragraph is empty
         if not paragraph.text.strip():
             return None  # Return None for empty paragraphs
@@ -129,9 +129,9 @@ class WordReader:
                     'underline': run.underline
                 }
                 runs.append(run_details)
-        print("-----------")
-        print(paragraph.text)
-        print("-----------")
+        # print("-----------")
+        # print(paragraph.text)
+        # print("-----------")
 # DEBUG
         return {
             'text': paragraph.text,

@@ -28,16 +28,14 @@ jobs:
         # Display the Python version being used
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-        # Install the package using the setup.py
-      # - name: Install package
-      #   run: python setup.py install
-        # Install pytest (you can use some other testing utility)
+        # Install pytest 
       - name: Install packages
         run: |
           sudo apt-get update
           sudo apt_get install -y poppler-utils tesseract-ocr
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
         # Run the tests. I'm using pytest and the file is in the tests directory.
       - name: Run tests
-        run: pytest test*
+        run: pytest -v -s
