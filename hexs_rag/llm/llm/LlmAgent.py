@@ -26,6 +26,9 @@ class LlmAgent:
         
 
         """
+        if not isinstance(client, ILlmClient):
+            raise ValueError("client should be an instance of ILlmClient")
+        
         self.client = client
     
     def send_request_to_llm(self, messages):
