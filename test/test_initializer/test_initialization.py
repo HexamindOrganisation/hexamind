@@ -13,6 +13,8 @@ from hexs_rag.initializer.initializer import Initializer
 def mock_env(monkeypatch):
     monkeypatch.setenv('DATABASE_PATH', './database_test')
     monkeypatch.setenv('COLLECTION_NAME', 'test_collection')
+    monkeypatch.setenv('LLM_NAME', 'mistral')
+    monkeypatch.setenv('LLM_API_KEY', 'test_api')
 
 @pytest.fixture
 def mock_chromadb(monkeypatch):
@@ -35,7 +37,7 @@ def test_collection_creation(mock_env):
 
 
         database_path = os.getenv('DATABASE_PATH')
-        initializer = Initializer(database_path=database_path, collection_name=os.getenv('COLLECTION_NAME'))
+        initializer = Initializer()
         _, collection = initializer.initialize_database()
 
         print(f"Database directory created at: {initializer}")
@@ -55,7 +57,7 @@ def test_create_directory(fs, mock_env, mock_chromadb):
     # Ensure the directory does not exist before calling the function
     assert not os.path.exists(database_path)
     # Instantiate the class and call the method to initialize the database
-    initializer = Initializer(database_path=database_path, collection_name=os.getenv('COLLECTION_NAME'))
+    initializer = Initializer()
     client_db, collection = initializer.initialize_database()
     assert os.path.exists(database_path)
 
@@ -67,11 +69,19 @@ def test_database_client_and_collection_initialization(mock_chromadb, mock_env):
     mock_chromadb.return_value = mock_client
     
     # Instantiate the Initializer and initialize the database
-    initializer = Initializer(database_path=os.getenv('DATABASE_PATH'), collection_name=os.getenv('COLLECTION_NAME'))
+    initializer = Initializer()
     client_db, collection = initializer.initialize_database()
     
     # Assert that both the database client and collection are not None 
     assert client_db is not None
     assert collection is not None
+
+def test_llm_initialization(mock_env):
+    # Instantiate the Initializer and initialize the LLM client
+    initializer = Initializer()
+    llm_agent = initializer.initialize_llm()
+    
+    # Assert that the LLM client is not None
+    assert llm_agent is not None
 
 
