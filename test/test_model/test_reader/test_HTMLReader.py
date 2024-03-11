@@ -64,7 +64,6 @@ def test_format_list(html_reader_instance):
     formatted_list = html_reader_instance.format_list(list_content)
     assert formatted_list.count("•") == 5, "Should format list content with bullets for each item, including nested lists."
 
-
 ##############################################################################
 # Error handling
 def test_read_html_with_nonexistent_file():

@@ -27,18 +27,27 @@ class MistralClientAdapter(ILlmClient):
 
 
     def chat(self, messages, temperature=0):
-        chat_response = self.client.chat(
-            model=self.model,
-            messages=messages,
-            temperature=temperature
-        )
-        return chat_response.choices[0].message.content
+        try: 
+            chat_response = self.client.chat(
+                model=self.model,
+                messages=messages,
+                temperature=temperature
+            )
+            return chat_response.choices[0].message.content
+        except Exception as e:
+            raise ValueError(f"Could not chat with Mistral: {e}")
     
     def create_chat_message(self, role, content):
-        return ChatMessage(role=role, content=content)
+        try:
+            return ChatMessage(role=role, content=content)
+        except Exception as e:
+            raise ValueError(f"Could not create chat message for Mistral: {e}")
 
     def embeddings(self, input):
-        return self.client.embeddings(
-            model=self.embed_model,
-            inputs=input
-       )
+        try: 
+            return self.client.embeddings(
+                model=self.embed_model,
+                inputs=input
+        )
+        except Exception as e:
+            raise ValueError(f"Could not get embeddings from Mistral: {e}, please check the embedded model name.")

@@ -15,7 +15,11 @@ class Container:
         self.children = []
         self.index = index
         self.father = father
-        self.id_ = int(str(1) + str(father.id_) + str(id_))
+
+        if father is not None:
+            self.id_ = int(str(1) + str(father.id_) + str(id_))
+        else:
+            self.id_ = int(str(1) + str(id_))
 
         if paragraphs:
             self.paragraphs, self.children = self.create_children(paragraphs, level, index)
@@ -36,7 +40,7 @@ class Container:
             'canRename': True,
             'data': {},
             'level': self.level,
-            'rank': self.rank,
+            'rank': self.index,
             'title': self.title.text if self.title else 'root'
         }}
         paragraphs_structure = [p.structure for p in self.paragraphs]

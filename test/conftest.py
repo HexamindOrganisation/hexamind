@@ -1,10 +1,13 @@
 #Description: define fixtures used within other tests
 
 import pytest
+import docx
+
 from hexs_rag.model.model.doc import Doc
+from hexs_rag.model.readers import WordReader
 from hexs_rag.model.readers.HTMLreader import HtmlReader
 
-
+########HTML
 @pytest.fixture
 def html_reader_instance(): # real html file example
     html_file_path = "../hexs_rag/data/test_data/HTML5 Test Page.html"
@@ -34,17 +37,6 @@ def sample_html_file(tmp_path): # sample html file example
     file.write_text(content, encoding='utf-8')
     return str(file)
 
-
-@pytest.fixture 
-def doc_excel_instance():
-    # Test data file paths
-    excel_file_path = "../hexs_rag/data/test_data/SampleData.xlsx"
-    # Create an instance of Reader_HTML
-    return Doc(path=excel_file_path,
-          include_images=True,
-          actual_first_page=1)
-
-
 @pytest.fixture 
 def doc_html_instance():
     # Test data file paths
@@ -53,7 +45,27 @@ def doc_html_instance():
     return Doc(path=html_file_path,
           include_images=True,
           actual_first_page=1)
-   
+
+#########DOCX
+@pytest.fixture(scope="session")
+def sample_docx_path(tmp_path_factory):
+    file_path = tmp_path_factory.mktemp("data") / "sample.docx"
+    doc = docx.Document()
+    doc.add_paragraph("This is a test paragraph.")
+    table = doc.add_table(rows=1, cols=2)
+    table.cell(0, 0).text = "Cell 1"
+    table.cell(0, 1).text = "Cell 2"
+    doc.save(file_path)
+    return str(file_path)
+
+@pytest.fixture
+def word_reader(sample_docx_path):
+    return WordReader(sample_docx_path)
+    
+@pytest.fixture
+def word_reader_with_actual_file():
+    docx_file_path = "../hexs_rag/data/test_data/sample_doc.docx"
+    return WordReader(docx_file_path)
 
 @pytest.fixture 
 def doc_word_instance():
@@ -64,7 +76,17 @@ def doc_word_instance():
           include_images=True,
           actual_first_page=1)
 
+#########################XLSX
+@pytest.fixture 
+def doc_excel_instance():
+    # Test data file paths
+    excel_file_path = "../hexs_rag/data/test_data/SampleData.xlsx"
+    # Create an instance of Reader_HTML
+    return Doc(path=excel_file_path,
+          include_images=True,
+          actual_first_page=1)
 
+##############PDF
 @pytest.fixture 
 def doc_pdf_instance():
     # Test data file paths
