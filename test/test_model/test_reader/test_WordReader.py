@@ -116,9 +116,7 @@ def test_table_to_paragraph_complex_structure(word_reader):
     cell1_row2.paragraphs = [paragraph1_cell1_row2]
     cell2_row2.paragraphs = [paragraph1_cell2_row2]
     row2.cells = [cell1_row2, cell2_row2]
-
     table.rows = [row1, row2]
-
     text, style = word_reader.table_to_paragraph(table)
     assert "Row 1, Cell 1 | Row 1, Cell 2\nRow 2, Cell 1 | " in text
     expected_style = "Body Text"  # Assuming Body Text is considered predominant for this test
