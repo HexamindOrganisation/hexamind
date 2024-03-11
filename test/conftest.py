@@ -39,5 +39,5 @@ def doc_pdf_instance():
     pdf_file_path = "../hexs_rag/data/test_data/pdf-test.pdf"
     # Create an instance of Reader_HTML
     return Doc(path=pdf_file_path,
-          include_images=False,
+          include_images=True,
           actual_first_page=1)
