@@ -54,7 +54,13 @@ def test_to_dict():
 @pytest.mark.parametrize('data, expected_exception', [
     (['not','a','dict'], AssertionError),
     ({'not_a' :'valid_data'}, AssertionError),
-    ({'doc': 1, 'title': 'test_title', 'content': 'test_content', 'index': 'test_index', 'rank': 1, 'level': 2, 'distance': 3.0}, AssertionError),])
+    ({'doc': 1, 'title': 'test_title', 'content': 'test_content', 'index': 'test_index', 'rank': 1, 'level': 2, 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 1, 'content': 'test_content', 'index': 'test_index', 'rank': 1, 'level': 2, 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 'test_title', 'content': 1, 'index': 'test_index', 'rank': 1, 'level': 2, 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 'test_title', 'content': 'test_content', 'index': 1, 'rank': 1, 'level': 2, 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 'test_title', 'content': 'test_content', 'index': 'test_index', 'rank': '1', 'level': 2, 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 'test_title', 'content': 'test_content', 'index': 'test_index', 'rank': 1, 'level': '2', 'distance': 3.0}, AssertionError),
+    ({'doc': 'test_doc', 'title': 'test_title', 'content': 'test_content', 'index': 'test_index', 'rank': 1, 'level': 2, 'distance': '3.0'}, AssertionError),])
 
 def test_from_dict_with_invalid_data(data, expected_exception):
     with pytest.raises(expected_exception):
