@@ -27,7 +27,7 @@ class LlmAgent:
 
         """
         if not isinstance(client, ILlmClient):
-            raise ValueError("client should be an instance of ILlmClient")
+            raise TypeError("client should be an instance of ILlmClient")
         
         self.client = client
     

@@ -21,11 +21,11 @@ class OpenAiClientAdapter(ILlmClient):
     """
     def __init__(self, client, model="gpt-3.5-turbo", embed_model = 'text-embedding-3-large'):
         if not isinstance(client, ILlmClient):
-            raise ValueError("client should be an instance of ILlmClient")
+            raise TypeError("client should be an instance of ILlmClient")
         if not isinstance(model, str):
-            raise ValueError("model should be a string")
+            raise TypeError("model should be a string")
         if not isinstance(embed_model, str):
-            raise ValueError("embed_model should be a string")
+            raise TypeError("embed_model should be a string")
         
         self.client = client
         self.model = model
