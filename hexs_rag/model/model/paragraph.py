@@ -58,6 +58,13 @@ class Paragraph:
             return INFINITE
         else:
             return INFINITE
+    
+    @property
+    def structure(self):
+        """
+        returns the structure of the paragraph
+        """
+        return [self.level, self.id_]
 
 
             
