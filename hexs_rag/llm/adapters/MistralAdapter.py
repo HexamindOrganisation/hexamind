@@ -33,10 +33,9 @@ class MistralClientAdapter(ILlmClient):
                 messages=messages,
                 temperature=temperature
             )
+            return chat_response.choices[0].message.content
         except Exception as e:
             raise ValueError(f"Could not chat with Mistral: {e}")
-        
-        return chat_response.choices[0].message.content
     
     def create_chat_message(self, role, content):
         try:
@@ -51,4 +50,4 @@ class MistralClientAdapter(ILlmClient):
                 inputs=input
         )
         except Exception as e:
-            raise ValueError(f"Could not get embeddings from Mistral: {e}")
+            raise ValueError(f"Could not get embeddings from Mistral: {e}, please check the embedded model name.")
