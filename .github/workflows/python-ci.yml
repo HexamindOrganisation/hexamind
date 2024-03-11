@@ -31,6 +31,8 @@ jobs:
         # Install pytest 
       - name: Install packages
         run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils tesseract-ocr
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
