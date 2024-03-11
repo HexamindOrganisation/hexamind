@@ -11,16 +11,20 @@ class LlmAdapterFactory:
     Depending on the configuration, it will create the adaptater for the right LLM client.
 
     Methods:
-    create_adaptater(config_path)
+    create_adaptater(llm_name, llm_api_key)
         Create the proper adaptater for the LLM client according to the configuration.
+        This is a static method meaning that it can be called without creating an instance of the class.
     """
 
-    def create_adapter():
-        llm_name = os.getenv('LLM_NAME')
+    @staticmethod
+    def create_adapter(llm_name, llm_api_key):
+        """
+        Create the proper adaptater for the LLM client according to the configuration.
+        """
 
         if llm_name == 'mistral':
-            return MistralClientAdapter(MistralClient(api_key = os.getenv('LLM_API_KEY')))
-        elif llm_name == 'chatgpt':
-            return OpenAiClientAdapter(OpenAI(api_key = os.getenv('LLM_API_KEY')))
+            return MistralClientAdapter(MistralClient(api_key = llm_api_key))
+        elif llm_name == 'openai':
+            return OpenAiClientAdapter(OpenAI(api_key = llm_api_key))
         else:
             raise ValueError(f"Unsupported llm name: {llm_name}")

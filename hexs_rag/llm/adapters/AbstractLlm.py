@@ -8,7 +8,7 @@ class ILlmClient(ABC):
     """
     
     @abstractmethod
-    def chat(self, model, message, temperature=0):
+    def chat(self, messages, temperature=0):
         pass
         
     @abstractmethod

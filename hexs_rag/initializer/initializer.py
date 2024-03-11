@@ -32,11 +32,10 @@ class Initializer:
     Note: This class can be inherited to add a method for initializing your custom controller or any other initialization logic.
     """
 
-    def __init__(self):
+    def __init__(self, database_path, collection_name):
         """Loads environment variables and initializes instance attributes."""
-        load_dotenv(dotenv_path=".env")
-        self.database_path = os.getenv('DATABASE_PATH')
-        self.collection_name = os.getenv('COLLECTION_NAME')
+        self.database_path = database_path
+        self.collection_name = collection_name
         if not self.database_path or not self.collection_name:
             logging.error('DATABASE_PATH or COLLECTION_NAME environment variables are not set.')
             raise ValueError('Missing environment variables for database initialization.')
