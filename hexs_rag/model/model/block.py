@@ -21,8 +21,6 @@ class Block:
             raise TypeError("title should be a string")
         if not isinstance(content, str):
             raise TypeError("content should be a string")
-        if not isinstance(index, str):
-            raise TypeError("index should be a string")
         if not isinstance(rank, int):
             raise TypeError("rank should be an int")
         if not isinstance(level, int):
