@@ -43,7 +43,7 @@ class ReaderExcel:
     """
     def __init__(self, 
                 path: str, 
-                sheet_name = 0):
+                sheet_name = None):
         self.path = path
         self.sheet_name = sheet_name
         self.sheet_number = None
