@@ -38,15 +38,6 @@ class Doc:
                 actual_first_page: int = 1,
                 sheet_name: int = 0):
 
-        if not isinstance(path, str):
-            raise TypeError("path should be a string")
-        if not isinstance(include_images, bool):
-            raise TypeError("include_images should be a bool")
-        if not isinstance(actual_first_page, int):
-            raise TypeError("actual_first_page should be an int")
-        if not isinstance(sheet_name, int):
-            raise TypeError("sheet_name should be an int")
-
         file_name = os.path.basename(path) # get file and ext from path
         self.title, self.extension = os.path.splitext(file_name) # separate file and ext
         self.extension = self.extension.lower()
