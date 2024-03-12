@@ -17,6 +17,14 @@ class Retriever:
     - model: # TODO 
     """
     def __init__(self, doc: Doc = None, collection=None, llmagent: LlmAgent = None, model = "mistral-embed"):
+        if not isinstance(doc, Doc) and doc is not None:
+            raise TypeError("doc should be a Doc")
+        if not isinstance(collection, type(None)):
+            raise TypeError("collection should be a Collection")
+        if not isinstance(llmagent, LlmAgent) and llmagent is not None:
+            raise TypeError("llmagent should be a LlmAgent")
+        if not isinstance(model, str):
+            raise TypeError("model should be a string")
         self.doc = doc
         self.collection = collection
         self.llmagent = llmagent 

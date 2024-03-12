@@ -7,6 +7,15 @@ class Paragraph:
     Paragraph class that represents the interface between the bloc and doc models and the container model. It handles the document hierarchy and structure.
     """
     def __init__(self, text : str, font_style : str, id_ : int, page_id : int):
+        if not isinstance(text, str):
+            raise TypeError("text should be a string")
+        if not isinstance(font_style, str):
+            raise TypeError("font_style should be a string")
+        if not isinstance(id_, int):
+            raise TypeError("id_ should be an int")
+        if not isinstance(page_id, int):
+            raise TypeError("page_id should be an int")
+
         self.font_style = font_style
         self.id_ = int(str(2)+str(page_id)+str(id_))
         self.page_id = page_id
