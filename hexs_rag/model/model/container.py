@@ -8,14 +8,6 @@ class Container:
     TODO: DOCSTRING
     """
     def __init__(self, paragraphs: list[Paragraph], title: Paragraph = None, level: int = 0, index: list[int] = None, father=None, id_=0):
-        if not isinstance(paragraphs, list):
-            raise TypeError("paragraphs should be a list")
-        if title is not None and not isinstance(title, Paragraph):
-            raise TypeError("title should be a Paragraph")
-        if not isinstance(level, int):
-            raise TypeError("level should be an int")
-        if not isinstance(id_, int):
-            raise TypeError("id_ should be an int")
         
         if index is None: index = []
         self.level = level
