@@ -16,8 +16,6 @@ class Container:
             raise TypeError("level should be an int")
         if not isinstance(index, list) and index is not None:
             raise TypeError("index should be a list")
-        if not isinstance(father, Container) and father is not None:
-            raise TypeError("father should be a Container")
         if not isinstance(id_, int):
             raise TypeError("id_ should be an int")
         
