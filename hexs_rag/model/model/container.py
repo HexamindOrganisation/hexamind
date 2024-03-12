@@ -14,8 +14,6 @@ class Container:
             raise TypeError("title should be a Paragraph")
         if not isinstance(level, int):
             raise TypeError("level should be an int")
-        if not isinstance(index, list) and index is not None:
-            raise TypeError("index should be a list")
         if not isinstance(id_, int):
             raise TypeError("id_ should be an int")
         
