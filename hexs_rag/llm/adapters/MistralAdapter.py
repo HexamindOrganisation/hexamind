@@ -27,10 +27,10 @@ class MistralClientAdapter(ILlmClient):
         self.model = model if model is not None else os.getenv('LLM_MODEL', 'mistral-large-latest')
         self.embed_model = embed_model if embed_model is not None else os.getenv('LLM_EMBED_MODEL', 'mistral-embed')
 
-        if not isinstance(model, str):
+        if not isinstance(self.model, str):
             raise TypeError("model should be a string")
         
-        if not isinstance(embed_model, str):
+        if not isinstance(self.embed_model , str):
             raise TypeError("embed_model should be a string")
 
 

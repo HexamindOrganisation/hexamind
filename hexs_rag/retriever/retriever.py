@@ -72,7 +72,7 @@ class Retriever:
 
         
         """
-        summary = self.llmagent.summarize_paragraph_v2(prompt=block.content, 
+        summary = self.llmagent.summarize_paragraph(prompt=block.content, 
                                                        title_doc=self.doc_container.title, 
                                                        title_para=block.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary

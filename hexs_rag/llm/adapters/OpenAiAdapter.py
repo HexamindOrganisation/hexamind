@@ -26,9 +26,9 @@ class OpenAiClientAdapter(ILlmClient):
         self.model = model if model is not None else os.getenv('LLM_MODEL', 'gpt-3.5-turbo')
         self.embed_model = embed_model if embed_model is not None else os.getenv('LLM_EMBED_MODEL', 'text-embedding-3-large')
 
-        if not isinstance(model, str):
+        if not isinstance(self.model, str):
             raise TypeError("model should be a string")
-        if not isinstance(embed_model, str):
+        if not isinstance(self.embed_model, str):
             raise TypeError("embed_model should be a string")
     
     def chat(self, messages, temperature=0):
