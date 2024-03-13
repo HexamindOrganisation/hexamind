@@ -47,7 +47,9 @@ class Doc:
         self.path = path  # Path of the temporary file for processing
         self.sheet_name = sheet_name
         self.paragraphs = self.read_document()
-        self.container = Container(self.paragraphs, father=self, title=self.set_first_container_title(self.title, self.extension))
+        self.container = Container(paragraphs = self.paragraphs,  
+                                    father=self, 
+                                    title= self.set_first_container_title(self.title, self.extension))
         set_indexes(self.container)
         self.blocks = self.get_blocks()
 
