@@ -6,7 +6,7 @@ from hexs_rag.model.model.paragraph import Paragraph
 
 # TODO handle case where there are multiple sheets for ingestion
 
-class ReaderExcel:
+class ReaderExcel: 
     """
     -----------------------
     Reader method that ingests Excel files and converts into a list of 

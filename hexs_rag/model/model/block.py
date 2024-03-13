@@ -15,6 +15,7 @@ class Block:
 
     def __init__(self, doc: str= '',title: str = '', content: str = '',
                 index: str = '', rank: int = 0, level: int = 0, distance: float = 99999):
+        
         self.doc = doc
         self.title = title
         self.content = content
@@ -28,7 +29,10 @@ class Block:
         """
         Returns the distance as a string with two decimal digits
         """
-        return format(self.distance, '.2f')
+        try:
+            return format(self.distance, '.2f')
+        except Exception as e:
+            raise ValueError(f"Could not get distance as string: {e}")
     
     @classmethod
     def from_dict(cls, data: dict):
@@ -53,25 +57,30 @@ class Block:
             if not isinstance(data[key], expected_type):
                 raise AssertionError('data[{}] should be of type {}'.format(key, expected_type))
         
-
-        return cls(doc=data.get('doc', ''),
-                   title=data.get('title', ''),
-                   content=data.get('content', ''),
-                   index=data.get('index', ''),
-                   rank=data.get('rank', 0),
-                   level=data.get('level', 0),
-                   distance=data.get('distance', 99999))
+        try:
+            return cls(doc=data.get('doc', ''),
+                    title=data.get('title', ''),
+                    content=data.get('content', ''),
+                    index=data.get('index', ''),
+                    rank=data.get('rank', 0),
+                    level=data.get('level', 0),
+                    distance=data.get('distance', 99999))
+        except Exception as e:
+            raise ValueError(f"Could not create block from dictionary: {e}")
     
     def to_dict(self) -> dict:
         """
         Returns the block as a dictionary
         TODO : check if it is a necessary method since we can use the __dict__ attribute
         """
-        return {'doc': self.doc,
-                'title': self.title,
-                'content': self.content,
-                'index': self.index,
-                'rank': self.rank,
-                'level': self.level,
-                'distance': self.distance}
+        try:
+            return {'doc': self.doc,
+                    'title': self.title,
+                    'content': self.content,
+                    'index': self.index,
+                    'rank': self.rank,
+                    'level': self.level,
+                    'distance': self.distance}
+        except Exception as e:
+            raise ValueError(f"Could not get block as dictionary: {e}")
     

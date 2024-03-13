@@ -21,6 +21,12 @@ class MistralClientAdapter(ILlmClient):
         Create a chat message according to the client's message format. Here is the specific format for Mistral.
     """
     def __init__(self, client,model="mistral-large-latest", embed_model = 'mistral-embed'):
+        if not isinstance(model, str):
+            raise TypeError("model should be a string")
+        
+        if not isinstance(embed_model, str):
+            raise TypeError("embed_model should be a string")
+        
         self.client = client
         self.model = model
         self.embed_model = embed_model

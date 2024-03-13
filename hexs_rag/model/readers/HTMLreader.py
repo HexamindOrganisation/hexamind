@@ -51,6 +51,16 @@ class HtmlReader:
     """
 
     def __init__(self, path: str):
+        
+        # handle errors
+        if not isinstance(path, str):
+            raise TypeError("Path must be a string")
+        file_name = os.path.basename(path) # get file and ext from path
+        self.title, self.extension = os.path.splitext(file_name) # separate file and ext
+        self.extension = self.extension.lower()
+        if self.extension != '.html':
+            raise TypeError("file must be HTML")
+        
         self.path = path
         self.paragraphs: List[Paragraph] = self.read_html_with_beautifulsoup()
 

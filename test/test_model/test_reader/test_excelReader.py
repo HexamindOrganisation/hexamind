@@ -60,3 +60,9 @@ def test_get_sheet_number(mock_excel_path):
     sheet_number = reader.get_sheet_number()
 
     assert sheet_number == 3, "The sheet number is not as expected"
+
+def test_no_sheet_name_given(mock_excel_path):
+    # make sure a file with multiple sheets ingests only the first sheet
+    reader = ReaderExcel(path=mock_excel_path)
+    assert len(reader.paragraphs) == 2
+    assert "Online Instruction Page" in reader.paragraphs[1].text  
