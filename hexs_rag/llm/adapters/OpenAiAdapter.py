@@ -23,8 +23,8 @@ class OpenAiClientAdapter(ILlmClient):
     def __init__(self, client, model=None, embed_model = None):
         
         self.client = client
-        self.model = model if model is not None else os.getenv('OPENAI_MODEL', 'gpt-3.5-turbo')
-        self.embed_model = embed_model if embed_model is not None else os.getenv('OPENAI_EMBED_MODEL', 'text-embedding-3-large')
+        self.model = model if model is not None else os.getenv('LLM_MODEL', 'gpt-3.5-turbo')
+        self.embed_model = embed_model if embed_model is not None else os.getenv('LLM_EMBED_MODEL', 'text-embedding-3-large')
 
         if not isinstance(model, str):
             raise TypeError("model should be a string")
