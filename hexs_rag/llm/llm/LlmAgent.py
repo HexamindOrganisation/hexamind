@@ -70,9 +70,10 @@ class LlmAgent:
                                                 location_of_the_paragraph, 
                                                 title_doc, 
                                                 title_para)
+        print("template \n" , template)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
-        print(response)
+        print("response\n", response)
         return str(response)
 
     def detect_language(self, text: str) -> str:
