@@ -1,6 +1,9 @@
 from hexs_rag.model.model.doc import Doc
 from hexs_rag.llm.llm import LlmAgent
 from hexs_rag.utils.model.block import separate_1_block_in_n
+from hexs_rag.database.adapters.AbstractDb import IDbClient
+from hexs_rag.model.model.block import Block
+from hexs_rag.llm.llm import LlmAgent
 
 class Ingestor:
     """
@@ -12,19 +15,16 @@ class Ingestor:
     - llmagent: # TODO
     - model: # TODO 
     """
-    def __init__(self, doc_container: Doc = None, collection=None, llmagent: LlmAgent = None, model = "mistral-embed"):
+    def __init__(self, clientdb : IDbClient, doc_container: Doc = None, llmagent: LlmAgent = None):
         # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
         #     raise TypeError("doc should be a Doc")
         # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
         #     raise TypeError("collection should be a Collection")
         if not isinstance(llmagent, LlmAgent) and llmagent is not None:
             raise TypeError("llmagent should be a LlmAgent")
-        if not isinstance(model, str):
-            raise TypeError("model should be a string")
         self.doc_container = doc_container
-        self.collection = collection
+        self.clientdb = clientdb
         self.llmagent = llmagent 
-        self.model = model
         if self.doc_container:
             self.process_document()
 
@@ -60,7 +60,7 @@ class Ingestor:
         else:
             self.summarize_and_store(block)
 
-    def summarize_and_store(self, block):
+    def summarize_and_store(self, block : Block):
         """
         Creates a summary of the chunk content using the llmagent,
         then stores in the collection
@@ -71,26 +71,10 @@ class Ingestor:
                                                        title_doc=self.doc_container.title, 
                                                        title_para=block.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
-        embedded_summary = self.get_embedding(summary)
-        self.store_summary(summary, embedded_summary, block)
+        embedded_summary = self.llmagent.get_embedding(summary)
+
+        self.clientdb.add_document(summary, embedded_summary, block)
         print(summary)
-
-    def get_embedding(self, text):
-        """
-        Returns text sembeddings 
-        """
-        embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) 
-        return embeddings_batch_response.data[0].embedding
-
-    def store_summary(self, summary, embedding, block):
-        """
-        adds summaries to collection
-        """
-        print(block.to_dict())
-        self.collection.add(documents=[summary],
-                            embeddings=[embedding],
-                            ids=[block.index],
-                            metadatas=[block.to_dict()])
 
     
     def summarize_by_hierarchy(self):
@@ -110,4 +94,4 @@ class Ingestor:
                     title_doc=self.doc_container.title,
                     title_para=f"Summary of section: {level}"
                 )
-                self.store_summary(level_summary, level, level_blocks[0])
+                self.clientdb.add_document(level_summary, level, level_blocks[0])
