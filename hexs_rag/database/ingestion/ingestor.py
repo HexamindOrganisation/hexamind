@@ -73,6 +73,7 @@ class Ingestor:
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
         embedded_summary = self.get_embedding(summary)
         self.store_summary(summary, embedded_summary, block)
+        print(summary)
 
     def get_embedding(self, text):
         """

@@ -11,7 +11,7 @@ class LlmAgent:
         client : ILlmClient
             The client to use for the LLM.
         
-        Methods:
+        Methods: 
         send_request_to_llm(self, messages)
             Send a request to the LLM and get the response.
         generate_paragraph(self, query, context, histo, language)
@@ -36,7 +36,11 @@ class LlmAgent:
     def send_request_to_llm(self, messages):
         return self.client.chat(messages=messages)
 
-    def generate_paragraph(self, query: str, context: dict, histo: list[(str, str)], language='fr') -> str:
+    def generate_paragraph(self, 
+                        query: str, 
+                        context: dict, 
+                        histo: list[(str, str)], 
+                        language='fr') -> str:
         """generates the  answer"""
         template = Template.generate_paragraph(query, context, histo)
         messages = [self.client.create_chat_message("user", template)]
@@ -61,8 +65,10 @@ class LlmAgent:
         location_of_the_paragraph = prompt.split(" :")[0]
         """summarizes the paragraph"""
         template = Template.summarize_paragraph(location_of_the_paragraph, title_doc, title_para)
+
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
+        print(response)
         return str(response)
 
     def detect_language(self, text: str) -> str:
