@@ -29,7 +29,7 @@ class MistralClientAdapter(ILlmClient):
 
         if not isinstance(self.model, str):
             raise TypeError("model should be a string")
-        
+
         if not isinstance(self.embed_model , str):
             raise TypeError("embed_model should be a string")
 
@@ -44,13 +44,13 @@ class MistralClientAdapter(ILlmClient):
             return chat_response.choices[0].message.content
         except Exception as e:
             raise ValueError(f"Could not chat with Mistral: {e}")
-    
+
     def create_chat_message(self, role, content):
         try:
             return ChatMessage(role=role, content=content)
         except Exception as e:
             raise ValueError(f"Could not create chat message for Mistral: {e}")
-
+        
     def embeddings(self, input):
         try: 
             return self.client.embeddings(
