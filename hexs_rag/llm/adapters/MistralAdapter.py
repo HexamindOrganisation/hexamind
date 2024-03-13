@@ -55,7 +55,7 @@ class MistralClientAdapter(ILlmClient):
         try: 
             return self.client.embeddings(
                 model=self.embed_model,
-                inputs=input
+                input=input
         )
         except Exception as e:
             raise ValueError(f"Could not get embeddings from Mistral: {e}, please check the embedded model name.")

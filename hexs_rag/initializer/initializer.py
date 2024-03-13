@@ -23,7 +23,7 @@ class Initializer:
     - None currently, but utilizes environment variables:
       - DATABASE_PATH: Path to the database directory.
       - COLLECTION_NAME: Name of the collection to use or create.
-    
+
     Methods:
     - initialize_database: Initializes the database and collection.
     - initialize_llm: Initializes the LLM client.
@@ -60,14 +60,14 @@ class Initializer:
             return client_db, collection
         except Exception as e:
             logging.error(f"Failed to initialize the database: {e}")
-            raise
-    
+            raise Exception(f"Failed to initialize the database: {e}") # TODO remove one of these later
+
     def initialize_llm(self) -> LlmAgent:
         """Initializes the LLM client."""
         try:
             llm_adapter = LlmAdapterFactory.create_adapter(self.llm_name, self.llm_api_key, self.model, self.embed_model)
             return LlmAgent(llm_adapter)
-        
+                
         except Exception as e:
             logging.error(f"Failed to initialize the LLM client: {e}")
             raise

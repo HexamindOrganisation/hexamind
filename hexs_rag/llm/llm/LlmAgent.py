@@ -6,7 +6,7 @@ class LlmAgent:
     def __init__(self, client : ILlmClient):
         """ 
         Constructor for the LLM agent. 
-
+ 
         Attributes:
         client : ILlmClient
             The client to use for the LLM.
@@ -27,7 +27,8 @@ class LlmAgent:
         
 
         """
-        if not isinstance(client, ILlmClient):
+        print("type: ",type(client)," DONE")
+        if not isinstance(client, ILlmClient): # TODO -> class not implemented yet
             raise TypeError("client should be an instance of ILlmClient")
         
         self.client = client
