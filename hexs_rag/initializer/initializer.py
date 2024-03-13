@@ -31,7 +31,7 @@ class Initializer:
     Note: This class can be inherited to add a method for initializing your custom controller or any other initialization logic.
     """
 
-    def __init__(self, database_path = None, collection_name = None, llm_name=None, llm_api_key=None):
+    def __init__(self, database_path = None, collection_name = None, llm_name=None, llm_api_key=None, model=None, embed_model=None):
         """Loads environment variables and initializes instance attributes."""
         self.database_path = database_path or os.getenv('DATABASE_PATH')
         self.collection_name = collection_name or os.getenv('COLLECTION_NAME')
@@ -44,6 +44,9 @@ class Initializer:
         if not self.llm_api_key:
             logging.error('LLM_API_KEY variable is not set.')
             raise ValueError('Missing variable for LLM API key.')
+        
+        self.model = model
+        self.embed_model = embed_model
 
     def initialize_database(self):
         """Initializes and returns the database and collection."""
@@ -62,7 +65,7 @@ class Initializer:
     def initialize_llm(self) -> LlmAgent:
         """Initializes the LLM client."""
         try:
-            llm_adapter = LlmAdapterFactory.create_adapter(self.llm_name, self.llm_api_key)
+            llm_adapter = LlmAdapterFactory.create_adapter(self.llm_name, self.llm_api_key, self.model, self.embed_model)
             return LlmAgent(llm_adapter)
                 
         except Exception as e:

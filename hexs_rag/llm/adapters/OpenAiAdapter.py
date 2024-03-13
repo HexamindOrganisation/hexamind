@@ -1,4 +1,5 @@
 from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
+import os
 
 class OpenAiClientAdapter(ILlmClient):
     """
@@ -19,15 +20,16 @@ class OpenAiClientAdapter(ILlmClient):
     create_chat_message(self, role, content)
         Create a chat message according to the client's message format. Here is the specific format for OpenAI.
     """
-    def __init__(self, client, model="gpt-3.5-turbo", embed_model = 'text-embedding-3-large'):
+    def __init__(self, client, model=None, embed_model = None):
+        
+        self.client = client
+        self.model = model if model is not None else os.getenv('OPENAI_MODEL', 'gpt-3.5-turbo')
+        self.embed_model = embed_model if embed_model is not None else os.getenv('OPENAI_EMBED_MODEL', 'text-embedding-3-large')
+
         if not isinstance(model, str):
             raise TypeError("model should be a string")
         if not isinstance(embed_model, str):
             raise TypeError("embed_model should be a string")
-        
-        self.client = client
-        self.model = model
-        self.embed_model = embed_model
     
     def chat(self, messages, temperature=0):
         try:

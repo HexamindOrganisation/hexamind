@@ -1,5 +1,6 @@
 from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 from mistralai.models.chat_completion import ChatMessage
+import os
 
 class MistralClientAdapter(ILlmClient):
     """
@@ -20,16 +21,17 @@ class MistralClientAdapter(ILlmClient):
     create_chat_message(self, role, content)
         Create a chat message according to the client's message format. Here is the specific format for Mistral.
     """
-    def __init__(self, client, model="mistral-large-latest", embed_model = 'mistral-embed'):
+    def __init__(self, client,model=None, embed_model = None):
+        
+        self.client = client
+        self.model = model if model is not None else os.getenv('MISTRAL_MODEL', 'mistral-large-latest')
+        self.embed_model = embed_model if embed_model is not None else os.getenv('MISTRAL_EMBED_MODEL', 'mistral-embed')
+
         if not isinstance(model, str):
             raise TypeError("model should be a string")
         
         if not isinstance(embed_model, str):
             raise TypeError("embed_model should be a string")
-        
-        self.client = client
-        self.model = model
-        self.embed_model = embed_model
 
 
     def chat(self, messages, temperature=0):
