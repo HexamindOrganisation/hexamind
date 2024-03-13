@@ -3,7 +3,7 @@ from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 
 class LlmAgent:
     def __init__(self, client : ILlmClient):
-        """
+        """ 
         Constructor for the LLM agent. 
 
         Attributes:

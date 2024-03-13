@@ -17,19 +17,19 @@ class LlmAdapterFactory:
     """
 
     @staticmethod
-    def create_adapter(llm_name, llm_api_key):
+    def create_adapter(llm_name, llm_api_key, model = None, embed_model = None):
         """
         Create the proper adaptater for the LLM client according to the configuration.
         """
 
         if llm_name == 'mistral':
             try:
-                return MistralClientAdapter(MistralClient(api_key = llm_api_key))
+                return MistralClientAdapter(MistralClient(api_key = llm_api_key), model, embed_model)
             except Exception as e:
                 raise ValueError(f"Could not create MistralClientAdapter: {e}")
         elif llm_name == 'openai':
             try:
-                return OpenAiClientAdapter(OpenAI(api_key = llm_api_key))
+                return OpenAiClientAdapter(OpenAI(api_key = llm_api_key), model, embed_model)
             except Exception as e:
                 raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
         else:
