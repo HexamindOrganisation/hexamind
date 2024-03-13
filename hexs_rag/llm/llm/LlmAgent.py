@@ -5,7 +5,7 @@ class LlmAgent:
     def __init__(self, client : ILlmClient):
         """
         Constructor for the LLM agent. 
-
+ 
         Attributes:
         client : ILlmClient
             The client to use for the LLM.
@@ -26,7 +26,8 @@ class LlmAgent:
         
 
         """
-        if not isinstance(client, ILlmClient):
+        print("type: ",type(client)," DONE")
+        if not isinstance(client, ILlmClient): # TODO -> class not implemented yet
             raise TypeError("client should be an instance of ILlmClient")
         
         self.client = client
@@ -130,6 +131,7 @@ class LlmAgent:
                     f"Your response shall be concise and shall respect the following format:"
                     f"<summary>"
                     f"If you see that the summary that you are creating will not respect ```{max_tokens}``` tokens, find a way to make it shorter.")
+        print(template)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         print("****************")

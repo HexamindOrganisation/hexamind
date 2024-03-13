@@ -5,31 +5,32 @@ import os
 from hexs_rag.model.model.block import Block
 from hexs_rag.model.model.doc import Doc
 from hexs_rag.llm.llm import LlmAgent
+from hexs_rag.utils.model.block import separate_1_block_in_n
 
 class Retriever:
     """
     Retriever class that serves as the retrieval part of the RAG system
     Responsible for retrieving documents relevant to input query  
     Attributes:
-    - doc: doc.container # TODO
+    - doc_container: doc.container # TODO
     - collection: # TODO
     - llmagent: # TODO
     - model: # TODO 
     """
-    def __init__(self, doc: Doc = None, collection=None, llmagent: LlmAgent = None, model = "mistral-embed"):
-        if not isinstance(doc, Doc) and doc is not None:
-            raise TypeError("doc should be a Doc")
-        if not isinstance(collection, type(None)):
-            raise TypeError("collection should be a Collection")
+    def __init__(self, doc_container: Doc = None, collection=None, llmagent: LlmAgent = None, model = "mistral-embed"):
+        # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
+        #     raise TypeError("doc should be a Doc")
+        # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
+        #     raise TypeError("collection should be a Collection")
         if not isinstance(llmagent, LlmAgent) and llmagent is not None:
             raise TypeError("llmagent should be a LlmAgent")
         if not isinstance(model, str):
             raise TypeError("model should be a string")
-        self.doc = doc
+        self.doc_container = doc_container
         self.collection = collection
         self.llmagent = llmagent 
         self.model = model
-        if self.doc:
+        if self.doc_container:
             self.process_document()
 
     def process_document(self):
@@ -38,7 +39,7 @@ class Retriever:
         Applies the process_block function to each block in the document
         --------
         """
-        for block in self.doc.blocks:
+        for block in self.doc_container.blocks:
             self.process_block(block)
         
 
@@ -58,7 +59,7 @@ class Retriever:
 
         """
         if len(block.content) > 4000:
-            new_blocks = block.separate_1_block_in_n(max_size=3000)
+            new_blocks = separate_1_block_in_n(block, max_size=3000)
             for new_block in new_blocks:
                 self.summarize_and_store(new_block)
         else:
@@ -72,7 +73,7 @@ class Retriever:
         
         """
         summary = self.llmagent.summarize_paragraph_v2(prompt=block.content, 
-                                                       title_doc=self.doc.title, 
+                                                       title_doc=self.doc_container.title, 
                                                        title_para=block.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
         embedded_summary = self.get_embedding(summary)
@@ -82,7 +83,7 @@ class Retriever:
         """
         Returns text sembeddings 
         """
-        embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) # TODO this needs to be generalizable. DONE
+        embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) 
         return embeddings_batch_response.data[0].embedding
 
     def store_summary(self, summary, embedding, block):
@@ -100,8 +101,8 @@ class Retriever:
         """
         Summarizes blocks based on their hierarchical levels.
         """
-        hierarchy = self.create_hierarchy(self.doc.blocks)
-        deepest_blocks_indices = self.find_deepest_blocks(self.doc.blocks)
+        hierarchy = self.create_hierarchy(self.doc_container.blocks)
+        deepest_blocks_indices = self.find_deepest_blocks(self.doc_container.blocks)
         print("Hierarchy levels identified:", hierarchy.keys())
         print("Deepest block indices:", deepest_blocks_indices)
 
@@ -110,7 +111,7 @@ class Retriever:
                 level_content = " ".join(block.content for block in level_blocks)
                 level_summary = self.llmagent.summarize_paragraph_v2(
                     prompt=level_content,
-                    title_doc=self.doc.title,
+                    title_doc=self.doc_container.title,
                     title_para=f"Summary of section: {level}"
                 )
                 self.store_summary(level_summary, level, level_blocks[0])
