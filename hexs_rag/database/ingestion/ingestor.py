@@ -62,13 +62,11 @@ class Ingestor:
     def summarize_and_store(self, block : Block):
         """
         Creates a summary of the chunk content using the llmagent,
-        then stores in the collection
-
-        
+        then stores in the collection        
         """
         summary = self.llmagent.summarize_paragraph(prompt=block.content, 
-                                                       title_doc=self.doc_container.title, 
-                                                       title_para=block.title)
+                                                    title_doc=self.doc_container.title, 
+                                                    title_para=block.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
         embedded_summary = self.llmagent.get_embedding(summary)
 

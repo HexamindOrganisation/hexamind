@@ -38,14 +38,23 @@ class Template:
         return template
 
     @staticmethod
-    def summarize_paragraph(location, title_doc, title_para):
-        """summarizes the paragraph"""
+    def summarize_paragraph(prompt, 
+                            location,
+                            title_doc, 
+                            title_para):
+        """
+        summarizes the paragraph
+        prompt: block content
+        title_doc:
+        title_para:
+        """
         MAX_TOKENS = 850
-        template = (f"Your task consists in summarizing in English the paragraph of the document untitled ```{title_doc}``` located in the ```{location}``` section of the document."
+        template = (f"Your task consists in summarizing in English the paragraph of the document untitled ```{title_doc}.``` located in the ```{location}``` section of the document."
                     f"The paragraph title is ```{title_para}```."
                     f"Your response shall be concise and shall respect the following format:"
                     f"<summary>"
-                    f"If you see that the summary that you are creating will not respect ```{MAX_TOKENS}``` tokens, find a way to make it shorter.")
+                    f"If you see that the summary that you are creating will not respect ```{MAX_TOKENS}``` tokens, find a way to make it shorter."
+                    f"The paragraph you need to summarize is the following: {prompt}")
         return template
     
     @staticmethod
