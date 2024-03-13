@@ -9,6 +9,8 @@ import logging
 import chromadb
 from hexs_rag.llm.llm import LlmAgent
 from hexs_rag.llm.adapters import LlmAdapterFactory
+from hexs_rag.database.adapters.DbAdapterFactory import DbAdapterFactory
+from hexs_rag.database.adapters.AbstractDb import IDbClient
 
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)
@@ -31,10 +33,12 @@ class Initializer:
     Note: This class can be inherited to add a method for initializing your custom controller or any other initialization logic.
     """
 
-    def __init__(self, database_path = None, collection_name = None, llm_name=None, llm_api_key=None, model=None, embed_model=None):
+    def __init__(self, database_path = None, collection_name = None, llm_name=None, llm_api_key=None, model=None, embed_model=None, db_name=None):
         """Loads environment variables and initializes instance attributes."""
         self.database_path = database_path or os.getenv('DATABASE_PATH')
         self.collection_name = collection_name or os.getenv('COLLECTION_NAME')
+        self.db_name = db_name or os.getenv('DB_NAME')
+
         if not self.database_path or not self.collection_name:
             logging.error('DATABASE_PATH or COLLECTION_NAME environment variables are not set.')
             raise ValueError('Missing environment variables for database initialization.')
@@ -48,16 +52,16 @@ class Initializer:
         self.model = model
         self.embed_model = embed_model
 
-    def initialize_database(self):
+    def initialize_database(self) -> IDbClient:
         """Initializes and returns the database and collection."""
         try:
             if not os.path.exists(self.database_path):
                 os.makedirs(self.database_path)
                 logging.info(f"Database directory created at: {self.database_path}")
             
-            client_db = chromadb.PersistentClient(self.database_path)
-            collection = client_db.get_or_create_collection(self.collection_name)
-            return client_db, collection
+            db_adapter = DbAdapterFactory.create_adapter(self.db_name, self.database_path, self.collection_name)
+            return db_adapter
+        
         except Exception as e:
             logging.error(f"Failed to initialize the database: {e}")
             raise Exception(f"Failed to initialize the database: {e}") # TODO remove one of these later

@@ -8,7 +8,7 @@ class DbAdapterFactory:
     """
 
     @staticmethod
-    def create_adapter(db_name, database_path, collection_name):
+    def create_adapter(db_name, database_path = None, collection_name = None):
         """
         Create the proper adapter for the database according to the configuration.
         """
