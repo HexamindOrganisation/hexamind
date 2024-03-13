@@ -30,91 +30,91 @@ class Retriever:
         self.collection = collection
         self.llmagent = llmagent 
         self.model = model
-        if self.doc_container:
-            self.process_document()
+    #     if self.doc_container:
+    #         self.process_document()
 
-    def process_document(self):
-        """
-        --------
-        Applies the process_block function to each block in the document
-        --------
-        """
-        for block in self.doc_container.blocks:
-            self.process_block(block)
+    # def process_document(self):
+    #     """
+    #     --------
+    #     Applies the process_block function to each block in the document
+    #     --------
+    #     """
+    #     for block in self.doc_container.blocks:
+    #         self.process_block(block)
         
 
-    def process_block(self, block):
-        """
+    # def process_block(self, block):
+    #     """
 
-        ---------------------------
-        Method used to ingest blocks into the database.
-        If the content is over 4000 characters
-        The document content is divided into further chunks 
-        Each chunk is then summarized and stored.
-        If the content is less than 4000 characters it's directly summarized and stored 
-        without further division.
-        ---------------------------
-        Attributes:
-        block: 
+    #     ---------------------------
+    #     Method used to ingest blocks into the database.
+    #     If the content is over 4000 characters
+    #     The document content is divided into further chunks 
+    #     Each chunk is then summarized and stored.
+    #     If the content is less than 4000 characters it's directly summarized and stored 
+    #     without further division.
+    #     ---------------------------
+    #     Attributes:
+    #     block: 
 
-        """
-        if len(block.content) > 4000:
-            new_blocks = separate_1_block_in_n(block, max_size=3000)
-            for new_block in new_blocks:
-                self.summarize_and_store(new_block)
-        else:
-            self.summarize_and_store(block)
+    #     """
+    #     if len(block.content) > 4000:
+    #         new_blocks = separate_1_block_in_n(block, max_size=3000)
+    #         for new_block in new_blocks:
+    #             self.summarize_and_store(new_block)
+    #     else:
+    #         self.summarize_and_store(block)
 
-    def summarize_and_store(self, block):
-        """
-        Creates a summary of the chunk content using the llmagent,
-        then stores in the collection
+    # def summarize_and_store(self, block):
+    #     """
+    #     Creates a summary of the chunk content using the llmagent,
+    #     then stores in the collection
 
         
-        """
-        summary = self.llmagent.summarize_paragraph_v2(prompt=block.content, 
-                                                       title_doc=self.doc_container.title, 
-                                                       title_para=block.title)
-        summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
-        embedded_summary = self.get_embedding(summary)
-        self.store_summary(summary, embedded_summary, block)
+    #     """
+    #     summary = self.llmagent.summarize_paragraph(prompt=block.content, 
+    #                                                    title_doc=self.doc_container.title, 
+    #                                                    title_para=block.title)
+    #     summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
+    #     embedded_summary = self.get_embedding(summary)
+    #     self.store_summary(summary, embedded_summary, block)
 
-    def get_embedding(self, text):
-        """
-        Returns text sembeddings 
-        """
-        embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) 
-        return embeddings_batch_response.data[0].embedding
+    # def get_embedding(self, text):
+    #     """
+    #     Returns text sembeddings 
+    #     """
+    #     embeddings_batch_response = self.llmagent.client.embeddings(input=[text]) 
+    #     return embeddings_batch_response.data[0].embedding
 
-    def store_summary(self, summary, embedding, block):
-        """
-        adds summaries to collection
-        """
-        print(block.to_dict())
-        self.collection.add(documents=[summary],
-                            embeddings=[embedding],
-                            ids=[block.index],
-                            metadatas=[block.to_dict()])
+    # def store_summary(self, summary, embedding, block):
+    #     """
+    #     adds summaries to collection
+    #     """
+    #     print(block.to_dict())
+    #     self.collection.add(documents=[summary],
+    #                         embeddings=[embedding],
+    #                         ids=[block.index],
+    #                         metadatas=[block.to_dict()])
 
     
-    def summarize_by_hierarchy(self):
-        """
-        Summarizes blocks based on their hierarchical levels.
-        """
-        hierarchy = self.create_hierarchy(self.doc_container.blocks)
-        deepest_blocks_indices = self.find_deepest_blocks(self.doc_container.blocks)
-        print("Hierarchy levels identified:", hierarchy.keys())
-        print("Deepest block indices:", deepest_blocks_indices)
+    # def summarize_by_hierarchy(self):
+    #     """
+    #     Summarizes blocks based on their hierarchical levels.
+    #     """
+    #     hierarchy = self.create_hierarchy(self.doc_container.blocks)
+    #     deepest_blocks_indices = self.find_deepest_blocks(self.doc_container.blocks)
+    #     print("Hierarchy levels identified:", hierarchy.keys())
+    #     print("Deepest block indices:", deepest_blocks_indices)
 
-        for level, level_blocks in hierarchy.items():
-            if len(level_blocks) > 1 and any(block.index in deepest_blocks_indices for block in level_blocks):
-                level_content = " ".join(block.content for block in level_blocks)
-                level_summary = self.llmagent.summarize_paragraph_v2(
-                    prompt=level_content,
-                    title_doc=self.doc_container.title,
-                    title_para=f"Summary of section: {level}"
-                )
-                self.store_summary(level_summary, level, level_blocks[0])
+    #     for level, level_blocks in hierarchy.items():
+    #         if len(level_blocks) > 1 and any(block.index in deepest_blocks_indices for block in level_blocks):
+    #             level_content = " ".join(block.content for block in level_blocks)
+    #             level_summary = self.llmagent.summarize_paragraph_v2(
+    #                 prompt=level_content,
+    #                 title_doc=self.doc_container.title,
+    #                 title_para=f"Summary of section: {level}"
+    #             )
+    #             self.store_summary(level_summary, level, level_blocks[0])
 
     def create_hierarchy(self, blocks):
         """
