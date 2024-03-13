@@ -6,7 +6,7 @@ class LlmAgent:
     def __init__(self, client : ILlmClient):
         """ 
         Constructor for the LLM agent. 
- 
+
         Attributes:
         client : ILlmClient
             The client to use for the LLM.
@@ -24,8 +24,6 @@ class LlmAgent:
             Summarize the paragraph.
         detect_language(self, text)
             Detect the language of the text.
-        
-
         """
         print("type: ",type(client)," DONE")
         if not isinstance(client, ILlmClient): # TODO -> class not implemented yet
@@ -61,14 +59,21 @@ class LlmAgent:
         response = self.send_request_to_llm(messages)
         return str(response)
 
-    def summarize_paragraph(self, prompt : str, title_doc : str = '', title_para : str = ''):
+    def summarize_paragraph(self, 
+                            prompt : str, 
+                            title_doc : str = '', 
+                            title_para : str = ''):
+
         location_of_the_paragraph = prompt.split(" :")[0]
         """summarizes the paragraph"""
-        template = Template.summarize_paragraph(location_of_the_paragraph, title_doc, title_para)
-
+        template = Template.summarize_paragraph(prompt,
+                                                location_of_the_paragraph, 
+                                                title_doc, 
+                                                title_para)
+        print("template \n" , template)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
-        print(response)
+        print("response\n", response)
         return str(response)
 
     def detect_language(self, text: str) -> str:
