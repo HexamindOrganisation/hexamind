@@ -75,7 +75,7 @@ class LlmAgent:
         """
         Returns text sembeddings 
         """
-        embeddings_batch_response = self.llmagent.client.embeddings(input=[text])
+        embeddings_batch_response = self.client.embeddings(input=[text])
         return embeddings_batch_response.data[0].embedding
 
     @staticmethod
