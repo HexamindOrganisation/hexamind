@@ -37,7 +37,6 @@ class Ingestor:
         for block in self.doc_container.blocks:
             self.process_block(block)
         
-
     def process_block(self, block):
         """
 
