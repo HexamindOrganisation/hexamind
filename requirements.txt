@@ -64,7 +64,6 @@ lxml==5.1.0
 lz4==4.3.3
 marshmallow==3.21.1
 minio==7.2.5
-mistralai==0.0.12
 mistralai==0.1.6
 mmh3==4.1.0
 monotonic==1.6
