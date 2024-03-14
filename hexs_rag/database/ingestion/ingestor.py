@@ -8,14 +8,17 @@ from hexs_rag.llm.llm import LlmAgent
 class Ingestor:
     """
     Ingestor class that serves as the ingestion part of the RAG system
-    Responsible for retrieving documents relevant to input query  
+    Responsible for ingesting documents relevant to input query  
     Attributes:
     - doc_container: doc.container # TODO
     - collection: # TODO
     - llmagent: # TODO
     - model: # TODO 
     """
-    def __init__(self, clientdb : IDbClient, doc_container: Doc = None, llmagent: LlmAgent = None):
+    def __init__(self, 
+                clientdb : IDbClient, 
+                doc_container: Doc = None, 
+                llmagent: LlmAgent = None):
         # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
         #     raise TypeError("doc should be a Doc")
         # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
@@ -38,7 +41,8 @@ class Ingestor:
             self.process_block(block)
         
 
-    def process_block(self, block):
+    def process_block(self, 
+                    block):
         """
 
         ---------------------------
@@ -60,14 +64,16 @@ class Ingestor:
         else:
             self.summarize_and_store(block)
 
-    def summarize_and_store(self, block : Block):
+    def summarize_and_store(self, 
+                            block : Block):
         """
         Creates a summary of the chunk content using the llmagent,
-        then stores in the collection        
+        then stores in the collection         
         """
         summary = self.llmagent.summarize_paragraph(prompt=block.content, 
                                                     title_doc=self.doc_container.title, 
                                                     title_para=block.title)
+        print(self.doc_container.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
         embedded_summary = self.llmagent.get_embedding(summary)
 

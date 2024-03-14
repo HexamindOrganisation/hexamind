@@ -352,11 +352,11 @@ class PdfReader:
             i+=1
         return concatenated_paragraphs
     
-
+    # TODO del if never used?
     def rearrange_paragraphs(self, paragraphs : list[Paragraph]):
         #associate paragraphs with the same font style
         i = 0
         while i < len(paragraphs):
-            paragraphs[i] = paragraphs[i].rearrange_paragraph()
+            paragraphs[i] = paragraphs[i].rearrange()
             i+=1
         return paragraphs

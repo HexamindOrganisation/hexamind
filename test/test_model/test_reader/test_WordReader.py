@@ -90,8 +90,8 @@ def test_paragraphs_with_real_file(word_reader_with_actual_file):
     assert word_reader_with_actual_file.paragraphs[0].id_ == 210
     assert word_reader_with_actual_file.paragraphs[1].id_ == 211
     # check font style
-    assert word_reader_with_actual_file.paragraphs[0].font_style == 'Title'
-    assert word_reader_with_actual_file.paragraphs[1].font_style == 'Authors'
+    assert word_reader_with_actual_file.paragraphs[0].font_style == 'title'
+    assert word_reader_with_actual_file.paragraphs[1].font_style == 'authors'
     # page id
     assert word_reader_with_actual_file.paragraphs[0].page_id == 1
 

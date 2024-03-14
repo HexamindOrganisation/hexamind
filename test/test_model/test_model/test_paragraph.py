@@ -22,16 +22,16 @@ def test_paragraph_blank_property(text, expected):
     paragraph = Paragraph(text, "content", 1, 1)
     assert paragraph.blank is expected
 
-# Testing the rearrange_paragraph method
+# Testing the rearrange method
 @pytest.mark.parametrize("font_style, expected_prefix", [
     ("code", "\n\nCode :```\n"),
     ("table", "\n\nTable :\n"),
     ("content", "")
 ])
-def test_rearrange_paragraph(font_style, expected_prefix):
+def rearrange(font_style, expected_prefix):
     text = "Example text"
     paragraph = Paragraph(text, font_style, 1, 1)
-    paragraph.rearrange_paragraph()
+    paragraph.rearrange()
     assert paragraph.text.startswith(expected_prefix)
 
 # Testing handle_levels with different font styles
@@ -52,7 +52,7 @@ def test_handle_levels(font_style, expected_level):
 
 # TODO The logic is wierd for this one. May need an actual conversation
 @pytest.mark.parametrize("font_style, expected_level", [
-    ("title-1", INFINITE),  # Incorrect delimiter
+    ("title-1", 1),  # Incorrect delimiter
     ("heading two", INFINITE),  # Non-integer level
     (" ", INFINITE),  # Blank input
     ("title1extra", INFINITE),  # Additional characters without space

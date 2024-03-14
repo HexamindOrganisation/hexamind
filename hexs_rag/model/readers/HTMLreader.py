@@ -63,6 +63,12 @@ class HtmlReader:
         
         self.path = path
         self.paragraphs: List[Paragraph] = self.read_html_with_beautifulsoup()
+        if not isinstance(self.paragraphs, list):
+            raise TypeError(f"Error in Paragraphs in html reader are {type(self.paragraphs)}")
+        
+        for para in self.paragraphs:
+            if not isinstance(para, Paragraph):
+                raise TypeError("ERROR: HtmlReader paragraphs list contains non paragraph types")
 
     def read_html_with_beautifulsoup(self) -> List[Paragraph]:
         """Opens an HTML file and parses it into Paragraph objects, ignoring certain tags."""
@@ -74,7 +80,7 @@ class HtmlReader:
                 leaf_elements = self.get_leaf_elements(soup)
                 paragraphs = self.extract_paragraphs(leaf_elements)
                 paragraphs = self.concatenate_paragraphs_with_same_font_style(paragraphs)
-                return [p.rearrange_paragraph() for p in paragraphs]
+                return [p.rearrange() for p in paragraphs]
         except:
             raise Exception(f"Error in html read. \n file_path : {self.path}")
 

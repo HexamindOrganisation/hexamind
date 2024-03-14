@@ -4,7 +4,9 @@ class Template:
     """
 
     @staticmethod
-    def generate_paragraph(query : str, context : dict, histo : list[(str, str)]) -> str:
+    def generate_paragraph(query : str, 
+                           context : dict, 
+                           histo : list[(str, str)]) -> str:
         """generates the  answer"""
 
         template = (f"You are a conversation bot designed to answer to the query from users."
@@ -22,7 +24,11 @@ class Template:
         return template
     
     @staticmethod
-    def generate_answer(query : str, answer : str, histo : str, context : str, language = str) -> str:
+    def generate_answer(query : str, 
+                        answer : str, 
+                        histo : str, 
+                        context : str, 
+                        language = str) -> str:
         """provides the final answer in {language} based on the initial query and the answer in english"""
 
         template = (f"Your task consists in translating the answer in {language}, if its not already the case, to the query "
