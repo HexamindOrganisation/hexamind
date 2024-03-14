@@ -21,7 +21,6 @@ certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
 chroma-hnswlib==0.7.3
-chromadb==0.3.23
 chromadb==0.4.24
 click==8.1.7
 clickhouse-connect==0.7.2
