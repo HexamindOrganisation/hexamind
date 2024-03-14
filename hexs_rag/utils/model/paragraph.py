@@ -2,7 +2,8 @@
 import re
 INFINITE = 10000
 
-def generate_paragraph_id(id: int, page_id: int) -> int:
+def generate_paragraph_id(id: int, 
+                        page_id: int) -> int:
     """Generates a unique paragraph ID."""
     return int(f"2{page_id}{id}")
 
@@ -22,8 +23,7 @@ def determine_level(font_style: str) -> int:
     else:
         return INFINITE
 
-def extract_numeric_suffix( 
-                            s: str, 
+def extract_numeric_suffix( s: str, 
                             default: int = INFINITE) -> int:
     """ Extracts a numeric suffix from a string and returns it as an integer. """
     match = re.search(r'\d+$', s)

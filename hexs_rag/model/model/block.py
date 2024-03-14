@@ -88,12 +88,4 @@ class Block:
             'distance': self.distance
         }
 
-    def __str__(self) -> str:
-        """
-        Returns a string representation of the Block instance, which can be useful for debugging and logging.
-        
-        Returns:
-            str: The string representation of the Block.
-        """
-        return (f"Block(title='{self.title}', index='{self.index}', rank={self.rank}, "
-                f"level={self.level}, distance={self.distance_str})")
+
