@@ -8,14 +8,17 @@ from hexs_rag.llm.llm import LlmAgent
 class Ingestor:
     """
     Ingestor class that serves as the ingestion part of the RAG system
-    Responsible for retrieving documents relevant to input query  
+    Responsible for ingesting documents relevant to input query  
     Attributes:
     - doc_container: doc.container # TODO
     - collection: # TODO
     - llmagent: # TODO
     - model: # TODO 
     """
-    def __init__(self, clientdb : IDbClient, doc_container: Doc = None, llmagent: LlmAgent = None):
+    def __init__(self, 
+                clientdb : IDbClient, 
+                doc_container: Doc = None, 
+                llmagent: LlmAgent = None):
         # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
         #     raise TypeError("doc should be a Doc")
         # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
@@ -28,6 +31,7 @@ class Ingestor:
         if self.doc_container:
             self.process_document()
 
+
     def process_document(self):
         """
         --------
@@ -37,7 +41,9 @@ class Ingestor:
         for block in self.doc_container.blocks:
             self.process_block(block)
         
-    def process_block(self, block):
+
+    def process_block(self, 
+                    block):
         """
 
         ---------------------------
@@ -59,21 +65,52 @@ class Ingestor:
         else:
             self.summarize_and_store(block)
 
-    def summarize_and_store(self, block : Block):
+    def summarize_and_store(self, 
+                            block : Block):
         """
         Creates a summary of the chunk content using the llmagent,
-        then stores in the collection        
+        then stores in the collection         
         """
         summary = self.llmagent.summarize_paragraph(prompt=block.content, 
                                                     title_doc=self.doc_container.title, 
                                                     title_para=block.title)
+        print(self.doc_container.title)
         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
         embedded_summary = self.llmagent.get_embedding(summary)
 
         self.clientdb.add_document(summary, embedded_summary, block)
         print(summary)
 
-    
+    ########################Summarize by Hierarchy fcts#####################################
+    def create_hierarchy(self, 
+                        blocks) -> dict:
+        """
+        Creates a hierarchical structure of the blocks based on their indices.
+        """
+        hierarchy = {}
+        for block in blocks:
+            levels = self.extract_levels(block.index)
+            for level in levels:
+                hierarchy.setdefault(level, []).append(block)
+        return hierarchy
+
+    def extract_levels(self, 
+                      index) -> list:
+        """
+        Extracts all hierarchical levels from a block index.
+        """
+        parts = index.split('.')
+        return ['.'.join(parts[:i]) for i in range(1, len(parts) + 1)]
+
+    def find_deepest_blocks(self, 
+                            blocks) -> list:
+        """
+        Identifies the deepest blocks in the hierarchy.
+        """
+        block_indices = {block.index for block in blocks}
+        return {block.index for block in blocks if not any(
+            idx != block.index and idx.startswith(block.index + '.') for idx in block_indices)}
+
     def summarize_by_hierarchy(self):
         """
         Summarizes blocks based on their hierarchical levels.

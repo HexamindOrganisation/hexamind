@@ -22,6 +22,7 @@ class Doc:
         id_ (int): A unique identifier for the instance of the document.
         path (str): The file path of the document.
         sheet_name (int): The name of the sheet within an Excel document to be processed.
+        paragraphs (list(Paragraphs)) : list of Reader.paragraphs
         container (Container): A container holding the structured representation of the document's content.
         blocks (list): A list of blocks derived from the document's content, post-structuring.
     
@@ -37,7 +38,7 @@ class Doc:
                 include_images: bool =True, 
                 actual_first_page: int = 1,
                 sheet_name: int = 0):
-
+ 
         file_name = os.path.basename(path) # get file and ext from path
         self.title, self.extension = os.path.splitext(file_name) # separate file and ext
         self.extension = self.extension.lower()

@@ -1,22 +1,28 @@
-# Description: Block class that represents the lower information level of a document.
-
-class Block: 
+class Block:
     """
-    Block class that represents the lower information level of a document. 
+    Block class that represents a unit of content within a document. 
+    It stores information relevant to the content such as its title, text, position in the document,
+    and any metadata that may be useful for retrieval and processing in a RAG system.
+    
     Attributes:
-    - doc: the document path
-    - title: the title of the document
-    - content: the content of the document
-    - index: the index of the block in the document
-    - rank: the rank of the block in the document
-    - level: the level of the block in the document
-    - distance: the distance of the block to the query
+        doc_path (str): The path to the document from which the block originates.
+        title (str): The title or heading of the block.
+        content (str): The actual textual content of the block.
+        index (str): A hierarchical index indicating the block's position within the document structure.
+        rank (int): A numerical rank that may be used for sorting or prioritization in retrieval tasks.
+        level (int): The level in the document hierarchy, with lower numbers indicating higher levels.
+        distance (float): Represents the relevance or similarity of the block to a query, with lower numbers indicating higher relevance.
     """
-
-    def __init__(self, doc: str= '',title: str = '', content: str = '',
-                index: str = '', rank: int = 0, level: int = 0, distance: float = 99999):
-        
-        self.doc = doc
+    
+    def __init__(self, 
+                 doc_path: str = '',
+                 title: str = '', 
+                 content: str = '',
+                 index: str = '', 
+                 rank: int = 0, 
+                 level: int = 0, 
+                 distance: float = 99999):
+        self.doc_path = doc_path
         self.title = title
         self.content = content
         self.index = index
@@ -27,60 +33,59 @@ class Block:
     @property
     def distance_str(self) -> str:
         """
-        Returns the distance as a string with two decimal digits
+        Returns the distance as a string formatted to two decimal places. If the distance is
+        not a float, a ValueError will be raised.
         """
-        try:
-            return format(self.distance, '.2f')
-        except Exception as e:
-            raise ValueError(f"Could not get distance as string: {e}")
+        if not isinstance(self.distance, float):
+            raise ValueError("Distance must be a float.")
+        return f"{self.distance:.2f}"
     
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: dict) -> 'Block':
         """
-        Creates a block from a dictionary
-        """
-        expected_keys = {'doc' : str,
-                        'title' : str,
-                        'content' : str,
-                        'index' : str,
-                        'rank' : int,
-                        'level' : int,
-                        'distance' : float}
+        Creates an instance of Block from a dictionary. This method validates the input dictionary
+        to ensure it contains the necessary keys and values of appropriate types.
         
+        Parameters:
+            data (dict): The dictionary from which to create the Block instance.
+        
+        Returns:
+            Block: An instance of the Block class.
+        
+        Raises:
+            ValueError: If the provided dictionary does not contain the correct keys and value types.
+        """
         if not isinstance(data, dict):
-            raise AssertionError('data should be a dictionary')
-        
-        if set(data.keys()) != expected_keys.keys():
-            raise AssertionError('data should contain the following keys: {}'.format(expected_keys.keys()))
-        
-        for key, expected_type in expected_keys.items():
+            raise AssertionError("data must be dict")
+
+        required_keys = {'doc_path': str, 'title': str, 'content': str,
+                         'index': str, 'rank': int, 'level': int, 'distance': float}
+
+        missing_keys = required_keys.keys() - data.keys()
+        if missing_keys:
+            raise AssertionError(f"Missing keys in data: {missing_keys}")
+
+        for key, expected_type in required_keys.items():
             if not isinstance(data[key], expected_type):
-                raise AssertionError('data[{}] should be of type {}'.format(key, expected_type))
-        
-        try:
-            return cls(doc=data.get('doc', ''),
-                    title=data.get('title', ''),
-                    content=data.get('content', ''),
-                    index=data.get('index', ''),
-                    rank=data.get('rank', 0),
-                    level=data.get('level', 0),
-                    distance=data.get('distance', 99999))
-        except Exception as e:
-            raise ValueError(f"Could not create block from dictionary: {e}")
+                raise AssertionError(f"Key '{key}' must be of type {expected_type.__name__}.")
+
+        return cls(**data)
     
     def to_dict(self) -> dict:
         """
-        Returns the block as a dictionary
-        TODO : check if it is a necessary method since we can use the __dict__ attribute
+        Converts the Block instance to a dictionary. 
+        
+        Returns:
+            dict: The dictionary representation of the Block instance.
         """
-        try:
-            return {'doc': self.doc,
-                    'title': self.title,
-                    'content': self.content,
-                    'index': self.index,
-                    'rank': self.rank,
-                    'level': self.level,
-                    'distance': self.distance}
-        except Exception as e:
-            raise ValueError(f"Could not get block as dictionary: {e}")
-    
+        return {
+            'doc_path': self.doc_path,
+            'title': self.title,
+            'content': self.content,
+            'index': self.index,
+            'rank': self.rank,
+            'level': self.level,
+            'distance': self.distance
+        }
+
+
