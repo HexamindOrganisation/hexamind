@@ -80,7 +80,7 @@ class HtmlReader:
                 leaf_elements = self.get_leaf_elements(soup)
                 paragraphs = self.extract_paragraphs(leaf_elements)
                 paragraphs = self.concatenate_paragraphs_with_same_font_style(paragraphs)
-                return [p.rearrange() for p in paragraphs]
+                return paragraphs
         except:
             raise Exception(f"Error in html read. \n file_path : {self.path}")
 
