@@ -39,5 +39,5 @@ jobs:
         # Run the tests. I'm using pytest and the file is in the tests directory.
       - name: Run tests
         run: pytest -v -s
-      -name: code review
+      - name: Code review
         run: pylint hexs_rag
