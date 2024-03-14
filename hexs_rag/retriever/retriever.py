@@ -108,8 +108,9 @@ class Retriever:
 
         blocks = []
         for bd, d in zip(block_dict_sources, distances):
-            b = Block().from_dict(bd)
-            b.distance = d
+            print("dict for block: \n\n", bd)
+            b = Block().from_dict(bd) # creates a block object from a dictionary
+            b.distance = d # the distance has to be set manually 
             blocks.append(b)
 
         return blocks
@@ -161,6 +162,7 @@ class Retriever:
             distances = res['distances'][0]
 
             for bd, d in zip(block_dict_sources, distances):
+                print(f"(retriever.py)\n dict for block: \n\n{bd}")
                 b = Block().from_dict(bd)
                 b.distance = d
                 blocks.append(b)

@@ -73,7 +73,7 @@ class Paragraph:
         """
         # Handle unsupported font_style values gracefully
         if self.font_style not in ["code", "table"]:
-            print(f"Unsupported font_style '{self.font_style}' for rearrangement.")
+            # print(f"Unsupported font_style '{self.font_style}' for rearrangement.")
             return self
         
         if self.font_style == "code":

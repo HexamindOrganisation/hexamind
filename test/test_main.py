@@ -8,12 +8,13 @@ def test_whole_thing():
     
     battery = Initializer( # initializes instance attributes
         database_path = './database_test', 
+        db_name = 'chroma', # chroma db name
         collection_name = 'test_collection', 
-        llm_name = "mistral", # either mistral or openai
+        llm_name = "mistral", # either mistral or openai 
         llm_api_key = 'n70UAHiVwZLbJW5jj1xpT5zRDCRtpozp'
-    ) 
+    )
 
-    client_db, collection = battery.initialize_database() 
+    db_adapter = battery.initialize_database() # Initializes and returns the database and collection
     llm_agent = battery.initialize_llm()
 
 
@@ -22,12 +23,12 @@ def test_whole_thing():
             actual_first_page = 1)
 
     ingestor = Ingestor(doc_container = doc.container, 
-                    collection = collection, 
-                    llmagent = llm_agent)
+                        clientdb = db_adapter,
+                        llmagent = llm_agent)
     # TODO check that document is in the database
     # TODO check that the summary is correctly being generated
     retriever = Retriever(doc_container = doc.container, 
-                        collection = collection, 
+                        collection = db_adapter.collection, 
                         llmagent = llm_agent)
     # TODO check retriever algorithm
     
