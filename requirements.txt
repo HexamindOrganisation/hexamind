@@ -86,7 +86,7 @@ opentelemetry-semantic-conventions==0.44b0
 opentelemetry-util-http==0.44b0
 orjson==3.9.15
 overrides==7.7.0
-packaging==24.0
+packaging==23.9
 pandas==2.2.1
 pdf2image==1.17.0
 pdfminer.six==20231228
