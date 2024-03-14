@@ -19,9 +19,8 @@ class TestRetriever(unittest.TestCase):
         self.llmagent = MagicMock(spec=LlmAgent, client=MagicMock())
         # Now explicitly set up the embeddings method to return what you expect.
         self.llmagent.client.embeddings.return_value = MagicMock(data=[MagicMock(embedding='mock_embedding')])
-        self.doc_container = MagicMock(spec=Doc)
         # Instantiate the Retriever with the mocked LlmAgent.
-        self.retriever = Retriever(doc_container=self.doc_container, llmagent=self.llmagent)
+        self.retriever = Retriever(llmagent=self.llmagent)
         self.retriever.collection = MagicMock()
         self.retriever.collection.query.return_value = {'metadatas': [['mock_data','mock_data2']], 'distances': [0.2,0.1]}
 
@@ -29,7 +28,6 @@ class TestRetriever(unittest.TestCase):
         """
         Test __init__ method to ensure it initializes attributes correctly.
         """
-        self.assertIs(self.retriever.doc_container, self.doc_container)
         self.assertIs(self.retriever.llmagent, self.llmagent)
     
     @patch('hexs_rag.retriever.retriever.Retriever.extract_levels')
@@ -84,7 +82,7 @@ class TestRetriever(unittest.TestCase):
 #                 include_images = False, 
 #                 actual_first_page = 1)
 
-#         retriever = Retriever(doc_container = doc.container, 
+#         retriever = Retriever( 
 #                         collection = db_adapter.collection, 
 #                         llmagent = llm_agent)
 

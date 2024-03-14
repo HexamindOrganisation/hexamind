@@ -25,8 +25,7 @@ def test_whole_thing():
                         llmagent = llm_agent)
     # TODO check that document is in the database
     # TODO check that the summary is correctly being generated
-    retriever = Retriever(doc_container = doc.container, 
-                        collection = db_adapter.collection, 
+    retriever = Retriever(collection = db_adapter.collection, 
                         llmagent = llm_agent)
     # TODO check retriever algorithm
     
