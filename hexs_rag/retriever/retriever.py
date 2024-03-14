@@ -20,8 +20,6 @@ class Retriever:
                 collection=None, 
                 llmagent: LlmAgent = None, 
                 model = "mistral-embed"):
-
-    
         # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
         #     raise TypeError("collection should be a Collection")
         if not isinstance(llmagent, LlmAgent) and llmagent is not None:
@@ -31,36 +29,6 @@ class Retriever:
         self.collection = collection
         self.llmagent = llmagent 
         self.model = model
-  
-
-    def create_hierarchy(self, 
-                        blocks) -> dict:
-        """
-        Creates a hierarchical structure of the blocks based on their indices.
-        """
-        hierarchy = {}
-        for block in blocks:
-            levels = self.extract_levels(block.index)
-            for level in levels:
-                hierarchy.setdefault(level, []).append(block)
-        return hierarchy
-
-    def extract_levels(self, 
-                      index) -> list:
-        """
-        Extracts all hierarchical levels from a block index.
-        """
-        parts = index.split('.')
-        return ['.'.join(parts[:i]) for i in range(1, len(parts) + 1)]
-
-    def find_deepest_blocks(self, 
-                            blocks) -> list:
-        """
-        Identifies the deepest blocks in the hierarchy.
-        """
-        block_indices = {block.index for block in blocks}
-        return {block.index for block in blocks if not any(
-            idx != block.index and idx.startswith(block.index + '.') for idx in block_indices)}
 
     def similarity_search(self, 
                         queries: str, 

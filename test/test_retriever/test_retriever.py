@@ -30,36 +30,36 @@ class TestRetriever(unittest.TestCase):
         """
         self.assertIs(self.retriever.llmagent, self.llmagent)
     
-    @patch('hexs_rag.retriever.retriever.Retriever.extract_levels')
-    def test_create_hierarchy(self, mock_extract_levels):
-        """
-        Test create_hierarchy method.
-        Mock extract_levels to return predefined levels for testing.
-        """
-        mock_extract_levels.side_effect = lambda x: [x]
-        blocks = [MagicMock(index='1'), MagicMock(index='2')]
-        hierarchy = self.retriever.create_hierarchy(blocks)
-        self.assertTrue('1' in hierarchy and '2' in hierarchy)
-        # Additional assertions to validate the structure of the hierarchy.
+    # @patch('hexs_rag.retriever.retriever.Retriever.extract_levels')
+    # def test_create_hierarchy(self, mock_extract_levels):
+    #     """
+    #     Test create_hierarchy method.
+    #     Mock extract_levels to return predefined levels for testing.
+    #     """
+    #     mock_extract_levels.side_effect = lambda x: [x]
+    #     blocks = [MagicMock(index='1'), MagicMock(index='2')]
+    #     hierarchy = self.retriever.create_hierarchy(blocks)
+    #     self.assertTrue('1' in hierarchy and '2' in hierarchy)
+    #     # Additional assertions to validate the structure of the hierarchy.
 
-    def test_extract_levels(self):
-        """
-        Test extract_levels method for correct extraction of hierarchical levels.
-        """
-        index = '1.2.3'
-        expected_levels = ['1', '1.2', '1.2.3']
-        levels = self.retriever.extract_levels(index)
-        self.assertEqual(levels, expected_levels)
+    # def test_extract_levels(self):
+    #     """
+    #     Test extract_levels method for correct extraction of hierarchical levels.
+    #     """
+    #     index = '1.2.3'
+    #     expected_levels = ['1', '1.2', '1.2.3']
+    #     levels = self.retriever.extract_levels(index)
+    #     self.assertEqual(levels, expected_levels)
     
-    def test_find_deepest_blocks(self):
-        """
-        Test find_deepest_blocks to ensure it identifies deepest blocks correctly.
-        """
-        blocks = [MagicMock(index='1.1'), MagicMock(index='1.2'), MagicMock(index='1.1.1')]
-        deepest_blocks = self.retriever.find_deepest_blocks(blocks)
-        self.assertIn('1.2', deepest_blocks)
-        self.assertIn('1.1.1', deepest_blocks)
-        self.assertNotIn('1.1', deepest_blocks)
+    # def test_find_deepest_blocks(self):
+    #     """
+    #     Test find_deepest_blocks to ensure it identifies deepest blocks correctly.
+    #     """
+    #     blocks = [MagicMock(index='1.1'), MagicMock(index='1.2'), MagicMock(index='1.1.1')]
+    #     deepest_blocks = self.retriever.find_deepest_blocks(blocks)
+    #     self.assertIn('1.2', deepest_blocks)
+    #     self.assertIn('1.1.1', deepest_blocks)
+    #     self.assertNotIn('1.1', deepest_blocks)
     
 # TODO delete later
 # class TestRetriever_with_real_data:

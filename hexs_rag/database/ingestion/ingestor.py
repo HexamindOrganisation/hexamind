@@ -31,6 +31,7 @@ class Ingestor:
         if self.doc_container:
             self.process_document()
 
+
     def process_document(self):
         """
         --------
@@ -80,7 +81,36 @@ class Ingestor:
         self.clientdb.add_document(summary, embedded_summary, block)
         print(summary)
 
-    
+    ########################Summarize by Hierarchy fcts#####################################
+    def create_hierarchy(self, 
+                        blocks) -> dict:
+        """
+        Creates a hierarchical structure of the blocks based on their indices.
+        """
+        hierarchy = {}
+        for block in blocks:
+            levels = self.extract_levels(block.index)
+            for level in levels:
+                hierarchy.setdefault(level, []).append(block)
+        return hierarchy
+
+    def extract_levels(self, 
+                      index) -> list:
+        """
+        Extracts all hierarchical levels from a block index.
+        """
+        parts = index.split('.')
+        return ['.'.join(parts[:i]) for i in range(1, len(parts) + 1)]
+
+    def find_deepest_blocks(self, 
+                            blocks) -> list:
+        """
+        Identifies the deepest blocks in the hierarchy.
+        """
+        block_indices = {block.index for block in blocks}
+        return {block.index for block in blocks if not any(
+            idx != block.index and idx.startswith(block.index + '.') for idx in block_indices)}
+
     def summarize_by_hierarchy(self):
         """
         Summarizes blocks based on their hierarchical levels.
