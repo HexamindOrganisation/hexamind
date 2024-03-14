@@ -1,5 +1,6 @@
 from hexs_rag.database.adapters.ChromaDbAdapter import ChromaDbAdapter
 from hexs_rag.database.adapters.MilvusDbAdapter import MilvusDbAdapter
+from hexs_rag.database.adapters.ElasticSearchAdapter import ElasticSearchAdapter
 import os
 import chromadb
 
@@ -33,6 +34,12 @@ class DbAdapterFactory:
                 return MilvusDbAdapter(collection_name=collection_name, **kwargs)
             except Exception as e:
                 raise ValueError(f"Could not create MilvusDbAdapter: {e}")
+        
+        elif db_name == 'elasticsearch':
+            try:
+                return ElasticSearchAdapter(**kwargs)
+            except Exception as e:
+                raise ValueError(f"Could not create ElasticSearchAdapter: {e}")
         else:
             raise ValueError(f"Unsupported database name: {db_name}")
  
