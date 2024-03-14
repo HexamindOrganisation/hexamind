@@ -5,6 +5,7 @@ import os
 
 # TODO : MUST BE INTENSIVELY TESTED BECAUSE NOT SURE OF THE IMPLEMENTATION
 # TODO : GET METHOD NOT IMPLEMENTED
+# COULD BE DELETED LATER
 
 class MilvusDbAdapter(IDbClient):
     def __init__(self, database_name =None, host=None, port=None, user=None, password=None , collection_name=None):
