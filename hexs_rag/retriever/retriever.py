@@ -12,26 +12,22 @@ class Retriever:
     Retriever class that serves as the retrieval part of the RAG system
     Responsible for retrieving documents relevant to input query  
     Attributes:
-    - doc_container: doc.container # TODO (we don't actually know why this is a container right now)
     - collection: # TODO
     - llmagent: # TODO
     - model: # TODO 
     """
-    def __init__(self, 
-                doc_container: Doc = None, 
+    def __init__(self,
                 collection=None, 
                 llmagent: LlmAgent = None, 
                 model = "mistral-embed"):
 
-        # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
-        #     raise TypeError("doc should be a Doc")
+    
         # if not isinstance(collection, chromadb.api.models.Collection.Collection): # TODO generalise to all forms of db collection
         #     raise TypeError("collection should be a Collection")
         if not isinstance(llmagent, LlmAgent) and llmagent is not None:
             raise TypeError("llmagent should be a LlmAgent")
         if not isinstance(model, str):
             raise TypeError("model should be a string")
-        self.doc_container = doc_container
         self.collection = collection
         self.llmagent = llmagent 
         self.model = model

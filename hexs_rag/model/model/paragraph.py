@@ -83,28 +83,3 @@ class Paragraph:
         return self
 
 
-# from hexs_rag.utils.model.paragraph import generate_paragraph_id, determine_level, rearrange_text
-
-# class Paragraph:
-#     """
-#     Represents a segment of text within a document, holding information about its content, 
-#     style, and position within the document's hierarchy.
-#     """
-
-#     def __init__(self, text: str, font_style: str, id: int, page_id: int):
-#         self.text = text.strip()
-#         self.font_style = font_style.strip().lower()
-#         self.id = generate_paragraph_id(id, page_id)
-#         self.page_id = page_id
-#         self.level = determine_level(self.font_style)
-#         self.is_structure = self.level < INFINITE
-#         self.rearrange()
-
-#     @property
-#     def blank(self) -> bool:
-#         """Checks if the paragraph is blank."""
-#         return not self.text or set(self.text).isdisjoint(string.ascii_letters)
-
-#     def rearrange(self):
-#         """Enhances paragraph structure based on font style."""
-#         self.text = rearrange_text(self.text, self.font_style)
