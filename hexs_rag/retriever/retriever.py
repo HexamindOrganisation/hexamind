@@ -40,6 +40,9 @@ class Retriever:
 
         Args:
             queries: A string or list of strings representing the query or queries.
+            folder:
+            document_or_folder:
+            documents:
 
         Returns:
             A list of Block objects that are similar to the given queries.
@@ -76,9 +79,7 @@ class Retriever:
             b = Block().from_dict(bd) # creates a block object from a dictionary
             b.distance = d # the distance has to be set manually 
             blocks.append(b)
-
         return blocks
-
 
 
     def keyword(self, 
@@ -92,7 +93,11 @@ class Retriever:
 
         Args:
             queries: A string or list of strings representing the query or queries.
-
+            keywords:
+            folder:
+            document_or_folder:
+            documents:
+            
         Returns:
             A list of Block objects that are similar to the given queries.
         """
