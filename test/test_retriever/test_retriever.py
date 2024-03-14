@@ -15,7 +15,7 @@ class TestRetriever(unittest.TestCase):
         Set up environment before each test.
         """
 
-    # Create a deep mock to automatically mock attribute calls.
+        # Create a deep mock to automatically mock attribute calls.
         self.llmagent = MagicMock(spec=LlmAgent, client=MagicMock())
         # Now explicitly set up the embeddings method to return what you expect.
         self.llmagent.client.embeddings.return_value = MagicMock(data=[MagicMock(embedding='mock_embedding')])
@@ -63,10 +63,7 @@ class TestRetriever(unittest.TestCase):
         self.assertIn('1.1.1', deepest_blocks)
         self.assertNotIn('1.1', deepest_blocks)
     
-
- 
-    
-
+# TODO delete later
 # class TestRetriever_with_real_data:
 #     def setUp(self):
 #         """

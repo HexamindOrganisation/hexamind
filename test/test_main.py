@@ -16,8 +16,6 @@ def test_whole_thing():
 
     db_adapter = battery.initialize_database() # Initializes and returns the database and collection
     llm_agent = battery.initialize_llm()
-
-
     doc = Doc(path="/Users/maxbeales/Desktop/hexamind/hexs_rag/data/test_data/SampleData.xlsx", 
             include_images = False, 
             actual_first_page = 1)
