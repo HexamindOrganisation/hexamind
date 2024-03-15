@@ -1,2 +1,0 @@
-name: Pull Elastic Search image
-run: docker pull docker.elastic.co/elasticsearch/elasticsearch:8.12.2
