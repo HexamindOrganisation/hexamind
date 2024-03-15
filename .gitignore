@@ -21,3 +21,7 @@ database_test/chroma.sqlite3
 .idea/hexs_rag.iml
 .env
 .vscode/
+pycallgraph.png
+hexs_rag/initializer/__pycache__/initializer.cpython-39.pyc
+hexs_rag/utils/model/.paragraph 2.py.icloud
+.gitignore

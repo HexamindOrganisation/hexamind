@@ -5,7 +5,7 @@ import chromadb
 from hexs_rag.database.adapters.ChromaDbAdapter import ChromaDbAdapter
 from hexs_rag.database.adapters.ElasticSearchAdapter import \
     ElasticSearchAdapter
-from hexs_rag.database.adapters.MilvusDbAdapter import MilvusDbAdapter
+# from hexs_rag.database.adapters.MilvusDbAdapter import MilvusDbAdapter
 
 
 class DbAdapterFactory:
