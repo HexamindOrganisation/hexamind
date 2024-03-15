@@ -1,19 +1,19 @@
 import json
-import pypdf
-
-# To analyze the PDF layout and extract text
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LTTextContainer, LTChar, LTFigure
+import os
 
 # To extract text from tables in PDF
 import pdfplumber as pdfp
-from PIL import Image
-from pdf2image import convert_from_path
+import pypdf
 import pytesseract
-import os
+from pdf2image import convert_from_path
+# To analyze the PDF layout and extract text
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTChar, LTFigure, LTTextContainer
+from PIL import Image
+
 from hexs_rag.model.model.paragraph import Paragraph
-from hexs_rag.utils.utils.table_converter import table_converter
 from hexs_rag.utils.model.pdfreader import *
+from hexs_rag.utils.utils.table_converter import table_converter
 
 
 class PdfReader:

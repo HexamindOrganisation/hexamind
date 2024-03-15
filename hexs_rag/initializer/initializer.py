@@ -3,13 +3,15 @@
 # TODO initialization might need a redesign for the library
 
 
-import os
 import logging
+import os
+
 import chromadb
-from hexs_rag.llm.llm import LlmAgent
-from hexs_rag.llm.adapters import LlmAdapterFactory
-from hexs_rag.database.adapters.DbAdapterFactory import DbAdapterFactory
+
 from hexs_rag.database.adapters.AbstractDb import IDbClient
+from hexs_rag.database.adapters.DbAdapterFactory import DbAdapterFactory
+from hexs_rag.llm.adapters import LlmAdapterFactory
+from hexs_rag.llm.llm import LlmAgent
 
 # Initialize logging with a basic configuration for debugging purposes
 logging.basicConfig(level=logging.INFO)

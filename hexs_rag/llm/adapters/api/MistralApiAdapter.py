@@ -1,6 +1,8 @@
-from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
-from mistralai.models.chat_completion import ChatMessage
 import os
+
+from mistralai.models.chat_completion import ChatMessage
+
+from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 
 
 class MistralClientAdapter(ILlmClient):

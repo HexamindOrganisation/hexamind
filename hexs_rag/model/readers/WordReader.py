@@ -1,12 +1,16 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-import docx
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
 import os
+
+import docx
 from docx.document import Document as _Document
-from hexs_rag.model.model.paragraph import Paragraph as ParagraphHexa
-from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
-from docx.table import _Cell, Table
+from docx.oxml.text.paragraph import CT_P
+from docx.table import Table, _Cell
 from docx.text.paragraph import Paragraph
+
+from hexs_rag.model.model.paragraph import Paragraph as ParagraphHexa
 
 
 class WordReader:

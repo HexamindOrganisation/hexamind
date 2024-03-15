@@ -2,6 +2,7 @@
 Utility functions related to the block class but not directly related to the class itself
 """
 import math
+
 from hexs_rag.model.model.block import Block
 
 

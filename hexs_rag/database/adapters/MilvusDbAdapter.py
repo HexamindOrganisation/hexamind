@@ -1,14 +1,10 @@
-from pymilvus import (
-    connections,
-    db,
-    CollectionSchema,
-    FieldSchema,
-    DataType,
-    Collection,
-)
+import os
+
+from pymilvus import (Collection, CollectionSchema, DataType, FieldSchema,
+                      connections, db)
+
 from hexs_rag.database.adapters.AbstractDb import IDbClient
 from hexs_rag.model.model.block import Block
-import os
 
 # TODO : MUST BE INTENSIVELY TESTED BECAUSE NOT SURE OF THE IMPLEMENTATION
 # TODO : GET METHOD NOT IMPLEMENTED

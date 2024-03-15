@@ -1,9 +1,8 @@
-from hexs_rag.model.model.doc import Doc
-from hexs_rag.llm.llm import LlmAgent
-from hexs_rag.utils.model.block import separate_1_block_in_n
 from hexs_rag.database.adapters.AbstractDb import IDbClient
-from hexs_rag.model.model.block import Block
 from hexs_rag.llm.llm import LlmAgent
+from hexs_rag.model.model.block import Block
+from hexs_rag.model.model.doc import Doc
+from hexs_rag.utils.model.block import separate_1_block_in_n
 
 
 class Ingestor:
