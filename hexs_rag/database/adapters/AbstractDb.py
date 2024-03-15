@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from hexs_rag.model.model.block import Block
 
 

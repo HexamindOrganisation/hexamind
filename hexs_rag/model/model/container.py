@@ -1,4 +1,5 @@
 from typing import List, Optional
+
 from .block import Block
 from .paragraph import Paragraph
 

@@ -1,6 +1,9 @@
 import json
 import os
+
 from mistralai.client import MistralClient
+from openai import OpenAI
+
 from hexs_rag.llm.adapters.api.MistralApiAdapter import MistralClientAdapter
 from hexs_rag.llm.adapters.api.OpenAiApiAdapter import OpenAiClientAdapter
 from openai import OpenAI

@@ -1,6 +1,8 @@
-from .AbstractDb import IDbClient
-from elasticsearch import Elasticsearch
 import os
+
+from elasticsearch import Elasticsearch
+
+from .AbstractDb import IDbClient
 
 # TODO : MUST BE INTENSIVELY TESTED BECAUSE NOT SURE OF THE IMPLEMENTATION
 

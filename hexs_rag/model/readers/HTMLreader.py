@@ -1,12 +1,14 @@
 # Description: HTML reader class designed to ingest HTML files
 
-from pyquery import PyQuery as pq
-from bs4 import BeautifulSoup
+import os
+from typing import List, Tuple
+
 import bs4
+from bs4 import BeautifulSoup
+from pyquery import PyQuery as pq
+
 from hexs_rag.model.model.paragraph import Paragraph
 from hexs_rag.utils.utils.table_converter import table_converter
-from typing import List, Tuple
-import os
 
 
 class HtmlReader:
