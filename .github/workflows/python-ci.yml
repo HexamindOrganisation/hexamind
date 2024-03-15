@@ -15,7 +15,19 @@ jobs:
       matrix:
         # Run in all these versions of Python
         python-version: [3.9]
-
+      
+    services: 
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+        env:
+          discovery.type: single-node
+        ports:
+          - 9200:9200
+        options: >-
+          --health-cmd "curl http://localhost:9200/_cluster/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
     steps:
         # Checkout the latest code from the repo
       - name: Checkout repo
@@ -25,6 +37,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Testing elastic search
+        run: curl -X GET "localhost:9200/"
         # Display the Python version being used
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
