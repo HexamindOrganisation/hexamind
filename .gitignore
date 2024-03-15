@@ -14,7 +14,7 @@ data/test_data/~$SampleData.xlsx
 demo.ipynb
 database_test/chroma.sqlite3
 
-
+.vscode
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/modules.xml
 .idea/vcs.xml
