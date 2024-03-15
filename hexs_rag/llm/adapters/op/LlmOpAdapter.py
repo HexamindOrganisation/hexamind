@@ -7,13 +7,13 @@ class LlmOpAdapter(ILlmClient):
     """
 
     def __init__(self, inference_endpoint, embeddings_endpoint, chat_method):
-        
+
         self.inference_endpoint = inference_endpoint
         self.embeddings_endpoint = embeddings_endpoint, 
         self.chat_method = chat_method
     
     def chat(self, messages, temperature=0):
-        try: 
+        try:
             return requests.post(self.inference_endpoint, json={
                 "messages": messages,
                 "temperature": temperature
