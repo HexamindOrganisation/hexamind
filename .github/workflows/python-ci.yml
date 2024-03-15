@@ -56,4 +56,6 @@ jobs:
         # Run the tests. I'm using pytest and the file is in the tests directory.
       - name: Run tests
         run: pytest -v -s
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
 

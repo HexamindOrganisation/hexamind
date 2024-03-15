@@ -73,10 +73,10 @@ class Initializer:
             if not os.path.exists(self.database_path):
                 os.makedirs(self.database_path)
                 logging.info(f"Database directory created at: {self.database_path}")
-
+ 
             db_adapter = DbAdapterFactory.create_adapter(
-                self.db_name, self.database_path, self.collection_name
-            )
+                self.db_name, self.collection_name, database_path = self.database_path
+            ) 
             return db_adapter
 
         except Exception as e:
@@ -89,10 +89,12 @@ class Initializer:
         """Initializes the LLM client."""
         try:
             llm_adapter = LlmAdapterFactory.create_adapter(
-                self.llm_name, self.llm_api_key, self.model, self.embed_model
+                self.llm_name, 
+                api_key = self.llm_api_key, 
+                model = self.model, 
+                embed_model = self.embed_model
             )
             return LlmAgent(llm_adapter)
-
         except Exception as e:
             logging.error(f"Failed to initialize the LLM client: {e}")
             raise
