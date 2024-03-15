@@ -73,10 +73,10 @@ class Initializer:
             if not os.path.exists(self.database_path):
                 os.makedirs(self.database_path)
                 logging.info(f"Database directory created at: {self.database_path}")
-
+ 
             db_adapter = DbAdapterFactory.create_adapter(
-                self.db_name, self.database_path, self.collection_name
-            )
+                self.db_name, self.collection_name, database_path = self.database_path
+            ) 
             return db_adapter
 
         except Exception as e:

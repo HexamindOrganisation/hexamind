@@ -11,7 +11,6 @@ class IDbClient(ABC):
 
     @abstractmethod
     def add_document(self, document, embedding, block: Block):
-    def add_document(self, document, embedding, block: Block):
         pass
 
     @abstractmethod
