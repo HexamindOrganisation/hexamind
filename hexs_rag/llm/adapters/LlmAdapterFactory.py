@@ -4,6 +4,8 @@ from mistralai.client import MistralClient
 from hexs_rag.llm.adapters.api.MistralApiAdapter import MistralClientAdapter
 from hexs_rag.llm.adapters.api.OpenAiApiAdapter import OpenAiClientAdapter
 from openai import OpenAI
+from hexs_rag.llm.adapters.op.LlmOpAdapter import LlmOpAdapter
+from hexs_rag.llm.adapters.ChatMessageFactory import ChatMessageFactory
 
 class LlmAdapterFactory:
     """
@@ -17,20 +19,28 @@ class LlmAdapterFactory:
     """
 
     @staticmethod
-    def create_adapter(llm_name, llm_api_key, model = None, embed_model = None):
+    def create_adapter(llm_name, on_premise=False, **kwargs):
         """
         Create the proper adaptater for the LLM client according to the configuration.
         """
 
-        if llm_name == 'mistral':
+        if on_premise:
             try:
-                return MistralClientAdapter(MistralClient(api_key = llm_api_key), model, embed_model)
+                chat_method = ChatMessageFactory.create_chat_message(llm_name)
+                return LlmOpAdapter(**kwargs, chat_method=chat_method)
             except Exception as e:
-                raise ValueError(f"Could not create MistralClientAdapter: {e}")
-        elif llm_name == 'openai':
-            try:
-                return OpenAiClientAdapter(OpenAI(api_key = llm_api_key), model, embed_model)
-            except Exception as e:
-                raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
+                raise ValueError(f"Could not create LlmOpAdapter: {e}")
         else:
-            raise ValueError(f"Unsupported llm name: {llm_name}")
+
+            if llm_name == 'mistral':
+                try:
+                    return MistralClientAdapter(MistralClient(api_key = kwargs["api_key"]), kwargs["model"], kwargs["embed_model"])
+                except Exception as e:
+                    raise ValueError(f"Could not create MistralClientAdapter: {e}")
+            elif llm_name == 'openai':
+                try:
+                    return OpenAiClientAdapter(OpenAI(api_key = kwargs["api_key"]), kwargs["model"], kwargs["embed_model"])
+                except Exception as e:
+                    raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
+            else:
+                raise ValueError(f"Unsupported llm name: {llm_name}")
