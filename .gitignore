@@ -19,3 +19,4 @@ database_test/chroma.sqlite3
 .idea/modules.xml
 .idea/vcs.xml
 .idea/hexs_rag.iml
+.vscode/
