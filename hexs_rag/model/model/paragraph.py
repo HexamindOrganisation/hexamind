@@ -3,6 +3,7 @@ import string
 
 INFINITE = 10000
 
+
 class Paragraph:
     """
     Paragraph class represents a segment of text within a document, holding information about its content, 
@@ -17,12 +18,8 @@ class Paragraph:
         is_structure (bool): A flag indicating whether the paragraph is a structural element (like a title or heading).
     """
 
-    def __init__(self, 
-                text: str, 
-                font_style: str, 
-                id_: int, 
-                page_id: int):
-                
+    def __init__(self, text: str, font_style: str, id_: int, page_id: int):
+
         self.text = text.strip()
         self.font_style = font_style.strip().lower()
         self.id_ = self._generate_id(id_, page_id)
@@ -38,8 +35,7 @@ class Paragraph:
         except ValueError as e:
             raise ValueError(f"Failed to compose ID from page_id and id_: {e}")
 
-    def _determine_level(self, 
-                        font_style: str) -> int:
+    def _determine_level(self, font_style: str) -> int:
         """
         Determines the hierarchical level of the paragraph based on its font style.
         
@@ -48,18 +44,19 @@ class Paragraph:
         """
         if font_style.startswith("title"):
             return self._extract_numeric_suffix(font_style, default=INFINITE)
-        elif any(font_style.startswith(style) for style in ["heading", "subtitle", "titre", "sous-titre"]):
+        elif any(
+            font_style.startswith(style)
+            for style in ["heading", "subtitle", "titre", "sous-titre"]
+        ):
             return self._extract_numeric_suffix(font_style)
         elif font_style == "content":
             return INFINITE
         else:
             return INFINITE
 
-    def _extract_numeric_suffix(self, 
-                                s: str, 
-                                default: int = INFINITE) -> int:
+    def _extract_numeric_suffix(self, s: str, default: int = INFINITE) -> int:
         """ Extracts a numeric suffix from a string and returns it as an integer. """
-        match = re.search(r'\d+$', s)
+        match = re.search(r"\d+$", s)
         return int(match.group()) if match else default
 
     @property
@@ -75,11 +72,9 @@ class Paragraph:
         if self.font_style not in ["code", "table"]:
             # print(f"Unsupported font_style '{self.font_style}' for rearrangement.")
             return self
-        
+
         if self.font_style == "code":
             self.text = "\n\nCode :```\n" + self.text + "\n```\n\n"
         elif self.font_style == "table":
             self.text = "\n\nTable :\n" + self.text + "\n\n"
         return self
-
-

@@ -1,11 +1,12 @@
-
 import re
+
 INFINITE = 10000
 
-def generate_paragraph_id(id: int, 
-                        page_id: int) -> int:
+
+def generate_paragraph_id(id: int, page_id: int) -> int:
     """Generates a unique paragraph ID."""
     return int(f"2{page_id}{id}")
+
 
 def determine_level(font_style: str) -> int:
     """
@@ -16,18 +17,22 @@ def determine_level(font_style: str) -> int:
     """
     if font_style.startswith("title"):
         return extract_numeric_suffix(font_style, default=INFINITE)
-    elif any(font_style.startswith(style) for style in ["heading", "subtitle", "titre", "sous-titre"]):
+    elif any(
+        font_style.startswith(style)
+        for style in ["heading", "subtitle", "titre", "sous-titre"]
+    ):
         return extract_numeric_suffix(font_style)
     elif font_style == "content":
         return INFINITE
     else:
         return INFINITE
 
-def extract_numeric_suffix( s: str, 
-                            default: int = INFINITE) -> int:
+
+def extract_numeric_suffix(s: str, default: int = INFINITE) -> int:
     """ Extracts a numeric suffix from a string and returns it as an integer. """
-    match = re.search(r'\d+$', s)
+    match = re.search(r"\d+$", s)
     return int(match.group()) if match else default
+
 
 def rearrange_text(font_style, text):
     """

@@ -6,7 +6,8 @@ from hexs_rag.model.model.paragraph import Paragraph
 
 # TODO handle case where there are multiple sheets for ingestion
 
-class ReaderExcel: 
+
+class ReaderExcel:
     """
     -----------------------
     Reader method that ingests Excel files and converts into a list of 
@@ -41,23 +42,21 @@ class ReaderExcel:
     Raises:
     ValueError: Unsupported file extension
     """
-    def __init__(self, 
-                path: str, 
-                sheet_name = None):
+
+    def __init__(self, path: str, sheet_name=None):
         self.path = path
         self.sheet_name = sheet_name
         self.sheet_number = None
         self.filename, self.file_extension = os.path.splitext(self.path)
-        if self.file_extension not in ['.xlsx', '.csv']:
+        if self.file_extension not in [".xlsx", ".csv"]:
             raise ValueError(f"Unsupported file extension: {self.file_extension}")
         if self.file_extension == ".xlsx":
             self.sheet_number = self.get_sheet_number()
 
         self.paragraphs = self.get_paragraphs()
 
-  
     def read_dataframe(self):
-        # TODO add more formats + further parameters for df ingestion. 
+        # TODO add more formats + further parameters for df ingestion.
         """Read data from an Excel or CSV file into a DataFrame.
 
         Determines the file type based on the file extension and reads
@@ -68,7 +67,7 @@ class ReaderExcel:
             DataFrame: The data from the file as a pandas DataFrame.
         """
         # Check the file extension and read the file into a DataFrame accordingly
-        if self.file_extension == '.xlsx':
+        if self.file_extension == ".xlsx":
             if self.sheet_name is None:
                 # For Excel files, use the pd.read_excel function
                 df = pd.read_excel(self.path, sheet_name=0)
@@ -76,15 +75,15 @@ class ReaderExcel:
                 try:
                     df = pd.read_excel(self.path, sheet_name=self.sheet_name)
                 except:
-                    raise ValueError(f"Sheet name {self.sheet_name} not found in the file")
-        elif self.file_extension == '.csv':
+                    raise ValueError(
+                        f"Sheet name {self.sheet_name} not found in the file"
+                    )
+        elif self.file_extension == ".csv":
             # For CSV files, use the pd.read_csv function
             df = pd.read_csv(self.path)
         return df
 
-    def get_paragraphs(self, 
-                    max_paragraph_length: int = 1000, 
-                    rows_per_page: int = 50):
+    def get_paragraphs(self, max_paragraph_length: int = 1000, rows_per_page: int = 50):
         """
         Extracts paragraphs of text from a DataFrame which is read from an Excel or CSV file.
         
@@ -112,34 +111,51 @@ class ReaderExcel:
         """
         df = self.read_dataframe()
 
-        paragraphs = [] # empty list to recieve paragraph info
-        
-        # gets top row information in the format: 
-        # Colname1: Col1Row1Val | colName2: Col2Row1Val| colName3: Col3Row1Val 
-        first_row_text = ' | '.join([f"{col}: {df.iloc[0][col]}" \
-                        for col in df.columns \
-                        if pd.notnull(df.iloc[0][col])])
-        paragraphs.append(Paragraph(first_row_text, 'Normal', 1, 1))  # Append the first row as a separate paragraph
-        
+        paragraphs = []  # empty list to recieve paragraph info
+
+        # gets top row information in the format:
+        # Colname1: Col1Row1Val | colName2: Col2Row1Val| colName3: Col3Row1Val
+        first_row_text = " | ".join(
+            [
+                f"{col}: {df.iloc[0][col]}"
+                for col in df.columns
+                if pd.notnull(df.iloc[0][col])
+            ]
+        )
+        paragraphs.append(
+            Paragraph(first_row_text, "Normal", 1, 1)
+        )  # Append the first row as a separate paragraph
+
         # initialise variables
         paragraph_lines = []
         current_page_id = 1
         paragraph_id = 2  # Start with 2 since the first row has already been added
 
-        for index, row in df.iloc[1:].iterrows():  # iterate through the rest of the rows
+        for index, row in df.iloc[
+            1:
+        ].iterrows():  # iterate through the rest of the rows
             # Concatenate text from multiple columns with column names
-            row_text = ' | '.join([f"{col}: {row[col]}" for col in df.columns if pd.notnull(row[col])])
+            row_text = " | ".join(
+                [f"{col}: {row[col]}" for col in df.columns if pd.notnull(row[col])]
+            )
 
             # Accumulate paragraph lines
             paragraph_lines.append(row_text)
 
             # Check if the maximum paragraph length is reached or if it's the last row
-            if sum(len(line) for line in paragraph_lines) >= max_paragraph_length or index == len(df) - 1:
+            if (
+                sum(len(line) for line in paragraph_lines) >= max_paragraph_length
+                or index == len(df) - 1
+            ):
                 # Join lines to form a paragraph
-                current_paragraph = ' '.join(paragraph_lines)
+                current_paragraph = " ".join(paragraph_lines)
 
                 # Create and append the Paragraph object
-                paragraphs.append(Paragraph(current_paragraph, 'Normal', paragraph_id, current_page_id))
+                paragraphs.append(
+                    Paragraph(
+                        current_paragraph, "Normal", paragraph_id, current_page_id
+                    )
+                )
                 paragraph_id += 1
                 paragraph_lines = []  # Reset for the next paragraph
 
@@ -148,7 +164,7 @@ class ReaderExcel:
                 current_page_id += 1
 
         return paragraphs
-    
+
     def get_sheet_number(self):
         """
         Returns the number of sheets in the Excel file.
@@ -157,5 +173,3 @@ class ReaderExcel:
         int: The number of sheets in the Excel file.
         """
         return len(pd.ExcelFile(self.path).sheet_names)
-    
-    

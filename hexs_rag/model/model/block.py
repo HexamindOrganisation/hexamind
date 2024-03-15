@@ -13,15 +13,17 @@ class Block:
         level (int): The level in the document hierarchy, with lower numbers indicating higher levels.
         distance (float): Represents the relevance or similarity of the block to a query, with lower numbers indicating higher relevance.
     """
-    
-    def __init__(self, 
-                 doc_path: str = '',
-                 title: str = '', 
-                 content: str = '',
-                 index: str = '', 
-                 rank: int = 0, 
-                 level: int = 0, 
-                 distance: float = 99999):
+
+    def __init__(
+        self,
+        doc_path: str = "",
+        title: str = "",
+        content: str = "",
+        index: str = "",
+        rank: int = 0,
+        level: int = 0,
+        distance: float = 99999,
+    ):
         self.doc_path = doc_path
         self.title = title
         self.content = content
@@ -29,7 +31,7 @@ class Block:
         self.rank = rank
         self.level = level
         self.distance = distance
-    
+
     @property
     def distance_str(self) -> str:
         """
@@ -39,9 +41,9 @@ class Block:
         if not isinstance(self.distance, float):
             raise ValueError("Distance must be a float.")
         return f"{self.distance:.2f}"
-    
+
     @classmethod
-    def from_dict(cls, data: dict) -> 'Block':
+    def from_dict(cls, data: dict) -> "Block":
         """
         Creates an instance of Block from a dictionary. This method validates the input dictionary
         to ensure it contains the necessary keys and values of appropriate types.
@@ -58,8 +60,15 @@ class Block:
         if not isinstance(data, dict):
             raise AssertionError("data must be dict")
 
-        required_keys = {'doc_path': str, 'title': str, 'content': str,
-                         'index': str, 'rank': int, 'level': int, 'distance': float}
+        required_keys = {
+            "doc_path": str,
+            "title": str,
+            "content": str,
+            "index": str,
+            "rank": int,
+            "level": int,
+            "distance": float,
+        }
 
         missing_keys = required_keys.keys() - data.keys()
         if missing_keys:
@@ -67,10 +76,12 @@ class Block:
 
         for key, expected_type in required_keys.items():
             if not isinstance(data[key], expected_type):
-                raise AssertionError(f"Key '{key}' must be of type {expected_type.__name__}.")
+                raise AssertionError(
+                    f"Key '{key}' must be of type {expected_type.__name__}."
+                )
 
         return cls(**data)
-    
+
     def to_dict(self) -> dict:
         """
         Converts the Block instance to a dictionary. 
@@ -79,13 +90,11 @@ class Block:
             dict: The dictionary representation of the Block instance.
         """
         return {
-            'doc_path': self.doc_path,
-            'title': self.title,
-            'content': self.content,
-            'index': self.index,
-            'rank': self.rank,
-            'level': self.level,
-            'distance': self.distance
+            "doc_path": self.doc_path,
+            "title": self.title,
+            "content": self.content,
+            "index": self.index,
+            "rank": self.rank,
+            "level": self.level,
+            "distance": self.distance,
         }
-
-

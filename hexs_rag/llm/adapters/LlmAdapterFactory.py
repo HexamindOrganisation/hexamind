@@ -5,6 +5,7 @@ from hexs_rag.llm.adapters.api.MistralApiAdapter import MistralClientAdapter
 from hexs_rag.llm.adapters.api.OpenAiApiAdapter import OpenAiClientAdapter
 from openai import OpenAI
 
+
 class LlmAdapterFactory:
     """
     This factory class is used to create the adaptater for the LLM client.
@@ -17,19 +18,23 @@ class LlmAdapterFactory:
     """
 
     @staticmethod
-    def create_adapter(llm_name, llm_api_key, model = None, embed_model = None):
+    def create_adapter(llm_name, llm_api_key, model=None, embed_model=None):
         """
         Create the proper adaptater for the LLM client according to the configuration.
         """
 
-        if llm_name == 'mistral':
+        if llm_name == "mistral":
             try:
-                return MistralClientAdapter(MistralClient(api_key = llm_api_key), model, embed_model)
+                return MistralClientAdapter(
+                    MistralClient(api_key=llm_api_key), model, embed_model
+                )
             except Exception as e:
                 raise ValueError(f"Could not create MistralClientAdapter: {e}")
-        elif llm_name == 'openai':
+        elif llm_name == "openai":
             try:
-                return OpenAiClientAdapter(OpenAI(api_key = llm_api_key), model, embed_model)
+                return OpenAiClientAdapter(
+                    OpenAI(api_key=llm_api_key), model, embed_model
+                )
             except Exception as e:
                 raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
         else:
