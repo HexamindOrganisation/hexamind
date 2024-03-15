@@ -18,10 +18,15 @@ class DbAdapterFactory:
         """
         Create the proper adapter for the database according to the configuration.
         """
-
+        if kwargs["database_path"]:
+            database_path = kwargs["database_path"]
+        else:
+            raise ValueError("Missing environment variable for database path.")
+            
         database_path = (
             database_path if database_path is not None else os.getenv("DATABASE_PATH")
         )
+        
         collection_name = (
             collection_name
             if collection_name is not None
@@ -30,10 +35,7 @@ class DbAdapterFactory:
 
         if db_name == "chroma":
             try:
-                if kwargs["database_path"]:
-                    database_path = kwargs["database_path"]
-                else:
-                    raise ValueError("Missing environment variable for database path.")
+  
 
                 return ChromaDbAdapter(
                     chromadb.PersistentClient(database_path), collection_name
