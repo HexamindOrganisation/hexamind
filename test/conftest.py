@@ -10,7 +10,7 @@ from hxm_rag.model.readers.HTMLreader import HtmlReader
 ########HTML
 @pytest.fixture
 def html_reader_instance(): # real html file example
-    html_file_path = "../hexs_rag/data/test_data/HTML5 Test Page.html"
+    html_file_path = "data/test_data/HTML5 Test Page.html"
     return HtmlReader(html_file_path)
 
 @pytest.fixture
@@ -40,7 +40,7 @@ def sample_html_file(tmp_path): # sample html file example
 @pytest.fixture 
 def doc_html_instance():
     # Test data file paths
-    html_file_path = "../hexs_rag/data/test_data/HTML5 Test Page.html"
+    html_file_path = "data/test_data/HTML5 Test Page.html"
     # Create an instance of Reader_HTML
     return Doc(path=html_file_path,
           include_images=True,
@@ -64,13 +64,13 @@ def word_reader(sample_docx_path):
     
 @pytest.fixture
 def word_reader_with_actual_file():
-    docx_file_path = "../hexs_rag/data/test_data/sample_doc.docx"
+    docx_file_path = "data/test_data/sample_doc.docx"
     return WordReader(docx_file_path)
 
 @pytest.fixture 
 def doc_word_instance():
     # Test data file paths
-    docx_file_path = "../hexs_rag/data/test_data/sample_doc.docx"
+    docx_file_path = "data/test_data/sample_doc.docx"
     # Create an instance of Reader_HTML
     return Doc(path=docx_file_path,
           include_images=True,
@@ -80,7 +80,7 @@ def doc_word_instance():
 @pytest.fixture 
 def doc_excel_instance():
     # Test data file paths
-    excel_file_path = "../hexs_rag/data/test_data/SampleData.xlsx"
+    excel_file_path = "data/test_data/SampleData.xlsx"
     # Create an instance of Reader_HTML
     return Doc(path=excel_file_path,
           include_images=True,
@@ -90,7 +90,7 @@ def doc_excel_instance():
 @pytest.fixture 
 def doc_pdf_instance():
     # Test data file paths
-    pdf_file_path = "../hexs_rag/data/test_data/pdf-test.pdf"
+    pdf_file_path = "data/test_data/pdf-test.pdf"
     # Create an instance of Reader_HTML
     return Doc(path=pdf_file_path,
           include_images=True,

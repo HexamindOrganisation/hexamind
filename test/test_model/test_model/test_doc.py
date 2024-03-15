@@ -23,28 +23,28 @@ def test_excel_initialisation(doc_excel_instance):
     assert doc_excel_instance.title == 'SampleData', "Title should be filename minus extension"
     assert doc_excel_instance.extension == '.xlsx', "Extension should be one of the supported formats"
     assert isinstance(doc_excel_instance.id_, int), "ID should be an integer"
-    assert doc_excel_instance.path == "../hexs_rag/data/test_data/SampleData.xlsx", "Path should match the input"
+    assert doc_excel_instance.path == "data/test_data/SampleData.xlsx", "Path should match the input"
     assert doc_excel_instance.sheet_name == 0, "Sheet name should match the input"
 
 def test_html_initialisation(doc_html_instance):
     assert doc_html_instance.title == 'HTML5 Test Page', "Title should be filename minus extension"
     assert doc_html_instance.extension == '.html', "Extension should be one of the supported formats"
     assert isinstance(doc_html_instance.id_, int), "ID should be an integer"
-    assert doc_html_instance.path == "../hexs_rag/data/test_data/HTML5 Test Page.html", "Path should match the input"
+    assert doc_html_instance.path == "data/test_data/HTML5 Test Page.html", "Path should match the input"
     assert doc_html_instance.sheet_name == 0, "Sheet name should match the input"
 
 def test_pdf_initialisation(doc_pdf_instance):
     assert doc_pdf_instance.title == 'pdf-test', "Title should be filename minus extension"
     assert doc_pdf_instance.extension == '.pdf', "Extension should be one of the supported formats"
     assert isinstance(doc_pdf_instance.id_, int), "ID should be an integer"
-    assert doc_pdf_instance.path == "../hexs_rag/data/test_data/pdf-test.pdf", "Path should match the input"
+    assert doc_pdf_instance.path == "data/test_data/pdf-test.pdf", "Path should match the input"
     assert doc_pdf_instance.sheet_name == 0, "Sheet name should match the input"
 
 def test_word_initialisation(doc_word_instance):
     assert doc_word_instance.title == 'sample_doc', "Title should be filename minus extension"
     assert doc_word_instance.extension == '.docx', "Extension should be one of the supported formats"
     assert isinstance(doc_word_instance.id_, int), "ID should be an integer"
-    assert doc_word_instance.path == "../hexs_rag/data/test_data/sample_doc.docx", "Path should match the input"
+    assert doc_word_instance.path == "data/test_data/sample_doc.docx", "Path should match the input"
     assert doc_word_instance.sheet_name == 0, "Sheet name should match the input"
 ###################################################
 
@@ -117,7 +117,7 @@ def test_word_paragraph(doc_word_instance):
 def test_format_error():
     # make sure incorrect file format raises error
     with pytest.raises(ValueError):
-        Doc(path="../hexs_rag/data/test_data/sample_txt.txt",
+        Doc(path="data/test_data/sample_txt.txt",
         include_images=True,
         actual_first_page=1)
 

@@ -13,16 +13,28 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def test_llm_agent_setup():
+    # test llm agent properties etc 
+    # TODO implement for other llms agents than openai
+    pass
+
+def test_db_adapter_setup():
+    # TODO implement for other databases
+    pass
+
 def test_whole_thing(llm_agent_setup, db_adapter_setup):
     doc = Doc(path="data/test_data/SampleData.xlsx", 
             include_images = False, 
             actual_first_page = 1)
-
+     
     ingestor = Ingestor(doc_container = doc.container, 
                         clientdb = db_adapter_setup,
-                        llmagent = llm_agent_setup)
+                        llmagent = llm_agent_setup) 
+    
     # TODO check that document is in the database
     # TODO check that the summary is correctly being generated
     retriever = Retriever(collection = db_adapter_setup.collection, 
                         llmagent = llm_agent_setup)
      # TODO check retriever algorithm
+
+    
