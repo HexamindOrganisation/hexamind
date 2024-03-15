@@ -1,4 +1,4 @@
-from hexs_rag.model.readers import WordReader
+from hxm_rag.model.readers import WordReader
 import pytest 
 from unittest.mock import MagicMock
 from docx.shared import Pt

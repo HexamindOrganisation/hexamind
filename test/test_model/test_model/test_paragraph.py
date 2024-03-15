@@ -1,5 +1,5 @@
 import pytest
-from hexs_rag.model.model.paragraph import Paragraph, INFINITE
+from hxm_rag.model.model.paragraph import Paragraph, INFINITE
 
 def test_paragraph_initialization():
     paragraph = Paragraph("Example text", "title 1", 1, 1)

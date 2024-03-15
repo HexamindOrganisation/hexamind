@@ -1,6 +1,6 @@
 import pytest
-from hexs_rag.model.readers import PdfReader
-from hexs_rag.model.model.paragraph import Paragraph
+from hxm_rag.model.readers import PdfReader
+from hxm_rag.model.model.paragraph import Paragraph
 from unittest.mock import patch, MagicMock
 
 MockElement = MagicMock()

@@ -1,5 +1,5 @@
 import argparse
-from hexs_rag.utils.utils._env._env import setup_env_file
+from hxm_rag.utils.utils._env._env import setup_env_file
 
 def main():
     parser = argparse.ArgumentParser(description="Setup .env file")

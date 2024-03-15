@@ -1,5 +1,5 @@
 import pytest
-from hexs_rag.model.model.block import Block
+from hxm_rag.model.model.block import Block
 
 def test_block_initialization():
     block = Block(doc_path='test_doc', title='test_title', content='test_content', index='test_index', rank=1, level=2, distance=3.0)
