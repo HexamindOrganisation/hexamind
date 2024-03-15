@@ -9,9 +9,12 @@ from hxm_rag.llm.llm.LlmAgent import LlmAgent
 from hxm_rag.retriever.retriever import Retriever
 from hxm_rag.model.model.doc import Doc 
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def test_whole_thing(llm_agent_setup, db_adapter_setup):
-    doc = Doc(path="../hxm_rag/data/test_data/SampleData.xlsx", 
+    doc = Doc(path="data/test_data/SampleData.xlsx", 
             include_images = False, 
             actual_first_page = 1)
 
@@ -22,5 +25,4 @@ def test_whole_thing(llm_agent_setup, db_adapter_setup):
     # TODO check that the summary is correctly being generated
     retriever = Retriever(collection = db_adapter_setup.collection, 
                         llmagent = llm_agent_setup)
-    # TODO check retriever algorithm
-    
+     # TODO check retriever algorithm
