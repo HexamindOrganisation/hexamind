@@ -6,9 +6,6 @@ import os
 from hexs_rag.llm.llm import LlmAgent
 from hexs_rag.model.model.block import Block
 
-# TODO retriever needs to be able to take a doc and add part of that doc to the query
-# some of the functionality placed in ingestor needs to be added back in here. 
-# --> meaning some of the functions used for both need to be generalised
 
 class Retriever:
     """
