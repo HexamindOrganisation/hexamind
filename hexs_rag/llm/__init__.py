@@ -1,7 +1,3 @@
-from .adapters import (
-    MistralClientAdapter,
-    OpenAiClientAdapter,
-    ILlmClient,
-    LlmAdapterFactory,
-)
+from .adapters import (ILlmClient, LlmAdapterFactory, MistralClientAdapter,
+                       OpenAiClientAdapter)
 from .llm import LlmAgent

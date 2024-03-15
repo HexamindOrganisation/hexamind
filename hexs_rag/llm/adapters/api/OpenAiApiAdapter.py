@@ -1,5 +1,6 @@
-from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 import os
+
+from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 
 
 class OpenAiClientAdapter(ILlmClient):

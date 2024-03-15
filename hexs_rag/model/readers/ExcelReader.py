@@ -1,7 +1,9 @@
 # Description: Excel file reader
 
 import os
+
 import pandas as pd
+
 from hexs_rag.model.model.paragraph import Paragraph
 
 # TODO handle case where there are multiple sheets for ingestion

@@ -1,19 +1,19 @@
 import json
-import pypdf
-
-# To analyze the PDF layout and extract text
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LTTextContainer, LTChar, LTFigure
+import os
 
 # To extract text from tables in PDF
 import pdfplumber as pdfp
-from PIL import Image
-from pdf2image import convert_from_path
+import pypdf
 import pytesseract
-import os
+from pdf2image import convert_from_path
+# To analyze the PDF layout and extract text
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTChar, LTFigure, LTTextContainer
+from PIL import Image
+
 from hexs_rag.model.model.paragraph import Paragraph
-from hexs_rag.utils.utils.table_converter import table_converter
 from hexs_rag.utils.model.pdfreader import *
+from hexs_rag.utils.utils.table_converter import table_converter
 
 
 class PdfReader:
@@ -56,6 +56,14 @@ class PdfReader:
         )
 
     def most_occuring_fonts(self, line_formats: list):
+        """_summary_
+
+        Args:
+            line_formats (list): _description_
+
+        Returns:
+            _type_: _description_
+        """
         if line_formats != []:
             min_freq = 3
             font_size_freq = {
@@ -74,6 +82,14 @@ class PdfReader:
         return line_formats
 
     def text_extraction(self, element):
+        """_summary_
+
+        Args:
+            element (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         # Extracting the text from the in line text element
         line_text = element.get_text()
         # Find the formats of the text
@@ -97,6 +113,16 @@ class PdfReader:
 
     # Extracting tables from the page
     def extract_table(self, pdf_path, page_num, table_num):
+        """_summary_
+
+        Args:
+            pdf_path (_type_): _description_
+            page_num (_type_): _description_
+            table_num (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         # Open the pdf file
         pdf = pdfp.open(pdf_path)
         # Find the examined page
@@ -108,6 +134,16 @@ class PdfReader:
 
     # Create a function to check if the element is in any tables present in the page
     def is_element_inside_any_table(self, element, page, tables):
+        """_summary_
+
+        Args:
+            element (_type_): _description_
+            page (_type_): _description_
+            tables (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         x0, y0up, x1, y1up = element.bbox
         # Change the cordinates because the pdfminer counts from the botton to top of the page
         y0 = page.bbox[3] - y1up
@@ -120,6 +156,16 @@ class PdfReader:
 
     # Function to find the table for a given element
     def find_table_for_element(self, element, page, tables):
+        """_summary_
+
+        Args:
+            element (_type_): _description_
+            page (_type_): _description_
+            tables (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         x0, y0up, x1, y1up = element.bbox
         # Change the cordinates because the pdfminer counts from the botton to top of the page
         y0 = page.bbox[3] - y1up
@@ -132,6 +178,12 @@ class PdfReader:
 
     # Create a function to crop the image elements from PDFs
     def crop_image(self, element, pageObj):
+        """_summary_
+
+        Args:
+            element (_type_): _description_
+            pageObj (_type_): _description_
+        """
         # Get the coordinates to crop the image from PDF
         [image_left, image_top, image_right, image_bottom] = [
             element.x0,
@@ -153,6 +205,11 @@ class PdfReader:
     def convert_to_images(
         self, input_file,
     ):
+        """_summary_
+
+        Args:
+            input_file (_type_): _description_
+        """
         images = convert_from_path(input_file)
         image = images[0]
         output_file = "PDF_image.png"
@@ -160,6 +217,14 @@ class PdfReader:
 
     # Create a function to read text from images
     def image_to_text(self, image_path):
+        """_summary_
+
+        Args:
+            image_path (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         # Read the image
         img = Image.open(image_path)
         # Extract the text from the image
@@ -167,6 +232,16 @@ class PdfReader:
         return text
 
     def pdf_manager(self, pdf_path, actual_first_page=0, include_images=True):
+        """_summary_
+
+        Args:
+            pdf_path (_type_): _description_
+            actual_first_page (int, optional): _description_. Defaults to 0.
+            include_images (bool, optional): _description_. Defaults to True.
+
+        Returns:
+            _type_: _description_
+        """
         # create a PDF file object
         pdfFileObj = open(pdf_path, "rb")
         # create a PDF reader object
@@ -368,6 +443,15 @@ class PdfReader:
         return paragraphs
 
     def concatenate_paragraphs(self, paragraphs, doc_title):
+        """_summary_
+
+        Args:
+            paragraphs (_type_): _description_
+            doc_title (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         concatenated_paragraphs = []
         i = 0
         actual_page_id = paragraphs[0].page_id
@@ -416,6 +500,14 @@ class PdfReader:
 
     # TODO del if never used?
     def rearrange_paragraphs(self, paragraphs: list[Paragraph]):
+        """_summary_
+
+        Args:
+            paragraphs (list[Paragraph]): _description_
+
+        Returns:
+            _type_: _description_
+        """
         # associate paragraphs with the same font style
         i = 0
         while i < len(paragraphs):

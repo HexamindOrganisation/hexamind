@@ -2,12 +2,14 @@
 # processes it based on its file type, and structures its
 # content into a form that is more manageable and accessible
 
-from hexs_rag.model.model.paragraph import Paragraph
-from hexs_rag.model.model.container import Container
-from hexs_rag.utils.utils.index_creation import set_indexes
-from hexs_rag.model.readers import ReaderExcel, HtmlReader, PdfReader, WordReader
 import os
 from typing import List
+
+from hexs_rag.model.model.container import Container
+from hexs_rag.model.model.paragraph import Paragraph
+from hexs_rag.model.readers import (HtmlReader, PdfReader, ReaderExcel,
+                                    WordReader)
+from hexs_rag.utils.utils.index_creation import set_indexes
 
 
 class Doc:

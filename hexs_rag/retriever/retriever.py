@@ -2,8 +2,9 @@
 # Responsible for retrieving documents relevant to input query
 
 import os
-from hexs_rag.model.model.block import Block
+
 from hexs_rag.llm.llm import LlmAgent
+from hexs_rag.model.model.block import Block
 
 
 class Retriever:
