@@ -2,9 +2,9 @@ import os
 from hexs_rag.llm.adapters.AbstractLlm import ILlmClient
 from hexs_rag.utils.llm.template import Template
 
+
 class LlmAgent:
-    def __init__(self, 
-                client : ILlmClient):
+    def __init__(self, client: ILlmClient):
         """ 
         Constructor for the LLM agent. 
 
@@ -26,41 +26,34 @@ class LlmAgent:
         detect_language(self, text)
             Detect the language of the text.
         """
-        print("type: ",type(client)," DONE")
-        if not isinstance(client, ILlmClient): # TODO -> class not implemented yet
+        print("type: ", type(client), " DONE")
+        if not isinstance(client, ILlmClient):  # TODO -> class not implemented yet
             raise TypeError("client should be an instance of ILlmClient")
-        
+
         self.client = client
-    
-    def send_request_to_llm(self, 
-                            messages):
+
+    def send_request_to_llm(self, messages):
         return self.client.chat(messages=messages)
 
-    def generate_paragraph(self, 
-                        query: str, 
-                        context: dict, 
-                        histo: list[(str, str)], 
-                        language='fr') -> str:
+    def generate_paragraph(
+        self, query: str, context: dict, histo: list[(str, str)], language="fr"
+    ) -> str:
         """generates the  answer"""
         template = Template.generate_paragraph(query, context, histo)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         return str(response)
 
-    def translate(self,
-                  text: str) -> str:
+    def translate(self, text: str) -> str:
         """translates"""
         template = Template.translate(text)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         return str(response)
 
-    def generate_answer(self, 
-                        query: str, 
-                        answer: str, 
-                        histo: str, 
-                        context: str,
-                        language : str) -> str:
+    def generate_answer(
+        self, query: str, answer: str, histo: str, context: str, language: str
+    ) -> str:
 
         """provides the final answer in {language} based on the initial query and the answer in english"""
         template = Template.generate_answer(query, answer, histo, context, language)
@@ -68,34 +61,30 @@ class LlmAgent:
         response = self.send_request_to_llm(messages)
         return str(response)
 
-    def summarize_paragraph(self, 
-                            prompt : str, 
-                            title_doc : str = '', 
-                            title_para : str = ''):
+    def summarize_paragraph(
+        self, prompt: str, title_doc: str = "", title_para: str = ""
+    ):
 
         location_of_the_paragraph = prompt.split(" :")[0]
         """summarizes the paragraph"""
-        template = Template.summarize_paragraph(prompt,
-                                                location_of_the_paragraph, 
-                                                title_doc, 
-                                                title_para)
-        print("template \n" , template)
+        template = Template.summarize_paragraph(
+            prompt, location_of_the_paragraph, title_doc, title_para
+        )
+        print("template \n", template)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         print("response\n", response)
         return str(response)
 
-    def detect_language(self, 
-                        text: str) -> str:
-                        
+    def detect_language(self, text: str) -> str:
+
         """detects the language"""
         template = Template.detect_language(text)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         return str(response)
-    
-    def get_embedding(self, 
-                    text):
+
+    def get_embedding(self, text):
         """
         Returns text sembeddings 
         """
@@ -103,8 +92,7 @@ class LlmAgent:
         return embeddings_batch_response.data[0].embedding
 
     @staticmethod
-    def print_response(self, 
-                    response):
+    def print_response(self, response):
         print("****************")
         print(response)
         print("----")
