@@ -1,7 +1,8 @@
-import os 
+import os
 import shutil
 from pathlib import Path
 import pkg_resources
+
 
 def setup_env_file(destination_directory=None):
     if destination_directory is None:
@@ -9,8 +10,10 @@ def setup_env_file(destination_directory=None):
     else:
         destination_directory = Path(destination_directory)
         destination_directory.mkdir(parents=True, exist_ok=True)
-    
-    template_file = pkg_resources.resource_filename(__name__, 'hexs_rag/utils/utils/_env/.env.template')
+
+    template_file = pkg_resources.resource_filename(
+        __name__, "hexs_rag/utils/utils/_env/.env.template"
+    )
     env_file = destination_directory / ".env"
 
     if not env_file.exists():

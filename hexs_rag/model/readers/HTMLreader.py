@@ -51,35 +51,43 @@ class HtmlReader:
     """
 
     def __init__(self, path: str):
-        
+
         # handle errors
         if not isinstance(path, str):
             raise TypeError("Path must be a string")
-        file_name = os.path.basename(path) # get file and ext from path
-        self.title, self.extension = os.path.splitext(file_name) # separate file and ext
+        file_name = os.path.basename(path)  # get file and ext from path
+        self.title, self.extension = os.path.splitext(
+            file_name
+        )  # separate file and ext
         self.extension = self.extension.lower()
-        if self.extension != '.html':
+        if self.extension != ".html":
             raise TypeError("file must be HTML")
-        
+
         self.path = path
         self.paragraphs: List[Paragraph] = self.read_html_with_beautifulsoup()
         if not isinstance(self.paragraphs, list):
-            raise TypeError(f"Error in Paragraphs in html reader are {type(self.paragraphs)}")
-        
+            raise TypeError(
+                f"Error in Paragraphs in html reader are {type(self.paragraphs)}"
+            )
+
         for para in self.paragraphs:
             if not isinstance(para, Paragraph):
-                raise TypeError("ERROR: HtmlReader paragraphs list contains non paragraph types")
+                raise TypeError(
+                    "ERROR: HtmlReader paragraphs list contains non paragraph types"
+                )
 
     def read_html_with_beautifulsoup(self) -> List[Paragraph]:
         """Opens an HTML file and parses it into Paragraph objects, ignoring certain tags."""
         try:
-            with open(self.path, "r", encoding='utf-8') as HTMLFile:
+            with open(self.path, "r", encoding="utf-8") as HTMLFile:
                 content = HTMLFile.read()
-                soup = BeautifulSoup(content, 'html.parser')
+                soup = BeautifulSoup(content, "html.parser")
                 self.remove_unwanted_tags(soup)
                 leaf_elements = self.get_leaf_elements(soup)
                 paragraphs = self.extract_paragraphs(leaf_elements)
-                paragraphs = self.concatenate_paragraphs_with_same_font_style(paragraphs)
+                paragraphs = self.concatenate_paragraphs_with_same_font_style(
+                    paragraphs
+                )
                 # [p.rearrange() for p in paragraphs]
                 return paragraphs
         except:
@@ -87,29 +95,44 @@ class HtmlReader:
 
     def remove_unwanted_tags(self, soup: BeautifulSoup):
         """Removes script, style, and other non-content tags from the soup object."""
-        for tag in soup(['style', 'script', 'footer', 'header', 'nav', 'aside', 'form']):
+        for tag in soup(
+            ["style", "script", "footer", "header", "nav", "aside", "form"]
+        ):
             tag.decompose()
 
     def get_leaf_elements(self, soup: BeautifulSoup) -> List[bs4.element.Tag]:
         """Gets all leaf elements in the HTML content."""
-        return [elem for elem in soup.body.descendants if elem.name and not elem.find_all()]
+        return [
+            elem for elem in soup.body.descendants if elem.name and not elem.find_all()
+        ]
 
     def extract_paragraphs(self, elements: List[bs4.element.Tag]) -> List[Paragraph]:
         """Creates a list of Paragraph objects from leaf elements."""
-        return [Paragraph(text=elem.get_text(strip=True, separator='\n'), 
-                          font_style=elem.name, id_=index, page_id=1)
-                for index, elem in enumerate(elements) if elem.get_text(strip=True)]
-     
-    def concatenate_paragraphs_with_same_font_style(self, paragraphs: List[Paragraph]) -> List[Paragraph]:
+        return [
+            Paragraph(
+                text=elem.get_text(strip=True, separator="\n"),
+                font_style=elem.name,
+                id_=index,
+                page_id=1,
+            )
+            for index, elem in enumerate(elements)
+            if elem.get_text(strip=True)
+        ]
+
+    def concatenate_paragraphs_with_same_font_style(
+        self, paragraphs: List[Paragraph]
+    ) -> List[Paragraph]:
         """Merges adjacent Paragraphs with the same font style into single Paragraphs."""
         concatenated_paragraphs = []
         for paragraph in paragraphs:
-            if concatenated_paragraphs and paragraph.font_style == concatenated_paragraphs[-1].font_style:
+            if (
+                concatenated_paragraphs
+                and paragraph.font_style == concatenated_paragraphs[-1].font_style
+            ):
                 concatenated_paragraphs[-1].text += f"\n{paragraph.text}"
             else:
                 concatenated_paragraphs.append(paragraph)
         return concatenated_paragraphs
-
 
     def create_table(self, paragraphs: List[Paragraph], i: int) -> List[Paragraph]:
         """
@@ -125,10 +148,12 @@ class HtmlReader:
         """
         titles = self.extract_table_titles(paragraphs, i)
         content, i = self.extract_table_content(paragraphs, i, len(titles))
-        table_paragraph = Paragraph(text=table_converter([titles] + content), 
-                                    font_style="table", 
-                                    id_=i, 
-                                    page_id=1)
+        table_paragraph = Paragraph(
+            text=table_converter([titles] + content),
+            font_style="table",
+            id_=i,
+            page_id=1,
+        )
         # Insert the new table Paragraph object at the correct index
         paragraphs.insert(i, table_paragraph)
         return paragraphs
@@ -150,7 +175,9 @@ class HtmlReader:
             titles.append(paragraphs.pop(i).text)
         return titles
 
-    def extract_table_content(self, paragraphs: List[Paragraph], i: int, num_titles: int) -> Tuple[List[List[str]], int]:
+    def extract_table_content(
+        self, paragraphs: List[Paragraph], i: int, num_titles: int
+    ) -> Tuple[List[List[str]], int]:
         """
         Extracts table content based on the number of titles and removes those Paragraphs
         from the list.
@@ -174,7 +201,7 @@ class HtmlReader:
         if len(row) == num_titles:  # Ensure the row has the correct number of columns
             content.append(row)
         return content, i
-    
+
     def create_list(self, paragraphs, start_index: int) -> Tuple[List[Paragraph], int]:
         """
         Parses a list of Paragraph objects starting at a given index, handling nested lists
@@ -190,7 +217,7 @@ class HtmlReader:
         """
         list_items = []  # Content of the list elements
         i = start_index  # Current index in the Paragraphs
-        
+
         # Loop through paragraphs starting at index `i`, looking for list elements
         while i < len(paragraphs) and paragraphs[i].font_style in ["ul", "ol", "li"]:
             if paragraphs[i].font_style == "li":
@@ -206,11 +233,13 @@ class HtmlReader:
             else:
                 # Increment index `i` if the current paragraph isn't a list item
                 i += 1
-        
+
         # Convert the list content into the formatted string representation
         formatted_list = self.format_list(list_items)
         # Create a new Paragraph for the entire list
-        list_paragraph = Paragraph(text=formatted_list, font_style="list", id_=start_index, page_id=1)
+        list_paragraph = Paragraph(
+            text=formatted_list, font_style="list", id_=start_index, page_id=1
+        )
         # Insert the new Paragraph back into paragraphs at the original list start index
         paragraphs.insert(start_index, list_paragraph)
 

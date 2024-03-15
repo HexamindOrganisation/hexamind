@@ -1,6 +1,6 @@
-#Description: doc class that initializes a document object, 
-# processes it based on its file type, and structures its 
-# content into a form that is more manageable and accessible 
+# Description: doc class that initializes a document object,
+# processes it based on its file type, and structures its
+# content into a form that is more manageable and accessible
 
 from hexs_rag.model.model.paragraph import Paragraph
 from hexs_rag.model.model.container import Container
@@ -8,6 +8,7 @@ from hexs_rag.utils.utils.index_creation import set_indexes
 from hexs_rag.model.readers import ReaderExcel, HtmlReader, PdfReader, WordReader
 import os
 from typing import List
+
 
 class Doc:
     """
@@ -33,24 +34,30 @@ class Doc:
         sheet_name (int): The sheet name for Excel files to be processed. Defaults to 0.
     """
 
-    def __init__(self, 
-                path: str ='', 
-                include_images: bool =True, 
-                actual_first_page: int = 1,
-                sheet_name: int = 0):
- 
-        file_name = os.path.basename(path) # get file and ext from path
-        self.title, self.extension = os.path.splitext(file_name) # separate file and ext
+    def __init__(
+        self,
+        path: str = "",
+        include_images: bool = True,
+        actual_first_page: int = 1,
+        sheet_name: int = 0,
+    ):
+
+        file_name = os.path.basename(path)  # get file and ext from path
+        self.title, self.extension = os.path.splitext(
+            file_name
+        )  # separate file and ext
         self.extension = self.extension.lower()
         self.actual_first_page = actual_first_page
-        self.include_images = include_images 
+        self.include_images = include_images
         self.id_ = id(self)
         self.path = path  # Path of the temporary file for processing
         self.sheet_name = sheet_name
         self.paragraphs = self.read_document()
-        self.container = Container(paragraphs = self.paragraphs,  
-                                    father=self, 
-                                    title= self.set_first_container_title(self.title, self.extension))
+        self.container = Container(
+            paragraphs=self.paragraphs,
+            father=self,
+            title=self.set_first_container_title(self.title, self.extension),
+        )
         set_indexes(self.container)
         self.blocks = self.get_blocks()
 
@@ -60,18 +67,21 @@ class Doc:
         Returns:
             list: A list of paragraphs extracted from the document.
         """
-        if self.extension == '.docx':
+        if self.extension == ".docx":
             paragraphs = WordReader(self.path).paragraphs
-        elif self.extension == '.pdf':
-            paragraphs = PdfReader(self.path, self.actual_first_page, self.include_images).paragraphs
-        elif self.extension == '.html':
+        elif self.extension == ".pdf":
+            paragraphs = PdfReader(
+                self.path, self.actual_first_page, self.include_images
+            ).paragraphs
+        elif self.extension == ".html":
             paragraphs = HtmlReader(self.path).paragraphs
-        elif self.extension == '.xlsx' or self.extension == '.csv':
-            paragraphs = ReaderExcel(self.path, sheet_name = self.sheet_name).paragraphs
+        elif self.extension == ".xlsx" or self.extension == ".csv":
+            paragraphs = ReaderExcel(self.path, sheet_name=self.sheet_name).paragraphs
         else:
-            raise ValueError(f"Unsupported file format: {self.extension}. Supported formats are: \n .docx, .pdf, .html, .xlsx, .csv")
+            raise ValueError(
+                f"Unsupported file format: {self.extension}. Supported formats are: \n .docx, .pdf, .html, .xlsx, .csv"
+            )
         return paragraphs
- 
 
     @property
     def structure(self):
@@ -86,10 +96,11 @@ class Doc:
         Returns:
             list: The list of processed blocks with updated document titles and string indexes.
         """
+
         def from_list_to_str(index_list):
             index_str = str(index_list[0])
             for el in index_list[1:]:
-                index_str += '.' + str(el)
+                index_str += "." + str(el)
             return index_str
 
         blocks = self.container.blocks
@@ -97,10 +108,8 @@ class Doc:
             block.doc = self.title
             block.index = from_list_to_str(block.index)
         return blocks
-    
-    def set_first_container_title(self,
-                                  title,
-                                  extension) -> Paragraph:
+
+    def set_first_container_title(self, title, extension) -> Paragraph:
         """
         Sets the initial container title based on the document's title and extension.
         
@@ -111,9 +120,9 @@ class Doc:
         Returns:
             Paragraph: A Paragraph object representing the initial container title.
         """
-        if extension == '.pdf':
-            return Paragraph(text=title,font_style='title0',id_=0,page_id=0)
-        elif extension == '.docx':
-            return Paragraph(text=title,font_style='title0',id_=0,page_id=1)
+        if extension == ".pdf":
+            return Paragraph(text=title, font_style="title0", id_=0, page_id=0)
+        elif extension == ".docx":
+            return Paragraph(text=title, font_style="title0", id_=0, page_id=1)
         else:
-            return Paragraph(text=title,font_style='h0',id_=0,page_id=1)
+            return Paragraph(text=title, font_style="h0", id_=0, page_id=1)
