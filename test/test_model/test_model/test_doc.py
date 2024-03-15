@@ -1,7 +1,7 @@
 # Description: Testing suite made for doc class. 
 # Instances are defined by fixtures in conftest.py
 
-from hexs_rag.model.model.doc import Doc
+from hxm_rag.model.model.doc import Doc
 import pytest
 
 # test that the instances work --> can be deleted later (just for test/debug setup)

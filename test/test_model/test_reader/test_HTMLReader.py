@@ -1,6 +1,6 @@
 
-from hexs_rag.model.readers.HTMLreader import HtmlReader
-from hexs_rag.model.model.paragraph import Paragraph
+from hxm_rag.model.readers.HTMLreader import HtmlReader
+from hxm_rag.model.model.paragraph import Paragraph
 from bs4 import BeautifulSoup
 import pytest
 

@@ -6,7 +6,7 @@ import os
 import logging
 
 # import intialization module from hexs_rag directory
-from hexs_rag.initializer.initializer import Initializer
+from hxm_rag.initializer.initializer import Initializer
 
 # Mock the environment variables for the test
 @pytest.fixture
