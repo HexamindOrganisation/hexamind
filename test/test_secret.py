@@ -2,7 +2,7 @@
 
 import os
 import unittest
-from hexs_rag.initializer.initializer import Initializer
+from hxm_rag.initializer.initializer import Initializer
 
 class MyApiTests(unittest.TestCase):
     def test_something_with_api(self):

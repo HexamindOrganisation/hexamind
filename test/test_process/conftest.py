@@ -1,11 +1,11 @@
 import os 
 import pytest
 
-from hexs_rag.initializer.initializer import Initializer
-from hexs_rag.database.ingestion.ingestor import Ingestor
-from hexs_rag.llm.llm.LlmAgent import LlmAgent
-from hexs_rag.retriever.retriever import Retriever
-from hexs_rag.model.model.doc import Doc 
+from hxm_rag.initializer.initializer import Initializer
+from hxm_rag.database.ingestion.ingestor import Ingestor
+from hxm_rag.llm.llm.LlmAgent import LlmAgent
+from hxm_rag.retriever.retriever import Retriever
+from hxm_rag.model.model.doc import Doc 
 
 @pytest.fixture
 def battery_setup():
