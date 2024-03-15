@@ -1,3 +1,5 @@
+# Description: use this testing suite to test if secret variables are working correctly
+
 import os
 import unittest
 from hexs_rag.initializer.initializer import Initializer
@@ -7,7 +9,7 @@ class MyApiTests(unittest.TestCase):
         api_key = os.environ['LLM_API_KEY']
 
         battery = Initializer( # initializes instance attributes
-        database_path = './database_test' , 
+        database_path = './database_test', 
         db_name = 'chroma', # chroma db name
         collection_name = 'test_collection', 
         llm_name = "mistral", # either mistral or openai 

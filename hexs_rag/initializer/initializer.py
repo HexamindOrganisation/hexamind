@@ -89,10 +89,12 @@ class Initializer:
         """Initializes the LLM client."""
         try:
             llm_adapter = LlmAdapterFactory.create_adapter(
-                self.llm_name, self.llm_api_key, self.model, self.embed_model
+                self.llm_name, 
+                api_key = self.llm_api_key, 
+                model = self.model, 
+                embed_model = self.embed_model
             )
             return LlmAgent(llm_adapter)
-
         except Exception as e:
             logging.error(f"Failed to initialize the LLM client: {e}")
             raise
