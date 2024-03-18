@@ -4,7 +4,9 @@ from hxm_rag.model.modelv2.block import Block
 class Container(Element):
     def __init__(self, parent_document, parent_container = None, level=0):
         super().__init__()
-        self.parent_document_uid = parent_document.uid
+        self.parent_container = parent_container
+        self.parent_document = parent_document
+        self.parent_document_uid = parent_document.uid if parent_document else None
         self.parent_container_uid = parent_container.uid if parent_container else None
         self.children = [] # adjency list
         self.level = level
@@ -22,7 +24,7 @@ class Container(Element):
             if isinstance(child, Container):
                 child.print_structure(indent+1)
             elif isinstance(child, Block):
-                print('  '*(indent+1) + f'Block : {child.uid}, Level : {child.level}, Content : {child.get_content()}')
+                print('  '*(indent+1) + f'Block : {child.uid}, Level : {child.level}')
     
     def add_child(self, child):
         if isinstance(child, Container):
