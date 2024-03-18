@@ -3,6 +3,9 @@ from typing import List, Optional
 from .block import Block
 from .paragraph import Paragraph
 
+from hxm_rag.utils.model.block import separate_1_block_in_n
+
+
 INFINITE = 99999
 
 
@@ -174,3 +177,34 @@ class Container:
                 len(attached_paragraphs) + len(container_paragraphs) :
             ]
         return attached_paragraphs, children
+    
+    ################################OLD ingestor fncs############################################
+    def process_document(self, llm_agent):
+        summarized_docs, embedded_summaries, block_list  = [],[],[]
+        for block in self.blocks:
+            print(block)
+            doc_summary,embedded_summary, individual_block = self.process_block(block, llm_agent)
+            summarized_docs.append(doc_summary)
+            embedded_summaries.append(embedded_summary)
+            block_list.append(individual_block)
+        return summarized_docs, embedded_summaries, block_list
+
+    def process_block(self, block,llm_agent):
+        if len(block.content) > 4000:
+            new_blocks = separate_1_block_in_n(block, max_size=3000)
+            for new_block in new_blocks:
+                return self.summarize(new_block, llm_agent)
+        else:
+            return self.summarize(block, llm_agent)
+
+    def summarize(self, block, llm_agent):
+        summary = llm_agent.summarize_paragraph(
+            prompt=block.content,
+            title_doc=self.title,
+            title_para=block.title,
+        )
+        summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
+        embedded_summary = llm_agent.get_embedding(summary)
+
+        # Return the summary and embedded summary for storage
+        return summary, embedded_summary, block
