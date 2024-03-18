@@ -4,11 +4,65 @@ from hxm_rag.model.model.block import Block
 from hxm_rag.model.model.doc import Doc
 from hxm_rag.utils.model.block import separate_1_block_in_n
 
+# TODO currently the ingestor only ingests summaries
+# ADD ingestion method to the method call
+# pass data to ingestor to ingest...
 
-class Ingestor:
+# class DocumentProcessor: # TODO -> all functionality moved to container
+#     def __init__(self, doc_container, llmagent):
+#         if not isinstance(llmagent, LlmAgent) and llmagent is not None:
+#             raise TypeError("llmagent should be a LlmAgent")
+#         self.doc_container = doc_container
+#         self.llmagent = llmagent
+
+#     def process_document(self):
+#         for block in self.doc_container.blocks:
+#             self.process_block(block)
+
+#     def process_block(self, block):
+#         if len(block.content) > 4000:
+#             new_blocks = separate_1_block_in_n(block, max_size=3000)
+#             for new_block in new_blocks:
+#                 self.summarize(new_block)
+#         else:
+#             self.summarize(block)
+
+#     def summarize(self, block):
+#         summary = self.llmagent.summarize_paragraph(
+#             prompt=block.content,
+#             title_doc=self.doc_container.title,
+#             title_para=block.title,
+#         )
+#         summary = summary.split("<summary>")[1] if "<summary>" in summary else summary
+#         embedded_summary = self.llmagent.get_embedding(summary)
+
+#         # Return the summary and embedded summary for storage
+#         return summary, embedded_summary, block
+
+
+# replaces upload functions
+ 
+class DocumentUploader:
+    def __init__(self, clientdb):
+        self.clientdb = clientdb
+
+    def upload_document(self, summarized_docs, embedded_summaries, block_list):
+        for summary, embedded_summary, block in zip(summarized_docs, embedded_summaries, block_list):
+            self.clientdb.add_document(summary, embedded_summary, block)
+
+
+# def main_rag():
+
+#     for block in doc_container.blocks:
+#         summary, embedded_summary, processed_block = processor.summarize_and_store(block)
+#         uploader.upload_document(summary, embedded_summary, processed_block)
+        
+###############OLD###################################
+##########################################################################
+class Uploader:
     """
-    Ingestor class that serves as the ingestion part of the RAG system
-    Responsible for ingesting documents relevant to input query  
+    Uploader class that serves as the upload part of the RAG system
+    Responsible for uploading documents relevant to input query  
     Attributes:
     - doc_container: doc.container # TODO
     - collection: # TODO
@@ -17,7 +71,10 @@ class Ingestor:
     """
 
     def __init__(
-        self, clientdb: IDbClient, doc_container: Doc = None, llmagent: LlmAgent = None
+        self, 
+        clientdb: IDbClient, 
+        doc_container: Doc = None, 
+        llmagent: LlmAgent = None
     ):
         # if not isinstance(doc_container, Doc.container) and doc_container is not None: # TODO
         #     raise TypeError("doc should be a Doc")
@@ -28,6 +85,7 @@ class Ingestor:
         self.doc_container = doc_container
         self.clientdb = clientdb
         self.llmagent = llmagent
+        self.summary = None
         if self.doc_container:
             self.process_document()
 
@@ -77,7 +135,7 @@ class Ingestor:
         embedded_summary = self.llmagent.get_embedding(summary)
 
         self.clientdb.add_document(summary, embedded_summary, block)
-        print(summary)
+        self.summary = summary
 
     ########################Summarize by Hierarchy fcts#####################################
     def create_hierarchy(self, blocks) -> dict:
@@ -112,7 +170,7 @@ class Ingestor:
             )
         }
 
-    def summarize_by_hierarchy(self):
+    def summarize_by_hierarchy(self): #unused currently
         """
         Summarizes blocks based on their hierarchical levels.
         """
