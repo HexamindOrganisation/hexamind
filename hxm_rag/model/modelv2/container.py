@@ -12,7 +12,12 @@ class Container(Element):
         self.level = level
     
     def get_content(self):
-        return ' '.join(child.get_content() for child in self.children if isinstance(child, Block))
+        content = ''
+        for child in self.children:
+            if isinstance(child, Block):
+                content += child.content + '\n'
+            elif isinstance(child, Container):
+                child.get_content()
     
     def print_structure(self, indent=0): #DFS traversal to print the structure of the container
         if self.level == 0:
