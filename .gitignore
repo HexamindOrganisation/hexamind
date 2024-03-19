@@ -27,5 +27,4 @@ hexs_rag/utils/model/.paragraph 2.py.icloud
 .gitignore
 cropped_image*  
 PDF_image*
-*.ipynb
-data/test_data/JulienFresnel_RapportdeStage_2021-2022.pdf
+*.ipynbs
