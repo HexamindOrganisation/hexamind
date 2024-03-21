@@ -15,8 +15,6 @@ from pdfminer.layout import LTChar, LTFigure, LTTextContainer, LTTextBoxHorizont
 from PIL import Image
 from collections import Counter
 
-from hxm_rag.model.modelv2.container import Container
-from hxm_rag.model.modelv2.block import Block
 from hxm_rag.utils.utils.table_converter import table_converter
 import re
 
