@@ -118,9 +118,9 @@ dependencies:
     - pyarrow==15.0.1
     - pycparser==2.21
     - pycryptodome==3.20.0
-    - pydantic==2.3.0
-    - pydantic-core==2.6.3
-    - pydantic-settings==2.2.1
+    - pydantic
+    - pydantic-core
+    - pydantic-settings
     - pymilvus==2.3.7
     - pypdf==4.1.0
     - pypdfium2==4.28.0
