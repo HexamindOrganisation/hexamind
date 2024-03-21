@@ -1,3 +1,6 @@
+# TODO: PdfReader need to be adjust, implmentation in stand by becaise this is not the critical part of the project
+
+
 import json
 import os
 
@@ -15,6 +18,7 @@ from collections import Counter
 from hxm_rag.model.modelv2.container import Container
 from hxm_rag.model.modelv2.block import Block
 from hxm_rag.utils.utils.table_converter import table_converter
+import re
 
 
 class PdfReader:
@@ -23,11 +27,15 @@ class PdfReader:
         #self.root_container = dict()
         self.most_common_font_sizes = self.most_common_font_size()
         self.body_size = self.most_common_font_sizes[0][0]
+        self.most_common_font_weights = self.most_common_font_weight()
+        self.body_weight = self.most_common_font_weights[0][0]
+        self.font_weights = [font_weight for font_weight, count in self.most_common_font_weights]
         self.font_sizes = [font_size for font_size, count in self.most_common_font_sizes]
         self.max_font_size = self.get_max_font_size()
         self.actual_first_page = actual_first_page
         self.include_image = include_image
         self.font_size_hierarchy = self.get_font_size_hierarchy()
+        self.previous_header = []
 
         self.root_container = self.add_to_structure()
 
@@ -45,6 +53,21 @@ class PdfReader:
         font_size_count = Counter(font_sizes)
         most_common_font_sizes = font_size_count.most_common()
         return most_common_font_sizes
+    
+    def most_common_font_weight(self):
+        font_weights = []
+
+        for page_layout in extract_pages(self.path):
+            for element in page_layout:
+                if isinstance(element, LTTextBoxHorizontal):
+                    for text_line in element:
+                        for element in text_line:
+                            if isinstance(element, LTChar):
+                                font_weights.append(element.fontname)
+        
+        font_weight_count = Counter(font_weights)
+        most_common_font_weights = font_weight_count.most_common()
+        return most_common_font_weights
 
     def get_max_font_size(self):
         #Get the max sized font of the document
@@ -73,6 +96,26 @@ class PdfReader:
         most_common_font_sizes = font_size_count.most_common()
         return most_common_font_sizes[0][0]
     
+    @staticmethod
+    def analyze_line_font_weight(line):
+        # Analyzing the max occuring font weight of the line
+        font_weights = []
+        for element in line:
+            if isinstance(element, LTChar):
+                font_weights.append(element.fontname)
+        font_weight_count = Counter(font_weights)
+        most_common_font_weights = font_weight_count.most_common()
+        return most_common_font_weights[0][0]
+    
+    def update_previous_header(self, font_size, font_weight):
+        self.previous_header.append((font_size, font_weight))
+    
+    def is_similar_to_previous_header(self, font_size, font_weight):
+        for prev_size, prev_weight in self.previous_header:
+            if abs(prev_size - font_size) <= 1 and prev_weight == font_weight:
+                return True
+        return False
+    
     def determine_level(self, font_size, last_font_size, max_font_size):
         # Determine hierarchical level of a line
 
@@ -88,6 +131,47 @@ class PdfReader:
 
         return new_level, is_header
     
+    def determine_levelv2(self, font_size, font_weight):
+        # Determine hierarchical level of a line according to font size and font weight
+
+        if font_size <= self.body_size:
+            return 0, False
+        
+        if font_size > self.body_size and font_weight != self.body_weight:
+            new_level = self.font_size_hierarchy.index(font_size) + 1
+            is_header = True
+        elif font_size > self.body_size and font_weight == self.body_weight:
+            new_level = self.font_size_hierarchy.index(font_size) +1
+            is_header = True
+        elif font_size == self.body_size and font_weight != self.body_weight:
+            new_level = self.font_size_hierarchy.index(font_size) + 1
+            is_header = True
+        else:
+            new_level = 0
+            is_header = False
+        
+        return new_level, is_header
+
+    def determine_levelv3(self, font_size, font_weight,text):
+        level, is_header = self.determine_levelv2(font_size, font_weight)
+        if self.has_numerical_pattern(text):
+            level += 1
+            is_header = True
+        return level, is_header
+    
+    def get_pattern_depth(self, line):
+        pattern = r'^(\d+(\.\d+)*)\s'
+        match = re.match(pattern, line)
+        if match:
+            return match.group(1).count('.') + 1
+        return 0
+    
+    def has_numerical_pattern(self, text):
+        pattern = r'^(\d+(\.\d+)*)\s'
+        if re.match(pattern, text.strip()):
+            return True
+        return False
+    
     def add_to_structure(self):
 
         root_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : 0}
@@ -102,8 +186,13 @@ class PdfReader:
                 if isinstance(element, LTTextBoxHorizontal):
                     for line in element:
                         font_size = self.analyze_line_font_size(line)
+                        font_weight = self.analyze_line_font_weight(line)
+                        pattern = self.get_pattern_depth(line.get_text())
 
-                        level, is_header = self.determine_level(font_size, last_font_size, self.max_font_size)
+                        if pattern > 0 or self.is_similar_to_previous_header(font_size, font_weight):
+                            self.update_previous_header(font_size, font_weight)
+
+                        level, is_header = self.determine_levelv3(font_size, font_weight, line.get_text())
 
                         if is_header:
                             while current_container['level'] >= level :
@@ -117,7 +206,7 @@ class PdfReader:
                             header_container['children'].append(header_block_container)
                             current_container['children'].append(header_container)
                             current_container = header_container
-                        
+                    
                         else:
                             body_text = line.get_text()
                             new_block = {'type' : 'block', 'content' : body_text, 'level' : last_level+1, 'parent' : current_container}

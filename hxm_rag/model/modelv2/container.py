@@ -35,3 +35,17 @@ class Container(Element):
         if isinstance(child, Container):
             child.level = self.level + 1
         self.children.append(child)
+    
+    @classmethod
+    def from_dict(cls, structure_dict, parent_document=None, parent_container = None):
+        root_container = cls(parent_document, parent_container, structure_dict.get('level', 0))
+
+        for child in structure_dict.get('children', []):
+            if child['type'] == 'container':
+                child_container = cls.from_dict(child, parent_document, root_container)
+                root_container.add_child(child_container)
+            elif child['type'] == 'block':
+                block = Block(child.get('content', ''), parent_document, root_container)
+                root_container.add_child(block)
+        
+        return root_container
