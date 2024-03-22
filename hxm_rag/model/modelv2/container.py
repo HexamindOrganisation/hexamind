@@ -10,26 +10,24 @@ class Container(Element):
         self.parent_container_uid = parent_container.uid if parent_container else None
         self.children = [] # adjency list
         self.level = level
-    
+
     def get_content(self):
         content = ''
         for child in self.children:
-            if isinstance(child, Block):
-                content += child.content + '\n'
-            elif isinstance(child, Container):
-                child.get_content()
+            content += child.get_content() + '\n\n'
+        return content
     
     def print_structure(self, indent=0): #DFS traversal to print the structure of the container
         if self.level == 0:
-            print(f'Root container : {self.uid}, Level : {self.level}')
+            print(f'Root container, Level : {self.level}')
         else:
-            print('  '*indent + f'Container : {self.uid}, Level : {self.level}')
+            print('  '*indent + f'Container, Level : {self.level}')
 
         for child in self.children:
             if isinstance(child, Container):
                 child.print_structure(indent+1)
             elif isinstance(child, Block):
-                print('  '*(indent+1) + f'Block : {child.uid}, Level : {child.level}')
+                print('  '*(indent+1) + f'Block, Level : {child.level}')
     
     def add_child(self, child):
         if isinstance(child, Container):
