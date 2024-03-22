@@ -10,12 +10,18 @@ class Container(Element):
         self.parent_container_uid = parent_container.uid if parent_container else None
         self.children = [] # adjency list
         self.level = level
-
+        self.content = ''
+    
     def get_content(self):
-        content = ''
+        content_parts = []
         for child in self.children:
-            content += child.get_content() + '\n\n'
-        return content
+            if isinstance(child, Container):
+                child.get_container_content()
+                content_parts.append(child.content)
+            elif isinstance(child, Block):
+                content_parts.append(child.content)
+        self.content = '\n\n'.join(content_parts)
+    
     
     def print_structure(self, indent=0): #DFS traversal to print the structure of the container
         if self.level == 0:

@@ -13,7 +13,7 @@ from docx.text.paragraph import Paragraph
 class WordReader:
     def __init__(self, path):
         self.path = path
-        self.document_structure = self.get_document_structurev2()
+        self.document_structure = self.get_document_structure()
 
     def iter_block_items(self, parent):
         if isinstance(parent, Document):
@@ -36,7 +36,7 @@ class WordReader:
             table_content += row_text + '\n'
         return table_content.strip()
     
-    def get_document_structurev2(self):
+    def get_document_structure(self):
         doc = docx.Document(self.path)
         root_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : 0}
         current_container = root_container
