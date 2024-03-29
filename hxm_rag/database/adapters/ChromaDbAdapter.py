@@ -6,12 +6,12 @@ class ChromaDbAdapter(IDbClient):
         self.client = client
         self.collection = self.client.get_or_create_collection(collection_name)
 
-    def add_document(self, document, embedding, block):
+    def add_document(self, document, embedding, ids, metadatas):
         self.collection.add(
             documents=[document],
             embeddings=[embedding],
-            ids=[block.index],
-            metadatas=[block.to_dict()],
+            ids=[ids],
+            metadatas=[metadatas],
         )
 
     def get_document(self, document_id):
@@ -27,7 +27,9 @@ class ChromaDbAdapter(IDbClient):
             ids=[block.index],
             metadatas=[block.to_dict()],
         )
-
+    
+    def get(self):
+        return self.collection.get(include=['embeddings', 'documents', 'metadatas'])
+    
     def search(self, query, num_results=10):
-        # TODO implement search
-        pass
+        return self.collection.query(query_embeddings=query, n_results=num_results)
