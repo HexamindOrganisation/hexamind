@@ -1,176 +1,108 @@
-from typing import List, Optional
+from hxm_rag.model.model.element import Element
+from hxm_rag.model.model.block import Block
+from hxm_rag.llm.llm.LlmAgent import LlmAgent
+import uuid
 
-from .block import Block
-from .paragraph import Paragraph
-
-INFINITE = 99999
-
-
-class Container:
-    """
-    A class to represent a container for paragraphs and other containers.
-    
-    Attributes:
-        level (int): The hierarchy level of the container.
-        title (Optional[Paragraph]): The title of the container as a paragraph, if any.
-        paragraphs (List[Paragraph]): The list of paragraphs contained directly within this container.
-        children (List[Container]): The list of child containers contained within this container.
-        index (List[int]): The hierarchical index representing the position of this container.
-        father (Optional[Container]): The parent container of this container.
-        id_ (int): A unique identifier for the container.
-        containers (List[Container]): A list of this container along with all its descendant containers.
-        blocks (List[Block]): A list of block representations of the container's content.
-    
-    Methods:
-        structure: Returns a structure representation of the container and its content.
-        text: Returns the textual representation of the container's title and paragraphs.
-        get_blocks: Generates block objects for the container's content.
-        create_children: Splits paragraphs into attached and container paragraphs, creating child containers as necessary.
-    """
-
-    def __init__(
-        self,
-        paragraphs: List[Paragraph],
-        title: Optional[Paragraph] = None,
-        level: int = 0,
-        index: Optional[List[int]] = None,
-        father: Optional["Container"] = None,
-        id_: int = 0,
-    ) -> None:
+class Container(Element):
+    def __init__(self, parent_document, parent_container = None, level=0):
+        super().__init__()
+        self.parent_container = parent_container
+        self.parent_document = parent_document
+        self.parent_document_uid = parent_document.uid if parent_document else None
+        self.parent_container_uid = parent_container.uid if parent_container else None
+        self.children = [] # adjency list
         self.level = level
-        self.title = title
-        self.paragraphs: List[Paragraph] = []
-        self.children: List[Container] = []
-        self.index = index if index is not None else []
-        self.father = father
-        self.id_ = int(f"1{father.id_ if father else ''}{id_}")
+        self.content = ''
+        self.embeddings = []
+        self.chunk_ids = []
+        self.chunks = []
+        self.metadatas = []
+        self.summary = ''
+        self.summary_embeddings = []
+        self.summary_chunk_id = []
+        self.summary_chunks =  []
+        self.summary_metadatas = []
+    
+    def get_content(self):
+        content_parts = []
+        for child in self.children:
+            if isinstance(child, Container):
+                child.get_content()
+                content_parts.append(child.content)
+            elif isinstance(child, Block):
+                content_parts.append(child.content)
+        self.content = '\n\n'.join(content_parts)
+    
+    
+    def print_structure(self, indent=0): #DFS traversal to print the structure of the container
+        if self.level == 0:
+            print(f'Root container, Level : {self.level}')
+        else:
+            print('  '*indent + f'Container, Level : {self.level}')
 
-        if paragraphs:
-            self.paragraphs, self.children = self.create_children(
-                paragraphs, level, self.index
-            )
+        for child in self.children:
+            if isinstance(child, Container):
+                child.print_structure(indent+1)
+            elif isinstance(child, Block):
+                print('  '*(indent+1) + f'Block, Level : {child.level}')
+    
+    def add_child(self, child):
+        self.children.append(child)
+    
+    
+    @classmethod
+    def from_dict(cls, structure_dict, parent_document=None, parent_container = None):
+        container = cls(parent_document, parent_container, structure_dict.get('level', 0))
 
-        self.containers: List[Container] = [self] + [
-            child for child in self.children for container in child.containers
-        ]
+        for child in structure_dict.get('children', []):
+            if child['type'] == 'container':
+                child_container = cls.from_dict(child, parent_document, container)
+                container.add_child(child_container)
+            elif child['type'] == 'block':
+                block = Block(child.get('content', ''), parent_document, container)
+                container.add_child(block)
+        
+        return container
+    
+    def get_embeddings(self, llm_agent:LlmAgent):
+        if not llm_agent:
+            raise ValueError('LLM agent not set')
 
-        self.blocks = self.get_blocks()
+        max_length = 8192
+  
 
-    @property
-    def structure(self) -> dict:
-        self_structure = {
-            str(self.id_): {
-                "index": str(self.id_),
-                "canMove": True,
-                "isFolder": True,
-                "children": [p.id_ for p in self.paragraphs]
-                + [child.id_ for child in self.children],
-                "canRename": True,
-                "data": {},
-                "level": self.level,
-                "rank": self.index,
-                "title": self.title.text if self.title else "root",
-            }
+        if len(self.content)<=max_length:
+            self.embeddings.append(llm_agent.get_embedding(self.content))
+            self.chunk_ids.append(str(uuid.uuid4()))
+            self.chunks.append(self.content)
+            self.metadatas.append(self.to_dict())
+
+        for child in self.children:
+            if isinstance(child, (Container)):
+                child.get_embeddings(llm_agent)
+    
+    def get_summaries(self, llm_agent:LlmAgent):
+        if not llm_agent:
+            raise ValueError('LLM agent not set')
+    
+        if self.content:
+            self.summary = llm_agent.summarize_paragraph(self.content)
+            self.summary = self.summary.split('<summary>')[1] if '<summary>' in self.summary else self.summary
+            self.summary_embeddings.append(llm_agent.get_embedding(self.summary))
+            self.summary_chunk_id.append(str(uuid.uuid4()))
+            self.summary_chunks.append(self.summary)
+            self.summary_metadatas.append(self.to_dict())
+
+        
+        for child in self.children:
+            if isinstance(child, (Container)):
+                child.get_summaries(llm_agent)
+
+    def to_dict(self):
+        return {
+            'uid' : self.uid if self.uid else '',
+            'parent_document_uid' : self.parent_document_uid if self.parent_document_uid else '',
+            'parent_container_uid' : self.parent_container_uid if self.parent_container_uid else '',
+            'level' : self.level if self.level else 0,
+            'children' : str([child.uid for child in self.children])
         }
-        paragraphs_structure = [p.structure for p in self.paragraphs]
-        structure = [self_structure] + paragraphs_structure
-        for child in self.children:
-            structure += child.structure
-        return structure
-
-    @property
-    def text(self) -> str:
-        text = f"Title {self.level}: {self.title.text}\n" if self.title else ""
-        for paragraph in self.paragraphs:
-            text += f"{paragraph.text}\n"
-        for child in self.children:
-            text += child.text
-        return text
-
-    def _prepare_title_text(self, title: Paragraph) -> str:
-        """Cleans the title text by removing carriage returns and newlines."""
-        return title.text.replace("\r", "").replace("\n", "")
-
-    def _accumulate_ancestor_titles(self, initial_content: str) -> str:
-        """Accumulates titles from ancestor containers, appending them to the initial content."""
-        content = initial_content
-        ancestor = self.father
-        while ancestor and isinstance(ancestor, Container):
-            if ancestor.title:
-                content = f"{self._prepare_title_text(ancestor.title)}/{content}"
-            ancestor = ancestor.father
-        return content
-
-    def  get_blocks(self) -> List[Block]:  # this isn't the same method as the one in Doc
-        """Generates block objects for the container's content, including handling of titles."""
-        block = Block(level=self.level, index=self.index)
-        if self.title:
-            cleaned_title = self._prepare_title_text(self.title)
-            block.title = cleaned_title
-            block.content = f"{cleaned_title}/"
-        block.content = self._accumulate_ancestor_titles(block.content) + " :\n\n"
-        block_filled = any(not paragraph.blank for paragraph in self.paragraphs)
-        blocks = [block] if block_filled else []
-        for child in self.children:
-            blocks.extend(child.get_blocks())
-        return blocks
-
-    def _classify_paragraphs(
-        self, paragraphs: List[Paragraph]
-    ) -> (List[Paragraph], List[Paragraph], bool, int):
-        """Classifies paragraphs into those to be attached directly and those to be contained, tracking hierarchy changes."""
-        attached_paragraphs = []
-        container_paragraphs = []
-        in_children = False
-        current_level = INFINITE
-        for paragraph in paragraphs:
-            if not in_children and not paragraph.is_structure:
-                attached_paragraphs.append(paragraph)
-            else:
-                in_children = True
-                if paragraph.blank:
-                    continue
-                if paragraph.is_structure and paragraph.level <= current_level:
-                    return (
-                        attached_paragraphs,
-                        container_paragraphs,
-                        True,
-                        paragraph.level,
-                    )
-                else:
-                    container_paragraphs.append(paragraph)
-        return attached_paragraphs, container_paragraphs, in_children, current_level
-
-    def _create_child_container(
-        self,
-        paragraphs: List[Paragraph],
-        title: Optional[Paragraph],
-        level: int,
-        rank: List[int],
-        child_id: int,
-    ):
-        """Creates a child container with given paragraphs, title, and hierarchy information."""
-        return Container(paragraphs, title, level, rank, self, child_id)
-
-    def create_children(self, paragraphs: List[Paragraph], level: int, rank: List[int]):
-        """Splits paragraphs into attached and container paragraphs, creating child containers as necessary."""
-        children = []
-        child_id = 0
-        while paragraphs:
-            (
-                attached_paragraphs,
-                container_paragraphs,
-                in_children,
-                current_level,
-            ) = self._classify_paragraphs(paragraphs)
-            if container_paragraphs or self.title:
-                children.append(
-                    self._create_child_container(
-                        container_paragraphs, self.title, current_level, rank, child_id
-                    )
-                )
-                child_id += 1
-            paragraphs = paragraphs[
-                len(attached_paragraphs) + len(container_paragraphs) :
-            ]
-        return attached_paragraphs, children
