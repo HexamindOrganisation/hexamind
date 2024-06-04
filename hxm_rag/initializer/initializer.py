@@ -6,8 +6,6 @@
 import logging
 import os
 
-import chromadb
-
 from hxm_rag.database.adapters.AbstractDb import IDbClient
 from hxm_rag.database.adapters.DbAdapterFactory import DbAdapterFactory
 from hxm_rag.llm.adapters import LlmAdapterFactory
