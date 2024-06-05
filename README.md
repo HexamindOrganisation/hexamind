@@ -8,7 +8,7 @@ This package has been created by Hexamind to provide a simple and easy way to us
 
 - **Website**: https://www.hexamind.ai/
 - **Documentation**: https://hexamind.github.io/hexamind/
-- **Source Code**: https://github.com/HexamindOrganisation/hexamind
+- **Source Code**: https://hexamindorganisation.github.io/hexamind/
 
 
 
