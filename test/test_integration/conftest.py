@@ -3,7 +3,7 @@ import os
 import pytest
 import shutil
 
-from hxm_rag.initializer.initializer import Initializer
+from hexamind.initializer.initializer import Initializer
 # TODO add additional teardown if required
 
 @pytest.fixture

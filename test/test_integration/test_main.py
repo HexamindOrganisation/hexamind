@@ -3,11 +3,11 @@
 import os 
 import pytest
 
-from hxm_rag.initializer.initializer import Initializer
-from hxm_rag.database.ingestion.ingestor import DocumentUploader
-from hxm_rag.llm.llm.LlmAgent import LlmAgent
-from hxm_rag.retriever.retriever import Retriever
-from hxm_rag.model.model.doc import Doc 
+from hexamind.initializer.initializer import Initializer
+from hexamind.database.ingestion.ingestor import DocumentUploader
+from hexamind.llm.llm.LlmAgent import LlmAgent
+from hexamind.retriever.retriever import Retriever
+from hexamind.model.model.doc import Doc 
 
 from dotenv import load_dotenv
 

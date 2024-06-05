@@ -3,9 +3,9 @@
 import pytest
 import docx
 
-from hxm_rag.model.model.doc import Doc
-from hxm_rag.model.readers import WordReader
-from hxm_rag.model.readers.HTMLreader import HtmlReader
+from hexamind.model.model.doc import Doc
+from hexamind.model.readers import WordReader
+from hexamind.model.readers.HTMLreader import HtmlReader
 
 ########HTML
 @pytest.fixture

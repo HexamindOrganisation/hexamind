@@ -1,8 +1,8 @@
 import pytest
 import os
-from hxm_rag.llm.adapters.LlmAdapterFactory import LlmAdapterFactory
-from hxm_rag.llm.adapters.api.OpenAiApiAdapter import OpenAiClientAdapter
-from hxm_rag.llm.adapters.api.MistralApiAdapter import MistralClientAdapter
+from hexamind.llm.adapters.LlmAdapterFactory import LlmAdapterFactory
+from hexamind.llm.adapters.api.OpenAiApiAdapter import OpenAiClientAdapter
+from hexamind.llm.adapters.api.MistralApiAdapter import MistralClientAdapter
 from unittest.mock import patch, MagicMock
 from unittest.mock import create_autospec
 

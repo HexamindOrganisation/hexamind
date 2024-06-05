@@ -1,6 +1,5 @@
 
-from hxm_rag.model.readers.HTMLreader import HtmlReader
-from hxm_rag.model.model.paragraph import Paragraph
+from hexamind.model.readers.HtmlReader import HtmlReader
 from bs4 import BeautifulSoup
 import pytest
 

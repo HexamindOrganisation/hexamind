@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import create_autospec, ANY
-from hxm_rag.llm.adapters.AbstractLlm import ILlmClient
-from hxm_rag.llm.llm.LlmAgent import LlmAgent
+from hexamind.llm.adapters.AbstractLlm import ILlmClient
+from hexamind.llm.llm.LlmAgent import LlmAgent
 
 @pytest.fixture
 def mock_llm_client():

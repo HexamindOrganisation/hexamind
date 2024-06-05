@@ -2,7 +2,7 @@
 
 import os
 import unittest
-from hxm_rag.initializer.initializer import Initializer
+from hexamind.initializer.initializer import Initializer
 
 class MyApiTests(unittest.TestCase):
     def test_something_with_api(self):

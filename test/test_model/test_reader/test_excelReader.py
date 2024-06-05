@@ -1,5 +1,5 @@
-from hxm_rag.model.readers import ReaderExcel
-from hxm_rag.model.model.paragraph import Paragraph
+from hexamind.model.readers import ReaderExcel
+from hexamind.model.model.paragraph import Paragraph
 import pytest
 import pandas as pd
 
