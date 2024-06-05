@@ -6,11 +6,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/initializer/</loc>
-         <lastmod>2024-06-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Database/chroma_db_adapter/</loc>
          <lastmod>2024-06-05</lastmod>
          <changefreq>daily</changefreq>
