@@ -13,7 +13,7 @@ def setup_env_file(destination_directory=None):
         destination_directory.mkdir(parents=True, exist_ok=True)
 
     template_file = pkg_resources.resource_filename(
-        __name__, "hxm_rag/utils/utils/_env/.env.template"
+        __name__, "hexamind/utils/utils/_env/.env.template"
     )
     env_file = destination_directory / ".env"
 

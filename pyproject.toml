@@ -25,4 +25,4 @@ dependencies = [
 ]
 
 [project.scripts]
-hexamind-env = "cli.py:main"
+hexamind-env = "hexamind.cli:main"
