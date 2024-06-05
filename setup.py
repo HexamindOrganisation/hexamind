@@ -15,5 +15,15 @@ setup(
         ]
     },
     python_requires='>=3.10',
+    install_requires=[
+        'beautifulsoup4==4.12.3',
+        'chromadb==0.5.0',
+        'elasticsearch==8.12.1',
+        'mistralai==0.3.0',
+        'openai==1.31.0',
+        'python_docx==1.1.0',
+        'Requests==2.32.3',
+        'setuptools==68.2.2'
+    ]
 )
     
