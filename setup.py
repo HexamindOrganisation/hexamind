@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'hexamind-env=cli.py:main'
+            'hexamind-env=hexamind.cli:main'
         ]
     },
     python_requires='>=3.10',
