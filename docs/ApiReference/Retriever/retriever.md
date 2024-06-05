@@ -37,3 +37,10 @@ retriever = Retriever(db_client, llm_agent)
 blocks = retriever.similarity_search("How to create a new document?")
 
 ```
+
+### How to import
+
+```py
+
+from hexamind import Retriever
+```

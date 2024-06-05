@@ -38,3 +38,11 @@ Get the embeddings of the text.
 **Parameters:**
 
 - `input` (str): The text to get the embeddings from.
+
+### How to import 
+
+```py
+
+from hexamind.llm.adapters import MistralClientAdapter
+
+```

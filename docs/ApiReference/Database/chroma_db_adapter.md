@@ -118,3 +118,9 @@ This method is exclusive to the `ChromaDbAdapter` class. It is used to get all t
 db_client = ChromaDbAdapter(database_path='path/to/chroma.db')
 documents = db_client.get()
 ```
+
+### How to import
+
+```py
+from hexamind.database import ChromaDbAdapter
+```

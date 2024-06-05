@@ -37,7 +37,7 @@ initializer = Initializer(
 
 ```py
 
-<class 'hxm_rag.initializer.initializer.Initializer'>
+<class 'hexamind.initializer.initializer.Initializer'>
 ```
 ### Methods
 
@@ -64,7 +64,7 @@ print(type(db_adapter))
 
 ```py
 
-<class 'hxm_rag.database.adapters.ChromaDbAdapter.ChromaDbAdapter'>
+<class 'hexamind.database.adapters.ChromaDbAdapter.ChromaDbAdapter'>
 
 ```
 
@@ -91,6 +91,13 @@ print(type(llm_agent))
 
 ```py
 
-<class 'hxm_rag.llm.llm.LlmAgent.LlmAgent'>
+<class 'hexamind.llm.llm.LlmAgent.LlmAgent'>
 
+```
+
+### How to import
+
+```py
+
+from hexamind import Initializer
 ```

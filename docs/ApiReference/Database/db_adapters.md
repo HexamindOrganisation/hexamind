@@ -42,9 +42,14 @@ print(type(db_adapter))
 
 ###### Output
 ```py 
-<class 'hxm_rag.database.adapters.ChromaDbAdapter.ChromaDbAdapter'>
+<class 'hexamind.database.adapters.ChromaDbAdapter.ChromaDbAdapter'>
 ```
 
+### How to import
+
+```py
+from hexamind.database import DbAdapterFactory
+```
 
 ## IDbClient
 

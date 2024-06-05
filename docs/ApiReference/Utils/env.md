@@ -8,7 +8,7 @@ The library provided also a utils to automatically generate a .env.template file
 
 ```bash
 
-hxmrag-env --destination /path/to/destination/folder/for/env/ 
+hexamind-env --destination /path/to/destination/folder/for/env/ 
 
 ```
 

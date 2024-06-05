@@ -110,3 +110,11 @@ llm_agent = LlmAgent(client=llm_adapter)
 embeddings = llm_agent.get_embeddings(text='This is a text to get the embeddings.')
 
 ```
+
+### How to import
+
+```py
+
+from hexamind import LlmAgent
+
+```

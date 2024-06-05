@@ -113,3 +113,11 @@ document = Document(dict_structure)
 ingestor.ingest_summaries(document=document)
 
 ```
+
+### How to import
+
+```py
+
+from hexamind import Ingestor
+
+```

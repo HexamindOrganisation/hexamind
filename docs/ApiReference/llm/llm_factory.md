@@ -49,3 +49,11 @@ llm_adapter = LlmAdapterFactory.create_adapter(llm_name='mistral', on_premise=Fa
 llm_agent = LlmAgent(client=llm_adapter)
 
 ```
+
+### How to import 
+
+```py
+
+from hexamind.llm.adapters import LlmAdapterFactory
+
+```

@@ -22,3 +22,10 @@ Create a chat message based on the model type.
 
 - `role` (str): The role of the message. ('user' or 'agent')
 - `content` (str): The content of the message.
+
+### How to import
+
+```py
+
+from hexamind.llm.adapters import ChatMessageFactory
+```

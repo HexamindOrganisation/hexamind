@@ -14,3 +14,11 @@ Utils with some function used to create the appropriate chat message for the cli
 **Returns**
 
 - `ChatMessage`: The final chat message.
+
+### How to import 
+
+```py
+
+from hexamind.llm.utils import MistralChatMessage
+
+```
