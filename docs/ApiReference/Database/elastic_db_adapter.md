@@ -1,0 +1,7 @@
+# ElasticSearchAdapter
+
+*Documentation coming soon.*
+
+```
+
+```

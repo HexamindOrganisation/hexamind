@@ -15,7 +15,7 @@ class ChromaDbAdapter(IDbClient):
         )
 
     def get_document(self, document_id):
-        self.collection.get(ids=[document_id])
+        return self.collection.get(ids=[document_id])
 
     def delete_document(self, document_id):
         self.collection.delete(ids=[document_id])

@@ -11,6 +11,30 @@ from docx.table import Table, _Cell
 from docx.text.paragraph import Paragraph
 
 class WordReader:
+    """
+    This class reads a Word document and extracts its structure into a nested dictionary.
+
+    The structure of the dictionary is as follows:
+
+    {
+        'type' : 'container' or 'block',
+        'children' : [list of nested dictionaries],
+        'content' : None or string,
+        'level' : int,
+        'parent' : parent dictionary
+    }
+
+    The 'type' key indicates if the dictionary represents a container or a block.
+
+    The 'children' key contains a list of nested dictionaries that represent the children of the current dictionary.
+
+    The 'content' key contains the text content of the block or container. If the dictionary represents a container, the content is None.
+
+    The 'level' key contains the level of the block or container in the hierarchy.
+
+    The 'parent' key contains a reference to the parent dictionary in the hierarchy.
+
+    """
     def __init__(self, path):
         self.path = path
 
@@ -36,6 +60,12 @@ class WordReader:
         return table_content.strip()
     
     def get_document_structure(self):
+        """
+        Main function to extract the structure of the Word document into a nested dictionary.
+
+        Returns:
+        - A nested dictionary representing the structure of the Word document.
+        """
         doc = docx.Document(self.path)
         root_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : 0}
         current_container = root_container

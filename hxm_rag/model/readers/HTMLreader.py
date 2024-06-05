@@ -2,6 +2,29 @@ from bs4 import BeautifulSoup
 import requests
 
 class HtmlReader:
+    """
+    This class reads a HTLM document and extracts its structure into a nested dictionary.
+
+    The structure of the dictionary is as follows:
+    {
+        'type' : 'container' or 'block',
+        'children' : [list of nested dictionaries],
+        'content' : None or string,
+        'level' : int,
+        'parent' : parent dictionary
+    }
+
+    The 'type' key indicates if the dictionary represents a container or a block.
+
+    The 'children' key contains a list of nested dictionaries that represent the children of the current dictionary.
+
+    The 'content' key contains the text content of the block or container. If the dictionary represents a container, the content is None.
+
+    The 'level' key contains the level of the block or container in the hierarchy.
+
+    The 'parent' key contains a reference to the parent dictionary in the hierarchy.
+
+    """
     def __init__(self, html_content):
         self.soup = BeautifulSoup(html_content, 'html.parser')
         self.document_structure = self.get_document_structure()
@@ -19,6 +42,12 @@ class HtmlReader:
         return table_content.strip()
     
     def get_document_structure(self):
+        """
+        This method extracts the structure of the HTML document into a nested dictionary.
+
+        Returns:
+        - A nested dictionary representing the structure of the HTML document.
+        """
         root_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : 0}
         hierarchy = [root_container]
 
