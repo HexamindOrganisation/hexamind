@@ -14,6 +14,6 @@ setup(
             'hexamind-env=cli.py:main'
         ]
     },
-    python_requires='>=3.12',
+    python_requires='>=3.10',
 )
     

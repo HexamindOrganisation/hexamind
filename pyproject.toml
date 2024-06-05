@@ -1,18 +1,18 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hexs_rag"
+name = "hexamind"
 version = "0.1"
-authors=[
+description = "Hexamind library to implement RAG solutions"
+readme = "README.md"
+readme-content-type = "text/markdown"
+requires-python = ">=3.10"
+authors = [
     {name = "Julien Fresnel", email = "julien.fresnel@hexamind.ai"},
     {name = "Max Beales", email = "max.beales@hexamind.ai"}
 ]
 
-dependencies = [
-    # List of dependencies
-]
-
 [project.scripts]
-hexsrag-env = "cli:main"
+hexamind-env = "cli.py:main"
