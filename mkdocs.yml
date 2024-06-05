@@ -3,7 +3,7 @@ site_description: Documentation for the Hxm_rag project
 site_author: Hexamind
 repo_url: https://github.com/HexamindOrganisation/hxm_rag
 repo_name: Hxm_rag
-
+site_url: https://hexamindorganisation.github.io/hxm_rag/
 theme:
   name: material
   language: en
