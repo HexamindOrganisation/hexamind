@@ -6,8 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "hexamind"
 version = "0.1"
 description = "Hexamind library to implement RAG solutions"
-readme = "README.md"
-readme-content-type = "text/markdown"
+readme ={ file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 authors = [
     {name = "Julien Fresnel", email = "julien.fresnel@hexamind.ai"},
