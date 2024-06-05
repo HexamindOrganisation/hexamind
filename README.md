@@ -1,6 +1,8 @@
-## RAG library
+![Hexamind](branding/hexamind.png)
 
-## Installation steps- How to use -etc
+# Hexamind library 
+
+## 
 
 
 

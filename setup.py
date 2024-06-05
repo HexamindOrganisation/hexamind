@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='hxm_rag',
+    name='hexamind',
     version='0.1',
     author='Julien Fresnel, Max Beales',
     author_email='julien.fresnel@hexamind.ai, max.beales@hexamind.ai',
@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'hxmrag-env=cli.py:main'
+            'hexamind-env=cli.py:main'
         ]
     },
     python_requires='>=3.12',

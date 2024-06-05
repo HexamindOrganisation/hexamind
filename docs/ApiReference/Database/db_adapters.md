@@ -4,7 +4,7 @@
 
 The database adapters are responsible for interfacing with vector databases. 
 
-Currently, hxm_rag supports only two databases which are chromadb and Elasticsearch. Please note that the Elasticsearch database is still under development.
+Currently, hexamind supports only two databases which are chromadb and Elasticsearch. Please note that the Elasticsearch database is still under development.
 
 A factory class is  available to create the database adapter based on the database type.
 
