@@ -28,3 +28,4 @@ The 'parent' key contains a reference to the parent dictionary in the hierarchy.
 
 from .HtmlReader import HtmlReader
 from .WordReader import WordReader
+from .IReader import IReader
