@@ -56,12 +56,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/ireader/</loc>
+         <lastmod>2024-06-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/markdown_reader/</loc>
          <lastmod>2024-06-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/word_reader/</loc>
+         <lastmod>2024-06-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Transformer/mk_transformer/</loc>
          <lastmod>2024-06-06</lastmod>
          <changefreq>daily</changefreq>
     </url>

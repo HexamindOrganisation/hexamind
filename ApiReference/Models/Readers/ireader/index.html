@@ -12,24 +12,28 @@
         <meta name="author" content="Hexamind">
       
       
-        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Database/db_adapters/">
+        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/ireader/">
       
       
+        <link rel="prev" href="../../Models/block/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+        <link rel="next" href="../word_reader/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
     
     
       
-        <title>Database Adpaters Factory - Hexamind</title>
+        <title>IReader - Hexamind</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#database-adpaters-factory" class="md-skip">
+        <a href="#ireader" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
+    <a href="../../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Database Adpaters Factory
+              IReader
             
           </span>
         </div>
@@ -195,7 +199,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
+    <a href="../../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -225,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -280,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../UserGuide/getting_started/" class="md-nav__link">
+      <a href="../../../../UserGuide/getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -301,7 +305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../UserGuide/installation/" class="md-nav__link">
+      <a href="../../../../UserGuide/installation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -326,17 +330,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -350,7 +356,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -361,17 +367,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
         
           
           <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
@@ -385,7 +393,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -434,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/document/" class="md-nav__link">
+      <a href="../../Models/document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -490,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/element/" class="md-nav__link">
+      <a href="../../Models/element/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -511,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/container/" class="md-nav__link">
+      <a href="../../Models/container/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -532,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/block/" class="md-nav__link">
+      <a href="../../Models/block/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -566,17 +574,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
@@ -590,7 +600,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_2">
             <span class="md-nav__icon md-icon"></span>
             Readers
@@ -601,10 +611,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../Models/Readers/ireader/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    IReader
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -613,6 +643,61 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to use it
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to use it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -625,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/word_reader/" class="md-nav__link">
+      <a href="../word_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -646,7 +731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/html_reader/" class="md-nav__link">
+      <a href="../html_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -667,7 +752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/markdown_reader/" class="md-nav__link">
+      <a href="../markdown_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -731,7 +816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Transformer/mk_transformer/" class="md-nav__link">
+      <a href="../../Transformer/mk_transformer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -806,48 +891,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dbadapterfactory" class="md-nav__link">
+  <a href="#how-to-use-it" class="md-nav__link">
     <span class="md-ellipsis">
-      DbAdapterFactory
+      How to use it
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="DbAdapterFactory">
+    <nav class="md-nav" aria-label="How to use it">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create_adapter" class="md-nav__link">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
-      create_adapter
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="create_adapter">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#usage-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage Example
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Usage Example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output
+      Example
     </span>
   </a>
   
@@ -855,34 +911,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-import" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to import
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#idbclient" class="md-nav__link">
-    <span class="md-ellipsis">
-      IDbClient
-    </span>
-  </a>
   
 </li>
       
@@ -904,56 +932,20 @@
   
 
 
-<h1 id="database-adpaters-factory">Database Adpaters Factory</h1>
+<h1 id="ireader">IReader</h1>
 <h2 id="overview">Overview</h2>
-<p>The database adapters are responsible for interfacing with vector databases. </p>
-<p>Currently, hexamind supports only two databases which are chromadb and Elasticsearch. Please note that the Elasticsearch database is still under development.</p>
-<p>A factory class is  available to create the database adapter based on the database type.</p>
-<h2 id="dbadapterfactory">DbAdapterFactory</h2>
-<p>The <code>DbAdapterFactory</code> class is used tp instanciate the proper database adapter based on the database type.</p>
-<h4 id="create_adapter">create_adapter</h4>
-<p>Create a database adapter based on the database type.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>db_name</code> (str): The name of the database. ('chroma' or 'elasticsearch')</li>
-<li><code>collection_name</code> (str): The name of the collection in the database. Default is None.</li>
-<li><code>kwargs</code> (dict): The keyword arguments to pass to the database adapter.<ul>
-<li>ChromaDbAdapter:<ul>
-<li><code>database_path</code> (str): The path to the chroma file.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Returns:</strong></p>
-<ul>
-<li>Database Adapter (<code>IDbClient</code>): Returns on instance of the database adpater. This type will always be an <code>IDbClient</code>.  <ul>
-<li><code>ChromaDbAdapter</code>: If the db_name is 'chroma'.</li>
-<li><code>ElasticSearchAdapter</code>: If the db_name is 'elasticsearch'.</li>
-</ul>
-</li>
-</ul>
-<h5 id="usage-example">Usage Example</h5>
-<h6 id="code">Code</h6>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">db_adapter</span> <span class="o">=</span> <span class="n">DbAdapterFactory</span><span class="o">.</span><span class="n">create_adapter</span><span class="p">(</span><span class="n">db_name</span><span class="o">=</span><span class="s1">&#39;chroma&#39;</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;chunks&#39;</span><span class="p">,</span> <span class="n">database_path</span><span class="o">=</span><span class="s1">&#39;path/to/chroma.db&#39;</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">db_adapter</span><span class="p">))</span>
+<p>This is the interface that all readers should implement. It has a single method <code>convert_to_markdown</code> that should be implemented by the child classes.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>You can create your own reader class by inheriting from this interface and implementing the <code>convert_to_markdown</code> method.</p>
+<h3 id="example">Example</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">MyReader</span><span class="p">(</span><span class="n">IReader</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">convert_to_markdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="c1"># Your implementation here</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="k">pass</span>
 </span></code></pre></div>
-<h6 id="output">Output</h6>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">hexamind</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">adapters</span><span class="o">.</span><span class="n">ChromaDbAdapter</span><span class="o">.</span><span class="n">ChromaDbAdapter</span><span class="s1">&#39;&gt;</span>
-</span></code></pre></div>
-<h3 id="how-to-import">How to import</h3>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">hexamind.database</span> <span class="kn">import</span> <span class="n">DbAdapterFactory</span>
-</span></code></pre></div>
-<h2 id="idbclient">IDbClient</h2>
-<p>Each of the adapters implement these methods from the <code>IDbClient</code> class. Basically all of the CRUD operations.</p>
-<ul>
-<li><code>add_document</code>: Add a document to the database.</li>
-<li><code>get_document</code>: Get a document from the database.</li>
-<li><code>delete_document</code>: Delete a document from the database.</li>
-<li><code>update_document</code>: Update a document in the database.</li>
-<li><code>search</code>: Search for documents in the database.</li>
-</ul>
 
 
 
@@ -978,6 +970,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../Models/block/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Block">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Block
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../word_reader/" class="md-footer__link md-footer__link--next" aria-label="Next: WordReader">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                WordReader
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -1011,10 +1041,10 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "diagrams"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
       
