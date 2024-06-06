@@ -63,7 +63,7 @@ You can then convert the nested dictionnary into the hxm_rag Document object.
 
 ```py
 
-from hxm_rag.model import Document
+from hexamind import Document
 
 doc = Document(doc_structure)
 
@@ -74,7 +74,8 @@ doc = Document(doc_structure)
 You can use select the proper agent in many ways, feel free to explore the [llm](llm.md) module to see the different model supported by the library. 
 
 ```py
-from llm import MistralClientAdapter, LlmAgent
+from hexamind.llm.adapters import MistralClientAdapter
+from hexamind import LlmAgent
 from mistralai import MistralClient
 
 # Create an instance of the MistralClient class
