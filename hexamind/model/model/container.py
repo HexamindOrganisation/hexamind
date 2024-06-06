@@ -2,7 +2,9 @@ from hexamind.model.model.element import Element
 from hexamind.model.model.block import Block
 from hexamind.llm.llm.LlmAgent import LlmAgent
 import uuid
-
+from graphviz import Digraph
+import platform
+import os
 class Container(Element):
     def __init__(self, parent_document, parent_container = None, level=0):
         super().__init__()
@@ -34,21 +36,66 @@ class Container(Element):
         self.content = '\n\n'.join(content_parts)
     
     
-    def print_structure(self, indent=0): #DFS traversal to print the structure of the container
+    def _get_structure_string(self, prefix='', is_last=True): #DFS traversal to print the structure of the container
+        structure_str = ''
         if self.level == 0:
-            print(f'Root container, Level : {self.level}')
+            structure_str += 'Root container, Level: 0\n'
         else:
-            print('  '*indent + f'Container, Level : {self.level}')
+            connector = '└── ' if is_last else '├── '
+            structure_str += f'{prefix}{connector}Container, Level: {self.level}\n'
+            prefix += '    ' if is_last else '│   '
 
-        for child in self.children:
+        child_count = len(self.children)
+        for i, child in enumerate(self.children):
+            is_last_child = (i == child_count - 1)
             if isinstance(child, Container):
-                child.print_structure(indent+1)
+                structure_str += child._get_structure_string(prefix, is_last_child)
             elif isinstance(child, Block):
-                print('  '*(indent+1) + f'Block, Level : {child.level}')
+                connector = '└── ' if is_last_child else '├── '
+                structure_str += f'{prefix}{connector}Block, Level: {child.level}\n'
+
+        return structure_str
+
     
     def add_child(self, child):
         self.children.append(child)
     
+    def __str__(self):
+        return self._get_structure_string()
+    
+    def __add_to_graph(self, dot, parent_id=None):
+        node_id = self.uid
+        label = f'Container\nLevel: {self.level}' if self.level != 0 else 'Root\nContainer'
+        dot.node(node_id, label)
+
+        if parent_id:
+            dot.edge(parent_id, node_id)
+
+        for child in self.children:
+            if isinstance(child, Container):
+                child.__add_to_graph(dot, node_id)
+            elif isinstance(child, Block):
+                child_id = child.uid
+                dot.node(child_id, f'Block\nLevel: {child.level}')
+                dot.edge(node_id, child_id)
+    
+    def visualize(self, filename='container_structure'):
+        dot = Digraph(comment='Container Structure')
+        self.__add_to_graph(dot)
+        rendered_path = dot.render(filename, format='pdf', view=True)
+
+        current_os = platform.system()
+
+        try: 
+            if current_os == 'Windows':
+                os.startfile(rendered_path)
+            elif current_os == 'Darwin':
+                os.system(f'open {rendered_path}')
+            elif current_os == 'Linux':
+                os.system(f'xdg-open {rendered_path}')
+        except Exception as e:
+            print(f'Error opening the rendered graph: {e}')
+            print('please open the file manually')
     
     @classmethod
     def from_dict(cls, structure_dict, parent_document=None, parent_container = None):
