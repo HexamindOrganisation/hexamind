@@ -54,9 +54,12 @@ nav:
                   - Container: ApiReference/Models/Models/container.md
                   - Block: ApiReference/Models/Models/block.md
           - Readers:
+              - IReader: ApiReference/Models/Readers/ireader.md
               - WordReader: ApiReference/Models/Readers/word_reader.md
               - HtmlReader: ApiReference/Models/Readers/html_reader.md
               - MardownReader: ApiReference/Models/Readers/markdown_reader.md
+          - Transformer:
+            - MkTransformer: ApiReference/Models/Transformer/mk_transformer.md
       #- Retriever: ApiReference/Retriever/retriever.md
       #- Utils: 
           #- Llm: 
