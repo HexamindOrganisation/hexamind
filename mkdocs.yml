@@ -28,24 +28,24 @@ nav:
       - Getting Started: UserGuide/getting_started.md
       - Installation: UserGuide/installation.md
   - API Reference:
-      - Database:
-          - Adapters:
-              - Factory : ApiReference/Database/db_adapters.md
-              - ChromaDbAdapter : ApiReference/Database/chroma_db_adapter.md
-              - ElasticSearchAdapter : ApiReference/Database/elastic_db_adapter.md
-          - Ingestion: ApiReference/Database/ingestion.md
-      - Initializer: ApiReference/Initializer/initializer.md
-      - Llm: 
-          - Adapters: 
-              - Factory: ApiReference/llm/llm_factory.md
-              - Adapters: 
-                  - ILlmClient: ApiReference/llm/illm_client.md
-                  - API models: 
-                      - MistralClientAdapter: ApiReference/llm/mistral_client.md
-                      - OpenAiClientAdapter: ApiReference/llm/openai_client.md
-                  - On Premise models: ApiReference/llm/on_premise_client.md
-                  - ChatMessageFactory: ApiReference/llm/chat_message_factory.md
-          - Llm Agent: ApiReference/llm/llm_agent.md
+      #- Database:
+          #- Adapters:
+              #- Factory : ApiReference/Database/db_adapters.md
+              #- ChromaDbAdapter : ApiReference/Database/chroma_db_adapter.md
+              #- ElasticSearchAdapter : ApiReference/Database/elastic_db_adapter.md
+          #- Ingestion: ApiReference/Database/ingestion.md
+      #- Initializer: ApiReference/Initializer/initializer.md
+      #- Llm: 
+          #- Adapters: 
+              #- Factory: ApiReference/llm/llm_factory.md
+              #- Adapters: 
+                  #- ILlmClient: ApiReference/llm/illm_client.md
+                  #- API models: 
+                      #- MistralClientAdapter: ApiReference/llm/mistral_client.md
+                      #- OpenAiClientAdapter: ApiReference/llm/openai_client.md
+                  #- On Premise models: ApiReference/llm/on_premise_client.md
+                  #- ChatMessageFactory: ApiReference/llm/chat_message_factory.md
+          #- Llm Agent: ApiReference/llm/llm_agent.md
       - Models:
           - Models:
               - Document: ApiReference/Models/Models/document.md
@@ -57,13 +57,13 @@ nav:
               - WordReader: ApiReference/Models/Readers/word_reader.md
               - HtmlReader: ApiReference/Models/Readers/html_reader.md
               - MardownReader: ApiReference/Models/Readers/markdown_reader.md
-      - Retriever: ApiReference/Retriever/retriever.md
-      - Utils: 
-          - Llm: 
-              - Template: ApiReference/Utils/Llm/template.md
-              - ChatMessage: ApiReference/Utils/Llm/chat_message.md
-          - Utils:
-              - _env: ApiReference/Utils/env.md
+      #- Retriever: ApiReference/Retriever/retriever.md
+      #- Utils: 
+          #- Llm: 
+              #- Template: ApiReference/Utils/Llm/template.md
+              #- ChatMessage: ApiReference/Utils/Llm/chat_message.md
+          #- Utils:
+              
 
 
 markdown_extensions:
