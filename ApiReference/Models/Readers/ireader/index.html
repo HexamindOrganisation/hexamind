@@ -671,6 +671,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstractmethod-_convert_to_markdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      @abstractmethod _convert_to_markdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abstractmethod-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      @abstractmethod read
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-use-it" class="md-nav__link">
     <span class="md-ellipsis">
       How to use it
@@ -891,6 +924,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstractmethod-_convert_to_markdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      @abstractmethod _convert_to_markdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abstractmethod-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      @abstractmethod read
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-use-it" class="md-nav__link">
     <span class="md-ellipsis">
       How to use it
@@ -935,6 +1001,16 @@
 <h1 id="ireader">IReader</h1>
 <h2 id="overview">Overview</h2>
 <p>This is the interface that all readers should implement. It has a single method <code>convert_to_markdown</code> that should be implemented by the child classes.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="abstractmethod-_convert_to_markdown">@abstractmethod _convert_to_markdown</h3>
+<p><strong>Return type</strong></p>
+<p><code>str</code></p>
+<h3 id="abstractmethod-read">@abstractmethod read</h3>
+<p>This is the same for every readers. </p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>dict</code>: The nested dictionary that represents the markdown file.</li>
+</ul>
 <h2 id="how-to-use-it">How to use it</h2>
 <p>You can create your own reader class by inheriting from this interface and implementing the <code>convert_to_markdown</code> method.</p>
 <h3 id="example">Example</h3>
@@ -942,9 +1018,12 @@
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">convert_to_markdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">_convert_to_markdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="c1"># Your implementation here</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="k">pass</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">return</span> <span class="n">MkTransformer</span><span class="o">.</span><span class="n">from_markdown</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_markdown</span><span class="p">())</span>
 </span></code></pre></div>
 
 
