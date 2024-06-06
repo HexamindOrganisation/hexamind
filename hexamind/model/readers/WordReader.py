@@ -9,36 +9,17 @@ from docx.oxml.table import CT_Tbl
 from docx.oxml.text.paragraph import CT_P
 from docx.table import Table, _Cell
 from docx.text.paragraph import Paragraph
+from hexamind.model.readers.IReader import IReader
+from collections import Counter
 
-class WordReader:
-    """
-    This class reads a Word document and extracts its structure into a nested dictionary.
-
-    The structure of the dictionary is as follows:
-
-    {
-        'type' : 'container' or 'block',
-        'children' : [list of nested dictionaries],
-        'content' : None or string,
-        'level' : int,
-        'parent' : parent dictionary
-    }
-
-    The 'type' key indicates if the dictionary represents a container or a block.
-
-    The 'children' key contains a list of nested dictionaries that represent the children of the current dictionary.
-
-    The 'content' key contains the text content of the block or container. If the dictionary represents a container, the content is None.
-
-    The 'level' key contains the level of the block or container in the hierarchy.
-
-    The 'parent' key contains a reference to the parent dictionary in the hierarchy.
-
-    """
+class WordReader(IReader):
     def __init__(self, path):
         self.path = path
+        self.body_font_size = None
+        self.body_bold_status = None
+        self.headers = []
 
-    def iter_block_items(self, parent):
+    def _iter_block_items(self, parent):
         if isinstance(parent, Document):
             parent_elm = parent.element.body
         elif isinstance(parent, _Cell):
@@ -52,83 +33,110 @@ class WordReader:
             elif isinstance(child, CT_Tbl):
                 yield Table(child, parent)
     
-    def table_to_string(self, table):
-        table_content = ''
+    def _detect_common_font_properties(self):
+        doc = docx.Document(self.path)
+        font_sizes = []
+        bold_statuses = []
+
+        for block in self._iter_block_items(doc):
+            if isinstance(block, Paragraph):
+                font_size = self._get_font_size(block)
+                bold_status = self._is_bold(block)
+                if font_size:
+                    font_sizes.append(font_size)
+                bold_statuses.append(bold_status)
+
+        font_size_counter = Counter(font_sizes)
+
+        if font_size_counter:
+            most_common_font_sizes = font_size_counter.most_common()
+            most_common_font_sizes.sort(key=lambda x: (-x[1], x[0]))
+            self.body_font_size = most_common_font_sizes[0][0]
+        
+        bold_status_counter = Counter(bold_statuses)
+        if bold_status_counter:
+            self.body_bold_status = bold_status_counter.most_common(1)[0][0]
+    
+    def _get_font_size(self, paragraph):
+        font_sizes = []
+        for run in paragraph.runs:
+            if run.font.size:
+                font_sizes.append(run.font.size.pt)
+            elif run.style.font.size:
+                font_sizes.append(run.style.font.size.pt)
+            elif paragraph.style.font.size:
+                font_sizes.append(paragraph.style.font.size.pt)
+            
+        if font_sizes:
+            return max(font_sizes)
+        
+        return None
+    
+    def _is_bold(self, paragraph):
+        return any(run.bold for run in paragraph.runs)
+
+    def _update_header_list(self, paragraph):
+        current_font_size = self._get_font_size(paragraph)
+        current_bold_status = self._is_bold(paragraph)
+        level = 1
+
+        if current_font_size is None:
+            current_font_size = self.body_font_size
+        print(f'Updating header list: {current_font_size}, {current_bold_status}')
+
+        if self.headers:
+            last_header = self.headers[-1]
+            if current_font_size > last_header['font_size'] or (current_bold_status and not last_header['bold']):
+                level = max(1, last_header['level'] - 1)
+            elif current_font_size < last_header['font_size'] or (not current_bold_status and last_header['bold']):
+                level = last_header['level'] + 1
+            else:
+                level = last_header['level']
+        
+        self.headers.append({
+            'font_size': current_font_size,
+            'bold': current_bold_status,
+            'level': level
+        })
+
+        return level
+    
+    def _table_to_markdown(self, table):
+        table_md = ''
         for row in table.rows:
             row_text = ' | '.join(cell.text.strip() for cell in row.cells)
-            table_content += row_text + '\n'
-        return table_content.strip()
-    
-    def get_document_structure(self):
-        """
-        Main function to extract the structure of the Word document into a nested dictionary.
+            table_md += row_text + '\n'
+        return table_md.strip()
+        
+    def convert_to_markdown(self):
+        self._detect_common_font_properties()
+        print(f"Body font : {self.body_font_size}")
+        docx_document = docx.Document(self.path)
+        markdown_content = ''
 
-        Returns:
-        - A nested dictionary representing the structure of the Word document.
-        """
-        doc = docx.Document(self.path)
-        root_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : 0}
-        current_container = root_container
-        accumulated_text = ''
-        last_header_level = 0
-
-        def flush_accumulated_text():
-            nonlocal accumulated_text, current_container, last_header_level
-            if accumulated_text:
-                target_level = last_header_level + (0 if last_header_level else 1)
-                parent_container = root_container
-                for _ in range(target_level-1):
-                    if parent_container['children']:
-                        parent_container = parent_container['children'][-1]
-                    else:
-                        break
-            block_content = {'type' : 'block', 'content' : accumulated_text, 'level' : target_level, 'parent' : parent_container}
-
-            if not last_header_level:
-                leaf_container = {'type' : 'container', 'children' : [block_content], 'content' : None, 'level' : target_level, 'parent' : parent_container}
-                parent_container['children'].append(leaf_container)
-            else:
-                leaf_container = {'type' : 'container', 'children' : [], 'content' : None, 'level' : target_level, 'parent' : parent_container}
-                leaf_container['children'].append(block_content)
-                parent_container['children'].append(leaf_container)
-            accumulated_text = ''
-            last_was_header = False
-
-        for block in self.iter_block_items(doc):
+        for block in self._iter_block_items(docx_document):
             if isinstance(block, Paragraph):
-                style = block.style.name if block.style else 'Normal'
+
                 text = block.text.strip()
-            
+                
                 if not text:
                     continue
 
-                if style.startswith('Heading'):
-                    flush_accumulated_text()
-                    level = int(style.replace('Heading', ''))
-                    last_header_level = level
-                    last_was_header = True
-                    accumulated_text = text
+                font_size = self._get_font_size(block)
+                print(font_size)
 
-                elif text:
-                    if accumulated_text:
-                        accumulated_text += '\n\n' + text
-                    else:
-                        accumulated_text = text
+                bold_status = self._is_bold(block)
+                print(bold_status)
 
-            elif isinstance(block, Table):
-                table_content = self.table_to_string(block)
-
-                if accumulated_text:
-                    accumulated_text += '\n\n' + table_content
+                if self._is_bold(block) or (self._get_font_size(block) and self._get_font_size(block) != self.body_font_size):
+                    level = self._update_header_list(block)
+                    print(level)
+                    markdown_content += f"{'#' * (level)} {text}\n\n"
                 else:
-                    accumulated_text = table_content
-        
-        flush_accumulated_text()
+                    markdown_content += f"{text}\n\n"
+            
+            elif isinstance(block, Table):
+                table_md = self._table_to_markdown(block)
+                markdown_content += f"{table_md}\n\n"
 
-        def remove_parent_ref(container):
-            container.pop('parent', None)
-            for child in container.get('children', []):
-                if child['type'] == 'container':
-                    remove_parent_ref(child)
-        remove_parent_ref(root_container)
-        return root_container
+        return markdown_content
