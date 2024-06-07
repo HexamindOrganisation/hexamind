@@ -62,14 +62,13 @@ class LlmAgent:
         response = self.send_request_to_llm(messages)
         return str(response)
 
-    def summarize_paragraph(
-        self, prompt: str, title_doc: str = "", title_para: str = ""
+    def summarize(
+        self, text: str, title_doc: str = "", title_para: str = ""
     ):
-
-        location_of_the_paragraph = prompt.split(" :")[0]
+        
         """summarizes the paragraph"""
         template = Template.summarize_paragraph(
-            prompt, location_of_the_paragraph, title_doc, title_para
+            text, title_doc, title_para
         )
         print("template \n", template)
         messages = [self.client.create_chat_message("user", template)]
