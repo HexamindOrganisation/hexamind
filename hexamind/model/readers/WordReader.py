@@ -11,6 +11,7 @@ from docx.table import Table, _Cell
 from docx.text.paragraph import Paragraph
 from hexamind.model.readers.IReader import IReader
 from collections import Counter
+from hexamind.model.transformer.MkTransformer import MkTransformer
 
 class WordReader(IReader):
     def __init__(self, path):

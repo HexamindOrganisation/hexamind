@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from hexamind.model.readers.IReader import IReader
+from hexamind.model.transformer.MkTransformer import MkTransformer
 
 class HtmlReader(IReader):
 
@@ -14,7 +15,7 @@ class HtmlReader(IReader):
             table_content += row_text + '\n'
         return table_content.strip()
     
-    def convert_to_markdown(self):
+    def _convert_to_markdown(self):
         markdown_content = ''
         for element in self.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'table']):
             if element.name.startswith('h'):
@@ -29,3 +30,4 @@ class HtmlReader(IReader):
                 markdown_content += f"{table_md}\n\n"
 
         return markdown_content
+    
