@@ -11,7 +11,7 @@ from docx.table import Table, _Cell
 from docx.text.paragraph import Paragraph
 from hexamind.model.readers.IReader import IReader
 from collections import Counter
-from hexamind.model.transformer.MkTransformer import MkTransformer
+from hexamind.model.builder.MkBuilder import MkBuilder
 
 class WordReader(IReader):
     def __init__(self, path):
@@ -109,7 +109,7 @@ class WordReader(IReader):
             table_md += row_text + '\n'
         return table_md.strip()
         
-    def convert_to_markdown(self):
+    def _convert_to_markdown(self):
         self._detect_common_font_properties()
         print(f"Body font : {self.body_font_size}")
         docx_document = docx.Document(self.path)

@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from hexamind.model.readers.IReader import IReader
-from hexamind.model.transformer.MkTransformer import MkTransformer
+from hexamind.model.builder.MkBuilder import MkBuilder
 
 class HtmlReader(IReader):
 
