@@ -1,40 +1,21 @@
+from typing import List, Optional, Union, Dict, Any
 from hexamind.model.model.element import Element
-from hexamind.llm.llm.LlmAgent import LlmAgent
-import uuid
 
-class UIDWrapper:
-    def __init__(self, uid, level=None):
-        self.uid = uid
-        self.level = level
-
-class Block(Element): 
-    def __init__(self, content, parent_document, parent_container, distance=0.0):
-        super().__init__()
-        self.parent_container = parent_container
-        self.parent_document_uid = parent_document.uid
-        self.parent_container_uid = parent_container.uid
-        self.content = content
-        self.level = parent_container.level
-        self.distance = distance
-     
-    def get_content(self):
+class Block(Element):
+    def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str, content: str):
+        super().__init__(parent_uid, title, level, section_number)
+        self.content: str = content
+    
+    def get_content(self) -> str:
+        """Returns the content of the block."""
         return self.content
     
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'uid': self.uid,
-            'parent_document_uid': self.parent_document_uid,
-            'parent_container_uid': self.parent_container_uid,
-            'level': self.level
+            'parent_uid': self.parent_uid,
+            'title': self.title,
+            'level': self.level,
+            'section_number': self.section_number,
+            'content': self.content
         }
-    
-    @classmethod
-    def from_metadata(cls, text_content, metadata, meta_distance):
-        return cls(
-            content=text_content,
-            parent_document=UIDWrapper(metadata.get('parent_document_uid')),
-            parent_container=UIDWrapper(metadata.get('parent_container_uid'), metadata.get('level')),
-            distance=meta_distance
-        )
-
-
