@@ -14,7 +14,7 @@ from collections import Counter
 from hexamind.model.builder.MkBuilder import MkBuilder
 
 class WordReader(IReader):
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.path = path
         self.body_font_size = None
         self.body_bold_status = None
@@ -34,7 +34,7 @@ class WordReader(IReader):
             elif isinstance(child, CT_Tbl):
                 yield Table(child, parent)
     
-    def _detect_common_font_properties(self):
+    def _detect_common_font_properties(self) -> None:
         doc = docx.Document(self.path)
         font_sizes = []
         bold_statuses = []
@@ -58,7 +58,7 @@ class WordReader(IReader):
         if bold_status_counter:
             self.body_bold_status = bold_status_counter.most_common(1)[0][0]
     
-    def _get_font_size(self, paragraph):
+    def _get_font_size(self, paragraph) -> int:
         font_sizes = []
         for run in paragraph.runs:
             if run.font.size:
@@ -73,10 +73,10 @@ class WordReader(IReader):
         
         return None
     
-    def _is_bold(self, paragraph):
+    def _is_bold(self, paragraph) -> bool:
         return any(run.bold for run in paragraph.runs)
 
-    def _update_header_list(self, paragraph):
+    def _update_header_list(self, paragraph) -> int:
         current_font_size = self._get_font_size(paragraph)
         current_bold_status = self._is_bold(paragraph)
         level = 1
@@ -102,14 +102,14 @@ class WordReader(IReader):
 
         return level
     
-    def _table_to_markdown(self, table):
+    def _table_to_markdown(self, table) -> str:
         table_md = ''
         for row in table.rows:
             row_text = ' | '.join(cell.text.strip() for cell in row.cells)
             table_md += row_text + '\n'
         return table_md.strip()
         
-    def _convert_to_markdown(self):
+    def convert_to_markdown(self) -> str:
         self._detect_common_font_properties()
         print(f"Body font : {self.body_font_size}")
         docx_document = docx.Document(self.path)
