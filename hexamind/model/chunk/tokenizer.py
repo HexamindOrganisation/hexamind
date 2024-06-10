@@ -9,14 +9,14 @@ class Tokenizer(ITokenizer):
     def __init__(self):
         self.tokenizer = MistralTokenizer.from_model("open-mixtral-8x22b")
     
-    def tokenize(self, text: str) -> List[str]:
+    def tokenize(self, text: str) -> List[int]:
         request = ChatCompletionRequest(
             messages=[UserMessage(content=text)]
         )
         tokenized = self.tokenizer.encode_chat_completion(request)
         return tokenized.tokens
 
-    def decode(self, tokens: List[str]) -> str:
+    def decode(self, tokens: List[int]) -> str:
         return self.tokenizer.decode(tokens)
     
     def count_tokens(self, text: str) -> int:

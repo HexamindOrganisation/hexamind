@@ -9,7 +9,7 @@ class ChunkExtractor:
     MAX_TOKENS = 8000
 
     @staticmethod
-    def slipt_content_into_chunks(content: str, 
+    def _slipt_content_into_chunks(content: str, 
                                   container_uid: str, 
                                   title: str, 
                                   level: int,
@@ -45,7 +45,7 @@ class ChunkExtractor:
         for child in container.children:
             if isinstance(child, Block):
                 block_content = child.get_content()
-                block_chunks = ChunkExtractor.slipt_content_into_chunks(
+                block_chunks = ChunkExtractor._slipt_content_into_chunks(
                     content=block_content,
                     container_uid=container.uid,
                     title=container.title,
@@ -94,7 +94,7 @@ class ChunkExtractor:
         chunks = []
         if container.section_number == section_number:
             container_content = container.get_content()
-            container_chunks = ChunkExtractor.slipt_content_into_chunks(
+            container_chunks = ChunkExtractor._slipt_content_into_chunks(
                 content=container_content,
                 container_uid=container.uid,
                 title=container.title,
@@ -126,7 +126,7 @@ class ChunkExtractor:
         chunks = []
         if container.level == level:
             container_content = container.get_content()
-            container_chunks = ChunkExtractor.slipt_content_into_chunks(
+            container_chunks = ChunkExtractor._slipt_content_into_chunks(
                 content=container_content,
                 container_uid=container.uid,
                 title=container.title,
