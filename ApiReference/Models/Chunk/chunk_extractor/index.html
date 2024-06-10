@@ -12,11 +12,13 @@
         <meta name="author" content="Hexamind">
       
       
-        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Transformer/mk_transformer/">
+        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/chunk_extractor/">
       
       
-        <link rel="prev" href="../../Readers/markdown_reader/">
+        <link rel="prev" href="../../Builder/mk_builder/">
       
+      
+        <link rel="next" href="../chunk/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -24,7 +26,7 @@
     
     
       
-        <title>MkTransformer - Hexamind</title>
+        <title>ChunkExtractor - Hexamind</title>
       
     
     
@@ -65,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mktransformer" class="md-skip">
+        <a href="#chunkextractor" class="md-skip">
           Skip to content
         </a>
       
@@ -86,9 +88,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MkTransformer
+              ChunkExtractor
             
           </span>
         </div>
@@ -181,6 +181,81 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../UserGuide/getting_started/" class="md-tabs__link">
+          
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Models/document/" class="md-tabs__link">
+          
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -194,8 +269,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
@@ -248,6 +325,9 @@
   
     
     
+    
+      
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -335,15 +415,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -372,6 +458,9 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
@@ -384,7 +473,7 @@
             
   
   <span class="md-ellipsis">
-    Models
+    Model
   </span>
   
 
@@ -394,42 +483,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
-            Models
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Models
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_1">
-            <span class="md-nav__icon md-icon"></span>
-            Models
+            Model
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -463,52 +517,34 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_3_1_1_2" id="__nav_3_1_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Elements
+    Model
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
             <span class="md-nav__icon md-icon"></span>
-            Elements
+            Model
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Models/element/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Element
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -560,14 +596,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
               
                 
   
@@ -577,15 +605,18 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_3" >
         
           
-          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_1_3" id="__nav_3_1_3_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -596,33 +627,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_3">
             <span class="md-nav__icon md-icon"></span>
             Readers
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Readers/ireader/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IReader
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -677,7 +687,7 @@
         
   
   <span class="md-ellipsis">
-    MardownReader
+    MarkdownReader
   </span>
   
 
@@ -699,36 +709,60 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Builder/mk_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Builder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
   
     
     
+    
+      
+      
     
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_1_3" id="__nav_3_1_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_1_5" id="__nav_3_1_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Transformer
+    Chunk
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1_5">
             <span class="md-nav__icon md-icon"></span>
-            Transformer
+            Chunk
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -752,7 +786,7 @@
           
   
   <span class="md-ellipsis">
-    MkTransformer
+    ChunkExtractor
   </span>
   
 
@@ -763,7 +797,7 @@
         
   
   <span class="md-ellipsis">
-    MkTransformer
+    ChunkExtractor
   </span>
   
 
@@ -802,59 +836,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#classmethod-from_mardown" class="md-nav__link">
-    <span class="md-ellipsis">
-      @classmethod from_mardown
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="@classmethod from_mardown">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage example
+      Usage Example
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Usage example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -867,9 +856,72 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chunk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chunk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenizer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tokenizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Summarizer/summarizer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Summarizer
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -934,59 +986,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#classmethod-from_mardown" class="md-nav__link">
-    <span class="md-ellipsis">
-      @classmethod from_mardown
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="@classmethod from_mardown">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage example
+      Usage Example
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Usage example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1008,81 +1015,63 @@
   
 
 
-<h1 id="mktransformer">MkTransformer</h1>
+<h1 id="chunkextractor">ChunkExtractor</h1>
 <h2 id="overview">Overview</h2>
-<p><code>MkTransformer</code> is a class that transforms markdown content into nested dictionnaries that will be used by the <code>Document</code> class to generate the Node tree structure using Container and Blocks objects. </p>
+<p>The <code>ChunkExtractor</code> class is responsible for extracting chunks from a document. It implements the differents default strategies to extract chunks from a document.</p>
 <h2 id="methods">Methods</h2>
-<h3 id="classmethod-from_mardown">@classmethod from_mardown</h3>
-<p>Converts the markdown content into a nested dictionnary.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>markdown_content</code> : str<ul>
-<li>The markdown content to be transformed.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>dict</code> : The nested dictionnary.<ul>
-<li>the dictionnary is structured like that : </li>
-</ul>
-</li>
-</ul>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        <span class="s1">&#39;type&#39;</span> <span class="p">:</span> <span class="s1">&#39;container&#39;</span> <span class="ow">or</span> <span class="s1">&#39;block&#39;</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="s1">&#39;children&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="nb">list</span> <span class="n">of</span> <span class="n">nested</span> <span class="n">dictionaries</span><span class="p">],</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="s1">&#39;content&#39;</span> <span class="p">:</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">string</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="s1">&#39;level&#39;</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="s1">&#39;parent&#39;</span> <span class="p">:</span> <span class="n">parent</span> <span class="n">dictionary</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="p">}</span>
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@staticmethod</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span> <span class="nf">extract_by_block</span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">container</span><span class="p">:</span> <span class="n">Container</span><span class="p">,</span> 
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">document_title</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">ITokenizer</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Chunk</span><span class="p">]</span>
 </span></code></pre></div>
-<h5 id="usage-example">Usage example</h5>
-<h6 id="code">Code</h6>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">markdown_content</span> <span class="o">=</span> <span class="s2">&quot;# Title </span><span class="se">\n\n</span><span class="s2"> This is a paragraph&quot;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">doc_structure</span> <span class="o">=</span> <span class="n">MkTransformer</span><span class="o">.</span><span class="n">from_mardown</span><span class="p">(</span><span class="n">markdown_content</span><span class="p">)</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">doc_structure</span><span class="p">)</span>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Extract a chunk as a block from Container/Block structure.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">@staticmethod</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">def</span> <span class="nf">extract_by_level</span><span class="p">(</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">container</span><span class="p">:</span> <span class="n">Container</span><span class="p">,</span> 
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">document_title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">ITokenizer</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Chunk</span><span class="p">]</span>
 </span></code></pre></div>
-<h6 id="output">Output</h6>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;container&#39;</span><span class="p">,</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="s1">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="p">{</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;container&#39;</span><span class="p">,</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>            <span class="s1">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>                <span class="p">{</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;container&#39;</span><span class="p">,</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>                    <span class="s1">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>                        <span class="p">{</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;block&#39;</span><span class="p">,</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>                            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>                            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>                            <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>                        <span class="p">}</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>                    <span class="p">],</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>                    <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>                    <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>                <span class="p">},</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>                <span class="p">{</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;container&#39;</span><span class="p">,</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>                    <span class="s1">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>                        <span class="p">{</span>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;block&#39;</span><span class="p">,</span>
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>                            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a paragraph&#39;</span><span class="p">,</span>
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>                            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>                            <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
-</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>                        <span class="p">}</span>
-</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>                    <span class="p">],</span>
-</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>                    <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>                    <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>                <span class="p">}</span>
-</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>            <span class="p">],</span>
-</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>        <span class="p">}</span>
-</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>    <span class="p">],</span>
-</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>    <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>    <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">0</span>
-</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="p">}</span>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Extract a chunk by level from Container/Block structure.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@staticmethod</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span> <span class="nf">extract_by_section_number</span><span class="p">(</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">container</span><span class="p">:</span> <span class="n">Container</span><span class="p">,</span> 
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">document_title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">ITokenizer</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Chunk</span><span class="p">]</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Extract a chunk by section number from Container/Block structure.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<h2 id="usage-example">Usage Example</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">chunks</span> <span class="o">=</span> <span class="n">ChunkExtractor</span><span class="o">.</span><span class="n">extract_by_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_container</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
 </span></code></pre></div>
 
 
@@ -1104,6 +1093,12 @@
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
         <footer class="md-footer">
@@ -1113,7 +1108,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../Readers/markdown_reader/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MardownReader">
+          <a href="../../Builder/mk_builder/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Builder">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1123,11 +1118,27 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                MardownReader
+                Builder
               </div>
             </div>
           </a>
         
+        
+          
+          <a href="../chunk/" class="md-footer__link md-footer__link--next" aria-label="Next: Chunk">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chunk
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
         
       </nav>
     
@@ -1163,7 +1174,7 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "navigation.tabs", "navigation.top", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.081f42fc.min.js"></script>

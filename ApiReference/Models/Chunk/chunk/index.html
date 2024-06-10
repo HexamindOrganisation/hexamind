@@ -12,13 +12,13 @@
         <meta name="author" content="Hexamind">
       
       
-        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/ireader/">
+        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/chunk/">
       
       
-        <link rel="prev" href="../../Models/block/">
+        <link rel="prev" href="../chunk_extractor/">
       
       
-        <link rel="next" href="../word_reader/">
+        <link rel="next" href="../tokenizer/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>IReader - Hexamind</title>
+        <title>Chunk - Hexamind</title>
       
     
     
@@ -67,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ireader" class="md-skip">
+        <a href="#chunk" class="md-skip">
           Skip to content
         </a>
       
@@ -88,9 +88,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
@@ -112,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IReader
+              Chunk
             
           </span>
         </div>
@@ -183,6 +181,81 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../UserGuide/getting_started/" class="md-tabs__link">
+          
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Models/document/" class="md-tabs__link">
+          
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -196,8 +269,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
@@ -250,6 +325,9 @@
   
     
     
+    
+      
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -337,15 +415,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -374,6 +458,9 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
@@ -386,7 +473,7 @@
             
   
   <span class="md-ellipsis">
-    Models
+    Model
   </span>
   
 
@@ -396,42 +483,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
-            Models
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Models
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_1">
-            <span class="md-nav__icon md-icon"></span>
-            Models
+            Model
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -465,52 +517,34 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_3_1_1_2" id="__nav_3_1_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Elements
+    Model
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
             <span class="md-nav__icon md-icon"></span>
-            Elements
+            Model
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Models/element/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Element
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -562,9 +596,131 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_3" id="__nav_3_1_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Readers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Readers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Readers/word_reader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WordReader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Readers/html_reader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HtmlReader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Readers/markdown_reader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MarkdownReader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Builder/mk_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Builder
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -581,31 +737,55 @@
     
     
     
+      
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_1_5" id="__nav_3_1_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Readers
+    Chunk
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1_5">
             <span class="md-nav__icon md-icon"></span>
-            Readers
+            Chunk
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chunk_extractor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ChunkExtractor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -627,7 +807,7 @@
           
   
   <span class="md-ellipsis">
-    IReader
+    Chunk
   </span>
   
 
@@ -638,7 +818,7 @@
         
   
   <span class="md-ellipsis">
-    IReader
+    Chunk
   </span>
   
 
@@ -671,59 +851,38 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#abstractmethod-_convert_to_markdown" class="md-nav__link">
-    <span class="md-ellipsis">
-      @abstractmethod _convert_to_markdown
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abstractmethod-read" class="md-nav__link">
-    <span class="md-ellipsis">
-      @abstractmethod read
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-use-it" class="md-nav__link">
+  <a href="#usage-example" class="md-nav__link">
     <span class="md-ellipsis">
-      How to use it
+      Usage Example
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="How to use it">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -743,53 +902,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../word_reader/" class="md-nav__link">
+      <a href="../tokenizer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    WordReader
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../html_reader/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    HtmlReader
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../markdown_reader/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MardownReader
+    Tokenizer
   </span>
   
 
@@ -813,59 +930,16 @@
   
   
   
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_1_3" id="__nav_3_1_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Transformer
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_3">
-            <span class="md-nav__icon md-icon"></span>
-            Transformer
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../Transformer/mk_transformer/" class="md-nav__link">
+      <a href="../../Summarizer/summarizer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    MkTransformer
+    Summarizer
   </span>
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -924,59 +998,38 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#abstractmethod-_convert_to_markdown" class="md-nav__link">
-    <span class="md-ellipsis">
-      @abstractmethod _convert_to_markdown
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abstractmethod-read" class="md-nav__link">
-    <span class="md-ellipsis">
-      @abstractmethod read
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-use-it" class="md-nav__link">
+  <a href="#usage-example" class="md-nav__link">
     <span class="md-ellipsis">
-      How to use it
+      Usage Example
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="How to use it">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -998,32 +1051,172 @@
   
 
 
-<h1 id="ireader">IReader</h1>
+<h1 id="chunk">Chunk</h1>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Chunk</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">container_uid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">document_title</span> <span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">section_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</span></code></pre></div>
 <h2 id="overview">Overview</h2>
-<p>This is the interface that all readers should implement. It has a single method <code>convert_to_markdown</code> that should be implemented by the child classes.</p>
-<h2 id="methods">Methods</h2>
-<h3 id="abstractmethod-_convert_to_markdown">@abstractmethod _convert_to_markdown</h3>
-<p><strong>Return type</strong></p>
-<p><code>str</code></p>
-<h3 id="abstractmethod-read">@abstractmethod read</h3>
-<p>This is the same for every readers. </p>
-<p><strong>Returns</strong></p>
+<p>A chunk is a representation of a segment of a document with specific attributes. This is the representation used in RAG application to store data into the database.</p>
+<h2 id="parameters">Parameters</h2>
 <ul>
-<li><code>dict</code>: The nested dictionary that represents the markdown file.</li>
+<li>
+<p><code>content</code> : str</p>
+<ul>
+<li>The content of the chunk.</li>
 </ul>
-<h2 id="how-to-use-it">How to use it</h2>
-<p>You can create your own reader class by inheriting from this interface and implementing the <code>convert_to_markdown</code> method.</p>
-<h3 id="example">Example</h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">MyReader</span><span class="p">(</span><span class="n">IReader</span><span class="p">):</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">_convert_to_markdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="c1"># Your implementation here</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="k">pass</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">return</span> <span class="n">MkTransformer</span><span class="o">.</span><span class="n">from_markdown</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_markdown</span><span class="p">())</span>
+</li>
+<li>
+<p><code>container_uid</code> : str</p>
+<ul>
+<li>The unique identifier of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>title</code> : Optional[str]</p>
+<ul>
+<li>The title of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>level</code> : Optional[int]</p>
+<ul>
+<li>The level of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>document_title</code> : Optional[str]</p>
+<ul>
+<li>The title of the document where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>section_number</code> : Optional[str]</p>
+<ul>
+<li>The section number of the container where the content belongs.</li>
+</ul>
+</li>
+</ul>
+<h2 id="attributes">Attributes</h2>
+<ul>
+<li>
+<p><code>uid</code> : str</p>
+<ul>
+<li>The unique identifier of the chunk.</li>
+</ul>
+</li>
+<li>
+<p><code>content</code> : str</p>
+<ul>
+<li>The content of the chunk.</li>
+</ul>
+</li>
+<li>
+<p><code>container_uid</code> : str</p>
+<ul>
+<li>The unique identifier of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>title</code> : Optional[str]</p>
+<ul>
+<li>The title of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>level</code> : Optional[int]</p>
+<ul>
+<li>The level of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>document_title</code> : Optional[str]</p>
+<ul>
+<li>The title of the document where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>section_number</code> : Optional[str]</p>
+<ul>
+<li>The section number of the container where the content belongs.</li>
+</ul>
+</li>
+<li>
+<p><code>embeddings</code> : Optional[ndarray]</p>
+<ul>
+<li>The embeddings of the content.</li>
+</ul>
+</li>
+<li>
+<p><code>metadata</code> : Optional[Dict[str, Any]]</p>
+<ul>
+<li>The metadata of the chunk.</li>
+</ul>
+</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="bp">self</span><span class="p">,</span> 
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Add custom metadatas to the chunk. This can be used to store additional information about the chunk.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">generate_embeddings</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="bp">self</span><span class="p">,</span> 
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">ll_agent</span><span class="p">:</span> <span class="n">LlmAgent</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Use a language model to generate embeddings for the content of the chunk. 
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Serialize the chunk into a dictionary.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<h2 id="usage-example">Usage Example</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>            <span class="n">start_idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">ChunkExtractor</span><span class="o">.</span><span class="n">MAX_TOKENS</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>            <span class="n">end_ids</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="n">ChunkExtractor</span><span class="o">.</span><span class="n">MAX_TOKENS</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>            <span class="n">chunk_content</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_ids</span><span class="p">])</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>            <span class="n">chunk</span> <span class="o">=</span> <span class="n">Chunk</span><span class="p">(</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>                <span class="n">content</span><span class="o">=</span><span class="n">chunk_content</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>                <span class="n">container_uid</span><span class="o">=</span><span class="n">container_uid</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>                <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>                <span class="n">document_title</span><span class="o">=</span><span class="n">document_title</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>                <span class="n">section_number</span><span class="o">=</span><span class="n">section_number</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>            <span class="p">)</span> <span class="c1"># Creating a chunk</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>            <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 </span></code></pre></div>
 
 
@@ -1045,6 +1238,12 @@
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
         <footer class="md-footer">
@@ -1054,7 +1253,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../Models/block/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Block">
+          <a href="../chunk_extractor/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ChunkExtractor">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1064,20 +1263,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Block
+                ChunkExtractor
               </div>
             </div>
           </a>
         
         
           
-          <a href="../word_reader/" class="md-footer__link md-footer__link--next" aria-label="Next: WordReader">
+          <a href="../tokenizer/" class="md-footer__link md-footer__link--next" aria-label="Next: Tokenizer">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                WordReader
+                Tokenizer
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1120,7 +1319,7 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "navigation.tabs", "navigation.top", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.081f42fc.min.js"></script>

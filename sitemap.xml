@@ -2,142 +2,152 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Database/chroma_db_adapter/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Database/db_adapters/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Database/elastic_db_adapter/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Database/ingestion/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Initializer/initializer/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Builder/mk_builder/</loc>
+         <lastmod>2024-06-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/chunk/</loc>
+         <lastmod>2024-06-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/chunk_extractor/</loc>
+         <lastmod>2024-06-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/tokenizer/</loc>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Models/block/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Models/container/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Models/document/</loc>
-         <lastmod>2024-06-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Models/element/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/html_reader/</loc>
-         <lastmod>2024-06-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/ireader/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/markdown_reader/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Readers/word_reader/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Transformer/mk_transformer/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Summarizer/summarizer/</loc>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Retriever/retriever/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Utils/env/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Utils/Llm/chat_message/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/Utils/Llm/template/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/chat_message_factory/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/illm_client/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/llm_agent/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/llm_factory/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/mistral_client/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/on_premise_client/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/ApiReference/llm/openai_client/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/UserGuide/getting_started/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hexamindorganisation.github.io/hexamind/UserGuide/installation/</loc>
-         <lastmod>2024-06-06</lastmod>
+         <lastmod>2024-06-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

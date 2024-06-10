@@ -12,24 +12,28 @@
         <meta name="author" content="Hexamind">
       
       
-        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/llm/mistral_client/">
+        <link rel="canonical" href="https://hexamindorganisation.github.io/hexamind/ApiReference/Models/Chunk/tokenizer/">
       
       
+        <link rel="prev" href="../chunk/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+        <link rel="next" href="../../Summarizer/summarizer/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
     
     
       
-        <title>MistralClientAdapter - Hexamind</title>
+        <title>Tokenizer - Hexamind</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mistralclientadapter" class="md-skip">
+        <a href="#tokenizer" class="md-skip">
           Skip to content
         </a>
       
@@ -86,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
+    <a href="../../../.." title="Hexamind" class="md-header__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -106,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MistralClientAdapter
+              Tokenizer
             
           </span>
         </div>
@@ -187,7 +191,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
     
@@ -206,7 +210,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../UserGuide/getting_started/" class="md-tabs__link">
+        <a href="../../../../UserGuide/getting_started/" class="md-tabs__link">
           
   
   User Guide
@@ -220,17 +224,21 @@
         
   
   
+    
+  
   
     
     
       
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../Models/Models/document/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Models/document/" class="md-tabs__link">
           
   
   API Reference
@@ -266,7 +274,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
+    <a href="../../../.." title="Hexamind" class="md-nav__button md-logo" aria-label="Hexamind" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -296,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -354,7 +362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../UserGuide/getting_started/" class="md-nav__link">
+      <a href="../../../../UserGuide/getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -375,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../UserGuide/installation/" class="md-nav__link">
+      <a href="../../../../UserGuide/installation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -400,23 +408,28 @@
       
   
   
+    
   
   
+  
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -427,7 +440,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -438,6 +451,8 @@
                 
   
   
+    
+  
   
   
     
@@ -447,11 +462,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
         
           
           <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
@@ -465,7 +480,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
             Model
@@ -479,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/document/" class="md-nav__link">
+      <a href="../../Models/document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -538,7 +553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/container/" class="md-nav__link">
+      <a href="../../Models/container/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -559,7 +574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Models/block/" class="md-nav__link">
+      <a href="../../Models/block/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -626,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/word_reader/" class="md-nav__link">
+      <a href="../../Readers/word_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -647,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/html_reader/" class="md-nav__link">
+      <a href="../../Readers/html_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -668,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Readers/markdown_reader/" class="md-nav__link">
+      <a href="../../Readers/markdown_reader/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -697,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Builder/mk_builder/" class="md-nav__link">
+      <a href="../../Builder/mk_builder/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -715,6 +730,8 @@
                 
   
   
+    
+  
   
   
     
@@ -724,11 +741,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5" checked>
         
           
           <label class="md-nav__link" for="__nav_3_1_5" id="__nav_3_1_5_label" tabindex="0">
@@ -742,7 +759,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_5">
             <span class="md-nav__icon md-icon"></span>
             Chunk
@@ -756,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Chunk/chunk_extractor/" class="md-nav__link">
+      <a href="../chunk_extractor/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -777,7 +794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Chunk/chunk/" class="md-nav__link">
+      <a href="../chunk/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -795,10 +812,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../Models/Chunk/tokenizer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Tokenizer
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -807,6 +844,64 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Example
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -827,7 +922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Models/Summarizer/summarizer/" class="md-nav__link">
+      <a href="../../Summarizer/summarizer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -891,62 +986,32 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Overview">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#chat" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
     <span class="md-ellipsis">
-      chat
+      Usage Example
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create_chat_message" class="md-nav__link">
-    <span class="md-ellipsis">
-      create_chat_message
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#embeddings" class="md-nav__link">
-    <span class="md-ellipsis">
-      embeddings
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-import" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to import
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -968,38 +1033,73 @@
   
 
 
-<h1 id="mistralclientadapter">MistralClientAdapter</h1>
+<h1 id="tokenizer">Tokenizer</h1>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Tokenizer</span><span class="p">()</span>
+</span></code></pre></div>
 <h2 id="overview">Overview</h2>
-<p>The <code>MistralClientAdapter</code> class is used to interface with the Mistral API. This class implements the <code>ILlmClient</code> interface.</p>
-<p><strong>Attributes:</strong></p>
+<p>The <code>Tokenizer</code> class is responsible for tokenizing a text. It is used in particular by the <code>ChunkExtractor</code> class to extract chunks from a document. 
+The default hexamind Tokenizer uses the MistralTokenizer. </p>
+<p>You can implement your own tokenizer by creating a child class of the <code>ITokenizer</code> interface define as follow:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span> <span class="nc">ITokenizer</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="nd">@abstractmethod</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="k">pass</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="nd">@abstractmethod</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="k">pass</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="nd">@abstractmethod</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">def</span> <span class="nf">count_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="k">pass</span>
+</span></code></pre></div>
+<h2 id="attributes">Attributes</h2>
 <ul>
-<li><code>client</code> (MistralClient): The Mistral client used to interface with the Mistral API.</li>
-<li><code>model</code> (str): The model to use for the llm agent.</li>
-<li><code>embed_model</code> (str): The model to use for the embeddings.</li>
+<li><code>tokenizer</code> : The tokenizer used to tokenize the text. <ul>
+<li>Here <code>MistralTokenizer.from_model("open-mixtral-8x22b")</code></li>
 </ul>
-<h3 id="methods">Methods</h3>
-<h4 id="chat">chat</h4>
-<p>Chat with the Mistral model.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>messages</code> (str): The messages to send to the Mistral model.</li>
-<li><code>temperature</code> (float): The temperature of the model.</li>
+</li>
 </ul>
-<h4 id="create_chat_message">create_chat_message</h4>
-<p>Create a chat message.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>role</code> (str): The role of the message. ('user' or 'agent')</li>
-<li><code>content</code> (str): The content of the message.</li>
-</ul>
-<h4 id="embeddings">embeddings</h4>
-<p>Get the embeddings of the text.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>input</code> (str): The text to get the embeddings from.</li>
-</ul>
-<h3 id="how-to-import">How to import</h3>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">hexamind.llm.adapters</span> <span class="kn">import</span> <span class="n">MistralClientAdapter</span>
+<h2 id="methods">Methods</h2>
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Transform sequence of characters into a sequence of tokens.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Transform sequence of tokens into a sequence of characters.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">count_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</span></code></pre></div>
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Count the number of tokens in a text.
+    </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+<h2 id="usage-example">Usage Example</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 
 
@@ -1031,6 +1131,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../chunk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chunk">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chunk
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../Summarizer/summarizer/" class="md-footer__link md-footer__link--next" aria-label="Next: Summarizer">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Summarizer
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -1064,10 +1202,10 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "navigation.tabs", "navigation.top", "diagrams"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.footer", "navigation.tabs", "navigation.top", "diagrams"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
       
