@@ -1,56 +1,36 @@
-# MardownReader
+# MarkdownReader
+
+```python
+
+class MarkdownReader(markdown_content: str)
+```
 
 ## Overview
 
-`MarkdownReader` is a class that reads markdown content and convert the format into the nested dictionnary structure using `MkTransformer`. It is a child object from the generic `IReader`interface.
+Dummy class that inherits from the generic `IReader` class. It is used to convert markdown content into markdown. Created to maintain consistency against all the readers.
+
+## Parameters
+
+- `markdown_content` : str
+    - The markdown content.
+
+## Attributes
+
+- `markdown_content` : str
+    - The markdown content.
+
 
 ## Methods
 
-### Constructor
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        ```python
+        def convert_to_markdown(self) -> str
+        ```
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Convert the markdown content to a markdown string.
+    </div>
+</div>
 
-**Parameters**
-
-- `markdown_content` : str
-    - The content of the markdown file to be read.
-
-### _convert_to_markdown
-
-Converts the markdown content into markdown format. So in that case, it returns the same content.
-
-**Returns**
-
-- `str` : The markdown content.
-
-### read
-
-Inherited from the `IReader` interface.
-
-**Returns**
-
-- `dict` : The nested dictionary that represents the markdown file.
-
-*See [IReader](ireader.md) for more information.*
-
-##### Usage example
-
-###### Code
-```python
-
-markdown_content = "# Title \n This is a paragraph"
-reader = MarkdownReader(markdown_content)
-dict_struct = reader.read()
-print(dict_struct)
-
-```
-
-###### Output
-```py
- {
-        'type' : 'container' or 'block',
-        'children' : [list of nested dictionaries],
-        'content' : None or string,
-        'level' : int,
-        'parent' : parent dictionary
-    }
-
-```
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">

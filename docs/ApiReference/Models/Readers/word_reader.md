@@ -1,56 +1,44 @@
 # WordReader
 
+```python
+
+class WordReader(path: str)
+```
+
 ## Overview 
 
-`WordReader` is a class that reads docx/doc files and convert the format into the nested dictionnary structure using `MkTransformer`. It is a child object from the generic `IReader`interface. 
+The `WordReader` class converts the word format into markdown. It is a child object from the generic `IReader` class.
+
+
+## Parameters
+
+- `path` : str
+    - The path to the word file.
+
+## Attributes 
+
+- `path` : str
+    - The path to the word file.
 
 ## Methods
 
-### Constructor 
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        ```python
+        def convert_to_markdown(self) -> str
+        ```
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Convert the word file format to a markdown string.
+    </div>
+</div>
 
-**Parameters**
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
 
-- `path` : str
-    - The path to the docx/doc file to be read.
+## Usage Example
 
-### _convert_to_markdown
-
-Converts the word file content into markdown format.
-
-**Returns**
-
-- `str` : The markdown content.
-
-### read
-
-Inherited from the `IReader` interface. 
-
-**Returns**
-
-- `dict` : The nested dictionary that represents the markdown file.
-
-*See [IReader](ireader.md) for more information.*
-
-##### Usage example
-
-###### Code
-```python 
-
-docx_path = "path/to/docx/file.docx"
-reader = WordReader(docx_path)
-dict_struct = reader.read()
-print(dict_struct)
-```
-
-###### Output
-```py 
-
-  {
-        'type' : 'container' or 'block',
-        'children' : [list of nested dictionaries],
-        'content' : None or string,
-        'level' : int,
-        'parent' : parent dictionary
-    }
-
-```
+```python
+path = 'path/to/word/file.docx'
+reader = WordReader(path)
+markdown = reader.convert_to_markdown()
+``` 

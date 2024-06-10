@@ -6,6 +6,7 @@ repo_name: Hexamind
 site_url: https://hexamindorganisation.github.io/hexamind
 theme:
   name: material
+  custom_dir: docs
   language: en
   icon:
     repo: fontawesome/brands/github
@@ -13,14 +14,18 @@ theme:
     text: Roboto
     code: Roboto Mono
   palette: 
-    primary: blue
-    accent: light-blue
+    primary: blue grey
+    accent: blue
   features:
     - content.code.copy
     - navigation.instant
     - navigation.instant.progress
     - navigation.footer
+    - navigation.tabs
+    - navigation.top
     - diagrams
+  extra_css:
+    - styles.css
 
 nav:
   - Home: index.md
@@ -49,15 +54,13 @@ nav:
       - Model:
           - Document: ApiReference/Models/Models/document.md
           - Model: 
-                - Element: ApiReference/Models/Models/element.md
                 - Container: ApiReference/Models/Models/container.md
                 - Block: ApiReference/Models/Models/block.md
           - Readers:
-              - IReader: ApiReference/Models/Readers/ireader.md
               - WordReader: ApiReference/Models/Readers/word_reader.md
               - HtmlReader: ApiReference/Models/Readers/html_reader.md
-              - MardownReader: ApiReference/Models/Readers/markdown_reader.md
-          - Builder: ApiReference/Models/Transformer/mk_transformer.md
+              - MarkdownReader: ApiReference/Models/Readers/markdown_reader.md
+          - Builder: ApiReference/Models/Builder/mk_builder.md
           - Chunk: 
               - ChunkExtractor: ApiReference/Models/Chunk/chunk_extractor.md
               - Chunk: ApiReference/Models/Chunk/chunk.md
@@ -101,3 +104,6 @@ extra:
     - text: Copyright © 2024 Hexamind
 
   generator: false
+
+
+
