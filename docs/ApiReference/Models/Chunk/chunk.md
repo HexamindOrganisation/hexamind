@@ -113,3 +113,25 @@ A chunk is a representation of a segment of a document with specific attributes.
 </div>
 
 <hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
+
+
+## Usage Example
+
+```python
+
+chunks = []
+for i in range(num_chunks):
+            start_idx = i * ChunkExtractor.MAX_TOKENS
+            end_ids = start_idx + ChunkExtractor.MAX_TOKENS
+            chunk_content = tokenizer.decode(tokens[start_idx:end_ids])
+            chunk = Chunk(
+                content=chunk_content,
+                container_uid=container_uid,
+                title=title,
+                level=level,
+                document_title=document_title,
+                section_number=section_number
+            ) # Creating a chunk
+            chunks.append(chunk)
+
+```
