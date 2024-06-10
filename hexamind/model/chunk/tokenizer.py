@@ -7,11 +7,11 @@ from hexamind.model.chunk.itokenizer import ITokenizer
 class Tokenizer(ITokenizer): 
 
     def __init__(self):
-        self.tokenizer = MistralTokenizer().v3()
+        self.tokenizer = MistralTokenizer.from_model("open-mixtral-8x22b")
     
     def tokenize(self, text: str) -> List[str]:
         request = ChatCompletionRequest(
-            messages=[UserMessage(text=text)]
+            messages=[UserMessage(content=text)]
         )
         tokenized = self.tokenizer.encode_chat_completion(request)
         return tokenized.tokens

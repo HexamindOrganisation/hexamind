@@ -1,8 +1,10 @@
 from typing import Optional, Dict, Any, List
 from hexamind.llm.llm import LlmAgent
+import uuid
 
 class Chunk:
     def __init__(self, content: str, container_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None):
+        self.uid = str(uuid.uuid4())
         self.content = content
         self.container_uid = container_uid
         self.title = title

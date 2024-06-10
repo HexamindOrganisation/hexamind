@@ -9,10 +9,10 @@ class MkBuilder:
     def from_markdown(cls, markdown_content : str, document_title : str) -> Container:
         htlm_content = markdown.markdown(markdown_content)
         soup = BeautifulSoup(htlm_content, features='html.parser')
-        return cls.get_document_structure(soup, document_title)
+        return cls._get_document_structure(soup, document_title)
 
     @staticmethod
-    def table_to_string(table):
+    def _table_to_string(table):
         table_content = '' 
         for row in table.find_all('tr'):
             row_text = ' | '.join(cell.get_text(strip=True) for cell in row.find_all(['td', 'th']))
@@ -20,7 +20,7 @@ class MkBuilder:
         return table_content.strip()
     
     @classmethod
-    def get_document_structure(cls, soup : str, document_title: str) -> Container:
+    def _get_document_structure(cls, soup : str, document_title: str) -> Container:
 
         root_container = Container(
             parent_uid=None,
@@ -79,7 +79,7 @@ class MkBuilder:
                     hierarchy[-1].add_child(leaf_container)
             
             elif element.name == 'table':
-                table_content = cls.table_to_string(element)
+                table_content = cls._table_to_string(element)
 
                 leaf_container = Container(
                     parent_uid=hierarchy[-1].uid,

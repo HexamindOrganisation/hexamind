@@ -14,16 +14,15 @@ class Container(Element):
     
     def add_child(self, child: Union['Container', 'Block']) -> None:
         """Adds a child to the container."""
-        if isinstance(child, Container):
-            child.parent = self
+        child.parent = self
         self.children.append(child)
-        self.update_content_upwards()
+        self._update_content_upwards()
     
     def _is_leaf_container(self) -> bool:
         """Returns True if the container is a leaf container."""
         return all(isinstance(child, Block) for child in self.children)
 
-    def update_content(self) -> None:
+    def _update_content(self) -> None:
         """Updates the content of the container."""
         content_parts = []
         if not self._is_leaf_container() and self.title and self.level != 0:
@@ -34,11 +33,11 @@ class Container(Element):
         
         self.content = '\n\n'.join(content_parts).strip()
     
-    def update_content_upwards(self) -> None:
+    def _update_content_upwards(self) -> None:
         """Updates the content of the container and its parents."""
-        self.update_content()
+        self._update_content()
         if self.parent:
-            self.parent.update_content_upwards()
+            self.parent._update_content_upwards()
     
     def get_content(self) -> str:
         """Returns the content of the container."""
@@ -65,7 +64,7 @@ class Container(Element):
 
         return structure_str
 
-    def __add_to_graph(self, dot, parent_id=None):
+    def __add_to_graph(self, dot, parent_id=None) -> None:
         node_id = self.uid
         label = f'Container\nLevel: {self.level}' if self.level != 0 else 'Root\nContainer'
         dot.node(node_id, label)
@@ -81,7 +80,7 @@ class Container(Element):
                 dot.node(child_id, f'Block\nLevel: {child.level}')
                 dot.edge(node_id, child_id)
 
-    def visualize(self, filename='container_structure'):
+    def visualize(self, filename='container_structure') -> None:
         dot = Digraph(comment='Container Structure')
         self.__add_to_graph(dot)
         rendered_path = dot.render(filename, format='pdf', view=True)

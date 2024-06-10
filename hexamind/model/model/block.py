@@ -5,6 +5,7 @@ class Block(Element):
     def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str, content: str):
         super().__init__(parent_uid, title, level, section_number)
         self.content: str = content
+        self.parent: Optional['Container'] = None
     
     def get_content(self) -> str:
         """Returns the content of the block."""

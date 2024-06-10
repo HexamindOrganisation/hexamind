@@ -13,12 +13,23 @@ class Document:
         self.title : str = title
         self.summarizer : Optional['Summarizer'] = None
         self.tokenizer : ITokenizer = Tokenizer()
-        
+    
+    def get_root(self) -> Container:
+        """Returns the root container of the document"""
+        return self.root_container
+    
+    def get_title(self) -> str:
+        """Returns the title of the document"""
+        return self.title
     
     def set_summarizer(self, summarizer: 'Summarizer') -> None:
+        """
+        Set the summarizer to be used for summarizing the content of the document"""
         self.summarizer = summarizer
     
     def set_tokenizer(self, tokenizer: ITokenizer) -> None:
+        """
+        Set the tokenizer to be used for tokenizing the content of the document"""
         self.tokenizer = tokenizer
 
     def get_content(self) -> str:
@@ -26,16 +37,20 @@ class Document:
         return self.root_container.get_content()
 
     def visualize_structure(self, filename: str = 'document_structure') -> None : 
+        """Visualize the structure of the document"""
         self.root_container.visualize(filename=filename)
     
     def to_dict(self) -> Dict[str, Any]:
+        """Returns the document as a dictionary"""
         return self.root_container.to_dict()
 
     def get_section_content(self, section_number :str) -> Optional[str]:
+        """Returns the content of the section with the given section number"""
         container = self._find_container_by_section_number(self.root_container, section_number)
         return container.get_content() if container else None
 
     def _find_container_by_section_number(self, container : Container, section_number: str) -> Optional[Container]:
+        """Find the container with the given section number in the document tree"""
         if container.section_number == section_number:
             return container
         for child in container.children:
@@ -46,6 +61,7 @@ class Document:
         return None
     
     def get_summary(self, section_number: Optional[str] = None, level: Optional[int] = None) -> Union[str, List[str]]:
+        """Returns the summary of the section with the given section number or the summaries of all sections at the given level"""
         if not self.summarizer:
             raise ValueError("Summarizer not set, Please set a summarizer before calling this method. document.set_summarizer(summarizer)")
         
@@ -63,6 +79,7 @@ class Document:
         return None
     
     def _collect_summaries_at_level(self, container: Container, level: int, summaries: List[str]) -> None:
+        """Collect summaries of all sections at the given level in the document tree"""
         if container.level == level:
             summaries.append(self.summarizer.summarize(container.get_content(), self.title, container.title))
         for child in container.children:
@@ -71,21 +88,16 @@ class Document:
     
     def extract_chunks(self, 
                        strategy: str = "block", 
-                       level: Optional[int] = None, 
-                       section_number: Optional[str] = None, 
                        callback : Optional[Callable[[Container, str], List[Chunk]]] = None) -> List[Chunk]:
+        
+        """Extract chunks from the document based on the given strategy"""
         
         if strategy == "block":
             return ChunkExtractor.extract_by_block(self.root_container, self.title, self.tokenizer)
         elif strategy == "level":
-            if level is None:
-                raise ValueError("Level must be provided when strategy is 'level'")
-            return ChunkExtractor.extract_by_level(self.root_container, level, self.title, self.tokenizer)
+            return ChunkExtractor.extract_by_level(self.root_container, self.title, self.tokenizer)
         elif strategy == "section_number":
-            if section_number is None:
-                raise ValueError("Section number must be provided when strategy is 'section_number'")
-            chunk = ChunkExtractor.extract_by_section_number(self.root_container, section_number, self.title, self.tokenizer)
-            return [chunk] if chunk else []
+            return ChunkExtractor.extract_by_section_number(self.root_container, self.title, self.tokenizer)
         elif strategy == "custom":
             if callback is None:
                 raise ValueError("Callback must be provided when strategy is 'custom'")
@@ -95,9 +107,11 @@ class Document:
             raise ValueError("Invalid strategy, valid values are 'block', 'level', 'section_number', 'custom'")
         
     def __str__(self) -> str:
+        """Returns the string representation of the document"""
         return f"Document: {self.title}\nContent:\n{self.get_content()}"
     
     def save(self, filename: str) -> None:
+        """Save the document to the given file"""
         content = self.get_content()
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(content)
