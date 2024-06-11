@@ -43,9 +43,12 @@ class MkBuilder:
                 if level not in section_counters:
                     section_counters[level] = 1
                 else:
-                    section_counters[level] = len(hierarchy[-1].children) + 1
+                    section_counters[level] += 1
                 
-                section_number = '.'.join(str(section_counters[i]) for i in range(1, level + 1))
+                for lvl in range(level + 1, max(section_counters.keys()) + 1):
+                    section_counters.pop(lvl, None)
+                
+                section_number = '.'.join(str(section_counters.get(i, 1)) for i in range(1, level + 1))
 
                 new_container = Container(
                     parent_uid=hierarchy[-1].uid,
@@ -65,7 +68,7 @@ class MkBuilder:
                         parent_uid=hierarchy[-1].uid,
                         title=hierarchy[-1].title,
                         level=hierarchy[-1].level,
-                        section_number=section_number
+                        section_number=hierarchy[-1].section_number
                     )
                     block = Block(
                         parent_uid=leaf_container.uid,
