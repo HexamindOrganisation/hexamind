@@ -11,7 +11,8 @@ class HtmlReader(IReader):
     def _table_to_markdown(self, table) -> str:
         table_content = ''
         for row in table.find_all('tr'):
-            row_text = ' | '.join(cell.get_text(strip=True) for cell in row.find_all(['td', 'th']))
+            cells = [cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])]
+            row_text = ' | ' + ' | '.join(cells) + ' |'
             table_content += row_text + '\n'
         return table_content.strip()
     
