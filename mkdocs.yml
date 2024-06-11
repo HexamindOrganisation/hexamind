@@ -32,6 +32,8 @@ nav:
   - User Guide:
       - Getting Started: UserGuide/getting_started.md
       - Installation: UserGuide/installation.md
+      - Tutorials:
+          - Work with the models: UserGuide/Tutorials/model.md
   - API Reference:
       #- Database:
           #- Adapters:
