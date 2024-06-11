@@ -23,7 +23,8 @@ setup(
         'openai==1.31.0',
         'python_docx==1.1.0',
         'Requests==2.32.3',
-        'setuptools==68.2.2'
+        'setuptools==68.2.2',
+        "mammoth==1.7.1"
     ]
 )
     
