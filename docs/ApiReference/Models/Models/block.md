@@ -1,118 +1,72 @@
-# Block
+# Block 
 
-## Overview 
+```python
 
-The Block is the leaf node of the hexamind data representation. It is the only element that can contain raw content. The Block doesn't have any behavior. 
-```mermaid
-
-%%{init: {'themeVariables': { 'primaryColor': '#ffdddd'}}}%%
-graph TD
-    classDef red fill:#ffdddd,stroke:#ff0000,stroke-width:2px;
-
-    subgraph Level0
-        container1["Root Container"]
-    end
-    
-    subgraph Level1
-        container2["Container"]
-        container3["Container"]
-    end
-    
-    subgraph Level2
-        container4["Container"]
-        container5["Container"]
-        container6["Container"]
-        container7["Container"]
-    end
-    
-    subgraph Level3
-        block1["Block"]
-        block2["Block"]
-        block3["Block"]
-        block4["Block"]
-        class block1,block2,block3,block4 red
-    end
-
-    container1 --> container2
-    container1 --> container3
-    container2 --> container4
-    container2 --> container5
-    container3 --> container6
-    container3 --> container7
-    container4 --> block1
-    container5 --> block2
-    container6 --> block3
-    container7 --> block4
+class Block(
+    parent_uid: Optional[str], 
+    title: str, 
+    level: int, 
+    section_number: str, 
+    content: str
+    )
 
 ```
 
-### Rules 
+## Parameters
 
-The following rules are applied when creating this structure : 
+- `parent_uid` : Optional[str]
+    - The unique identifier of the parent container. If the block is a root block, the parent_uid is None.
+- `title` : str
+    - The title of the block. Based on the section title.
+- `level` : int
+    - The level of the block in the document hierarchy. The root block has level 0.
+- `section_number` : str
+    - The section number of the block. The section number is a string that represents the position of the block in the document hierarchy. The section number is a sequence of integers separated by dots. For example, the section number of a block that is the first child of the root container is "1". The section number of a block that is the second child of the first child of the root container is "1.2".
+- `content` : str
+    - The content of the block. 
 
-- A container can contain other containers or blocks
-- A block can only contain raw content and don't have any children
-- A container can contain multiple children
-- A block is always contained by it own parent container
 
-### Properties
+## Attributes
 
-A Block, as well as a Container, inherit from the same abstract class `Element`.
-
-The Block is the object use in the leaf node of the hexamind tree representation of a document. But it is also the object retrieve by the retriver in the vector db. Every sources retrieved is then converted to a block object, and a distance from the query is associated to it.
-
-## Properties
-
-**Constructor Parameters**
-
-- `content`(str): The content of the block.
-- `parent_document`(Document): The parent document of the block.
-- `parent_container`(Container): The parent container of the block.
-- `distance`(int): In the RAG model, represents the distance between the block and the query. 
-
-**Attributes**
-
-- `content`(str): The content of the block.
-- `parent_document`(Document): The parent document of the block.
-- `parent_container`(Container): The parent container of the block.
-- `distance`(int): In the RAG model, represents the distance between the block and the query.
-- `level`(int): The level of the block in the document.
+- `uid` : str
+    - The unique identifier of the block. The unique identifier is generated using the `uuid` module.
+- `parent_uid` : Optional[str]
+    - The unique identifier of the parent container. If the block is a root block, the parent_uid is None.
+- `title` : str
+    - The title of the block. Based on the section title.
+- `level` : int
+    - The level of the block in the document hierarchy. The root block has level 0.
+- `section_number` : str
+    - The section number of the block. The section number is a string that represents the position of the block in the document hierarchy. The section number is a sequence of integers separated by dots. For example, the section number of a block that is the first child of the root container is "1". The section number of a block that is the second child of the first child of the root container is "1.2".
+- `parent` : Optional[Container]
+    - The parent container of the block. If the block is a root block, the parent is None.
+- `content` : str
+    - The content of the block.
 
 ## Methods
 
-#### get_content
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        ```python
+        def get_content(self) -> str
+        ```
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Returns the content of the block.
+    </div>
+</div>
 
-Return the content of the block.
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">
 
-#### to_dict
+<div style="display: flex; flex-direction: row; justify-content: space-between; magin-bottom: 10px">
+    <div style="flex: 1; padding: 8px;">
+        ```python
+        def to_dict(self) -> Dict[str, Any]
+        ```
+    </div>
+    <div style="flex: 2; padding: 20px; ">
+        Serialize the block to a dictionary.
+    </div>
+</div>
 
-Return a dictionary representation of the block.
-
-#### from_metadata
-
-Create a block object from a metadata dictionary. This method is used to create a block object from the vector db.
-
-**Parameters**
-
-- `text_content`(str): The content of the block.
-- `metadata`(dict): The metadata of the block.
-- `meta_distance`(int): The distance of the block from the query.
-
-**Returns**
-
-- `Block`: The block object created from the metadata.
-
-##### Usage Example
-
-###### Code
-
-```py
-
-blocks = []
-for content, metadata, distance in zip(contents, metadatas, distances):
-    block = Block.from_metadata(content, metadata, distance)
-    blocks.append(block)
-
-```
-
-
+<hr style="border: none; border-top: 1px solid #ccc; margin 20px 0;">

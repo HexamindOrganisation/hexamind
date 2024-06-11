@@ -1,48 +1,56 @@
+from typing import List, Optional, Union, Dict, Any
 from hexamind.model.model.element import Element
 from hexamind.model.model.block import Block
-from hexamind.llm.llm.LlmAgent import LlmAgent
-import uuid
 from graphviz import Digraph
 import platform
 import os
+
 class Container(Element):
-    def __init__(self, parent_document, parent_container = None, level=0):
-        super().__init__()
-        self.parent_container = parent_container
-        self.parent_document = parent_document
-        self.parent_document_uid = parent_document.uid if parent_document else None
-        self.parent_container_uid = parent_container.uid if parent_container else None
-        self.children = [] # adjency list
-        self.level = level
-        self.content = ''
-        self.embeddings = []
-        self.chunk_ids = []
-        self.chunks = []
-        self.metadatas = []
-        self.summary = ''
-        self.summary_embeddings = []
-        self.summary_chunk_id = []
-        self.summary_chunks =  []
-        self.summary_metadatas = []
+    def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str):
+        super().__init__(parent_uid, title, level, section_number)
+        self.children: List[Union['Container', 'Block']] = []
+        self.parent : Optional['Container'] = None
+        self.content: str = ''
     
-    def get_content(self):
+    def add_child(self, child: Union['Container', 'Block']) -> None:
+        """Adds a child to the container."""
+        child.parent = self
+        self.children.append(child)
+        self._update_content_upwards()
+    
+    def _is_leaf_container(self) -> bool:
+        """Returns True if the container is a leaf container."""
+        return all(isinstance(child, Block) for child in self.children)
+
+    def _update_content(self) -> None:
+        """Updates the content of the container."""
         content_parts = []
+        if not self._is_leaf_container() and self.title and self.level != 0:
+            content_parts.append(f"{'#' * self.level} {self.title}")
+
         for child in self.children:
-            if isinstance(child, Container):
-                child.get_content()
-                content_parts.append(child.content)
-            elif isinstance(child, Block):
-                content_parts.append(child.content)
-        self.content = '\n\n'.join(content_parts)
+            content_parts.append(child.get_content())
+        
+        self.content = '\n\n'.join(content_parts).strip()
     
+    def _update_content_upwards(self) -> None:
+        """Updates the content of the container and its parents."""
+        self._update_content()
+        if self.parent:
+            self.parent._update_content_upwards()
     
-    def _get_structure_string(self, prefix='', is_last=True): #DFS traversal to print the structure of the container
+    def get_content(self) -> str:
+        """Returns the content of the container."""
+        return self.content
+    
+    def _get_structure_string(self, prefix : str ='', is_last : bool =True) -> str:
+        """Returns the structure of the container."""
         structure_str = ''
         if self.level == 0:
             structure_str += 'Root container, Level: 0\n'
         else:
             connector = '└── ' if is_last else '├── '
-            structure_str += f'{prefix}{connector}Container, Level: {self.level}\n'
+            structure_str += f'{prefix}{connector}Container, Level: {self.level}, Section number: {self.section_number}\n'
             prefix += '    ' if is_last else '│   '
 
         child_count = len(self.children)
@@ -52,18 +60,11 @@ class Container(Element):
                 structure_str += child._get_structure_string(prefix, is_last_child)
             elif isinstance(child, Block):
                 connector = '└── ' if is_last_child else '├── '
-                structure_str += f'{prefix}{connector}Block, Level: {child.level}\n'
+                structure_str += f'{prefix}{connector}Block, Level: {child.level}, Section number: {self.section_number}\n'
 
         return structure_str
 
-    
-    def add_child(self, child):
-        self.children.append(child)
-    
-    def __str__(self):
-        return self._get_structure_string()
-    
-    def __add_to_graph(self, dot, parent_id=None):
+    def __add_to_graph(self, dot, parent_id=None) -> None:
         node_id = self.uid
         label = f'Container\nLevel: {self.level}' if self.level != 0 else 'Root\nContainer'
         dot.node(node_id, label)
@@ -78,8 +79,8 @@ class Container(Element):
                 child_id = child.uid
                 dot.node(child_id, f'Block\nLevel: {child.level}')
                 dot.edge(node_id, child_id)
-    
-    def visualize(self, filename='container_structure'):
+
+    def visualize(self, filename='container_structure') -> None:
         dot = Digraph(comment='Container Structure')
         self.__add_to_graph(dot)
         rendered_path = dot.render(filename, format='pdf', view=True)
@@ -97,59 +98,16 @@ class Container(Element):
             print(f'Error opening the rendered graph: {e}')
             print('please open the file manually')
     
-    @classmethod
-    def from_dict(cls, structure_dict, parent_document=None, parent_container = None):
-        container = cls(parent_document, parent_container, structure_dict.get('level', 0))
-
-        for child in structure_dict.get('children', []):
-            if child['type'] == 'container':
-                child_container = cls.from_dict(child, parent_document, container)
-                container.add_child(child_container)
-            elif child['type'] == 'block':
-                block = Block(child.get('content', ''), parent_document, container)
-                container.add_child(block)
-        
-        return container
+    def __str__(self) -> str:
+        return self._get_structure_string()
     
-    def get_embeddings(self, llm_agent:LlmAgent):
-        if not llm_agent:
-            raise ValueError('LLM agent not set')
-
-        max_length = 8192
-  
-
-        if len(self.content)<=max_length:
-            self.embeddings.append(llm_agent.get_embedding(self.content))
-            self.chunk_ids.append(str(uuid.uuid4()))
-            self.chunks.append(self.content)
-            self.metadatas.append(self.to_dict())
-
-        for child in self.children:
-            if isinstance(child, (Container)):
-                child.get_embeddings(llm_agent)
-    
-    def get_summaries(self, llm_agent:LlmAgent):
-        if not llm_agent:
-            raise ValueError('LLM agent not set')
-    
-        if self.content:
-            self.summary = llm_agent.summarize_paragraph(self.content)
-            self.summary = self.summary.split('<summary>')[1] if '<summary>' in self.summary else self.summary
-            self.summary_embeddings.append(llm_agent.get_embedding(self.summary))
-            self.summary_chunk_id.append(str(uuid.uuid4()))
-            self.summary_chunks.append(self.summary)
-            self.summary_metadatas.append(self.to_dict())
-
-        
-        for child in self.children:
-            if isinstance(child, (Container)):
-                child.get_summaries(llm_agent)
-
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         return {
-            'uid' : self.uid if self.uid else '',
-            'parent_document_uid' : self.parent_document_uid if self.parent_document_uid else '',
-            'parent_container_uid' : self.parent_container_uid if self.parent_container_uid else '',
-            'level' : self.level if self.level else 0,
-            'children' : str([child.uid for child in self.children])
+            'uid': self.uid,
+            'parent_uid': self.parent_uid,
+            'title': self.title,
+            'level': self.level,
+            'section_number': self.section_number,
+            'content': self.content,
+            'children': [child.to_dict() for child in self.children]
         }

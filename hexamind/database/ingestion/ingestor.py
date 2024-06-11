@@ -1,7 +1,7 @@
 from hexamind.model.model.element import Element
 from hexamind.model.model.container import Container
 from hexamind.model.model.block import Block
-from hexamind.model.model.document import Document
+from hexamind.model.document import Document
 from hexamind.database.adapters.AbstractDb import IDbClient
 from hexamind.llm.llm.LlmAgent import LlmAgent
 
