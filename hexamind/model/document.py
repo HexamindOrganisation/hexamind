@@ -108,7 +108,7 @@ class Document:
         
     def __str__(self) -> str:
         """Returns the string representation of the document"""
-        return f"Document: {self.title}\nContent:\n{self.get_content()}"
+        return str(self.root_container)
     
     def save(self, filename: str) -> None:
         """Save the document to the given file"""
