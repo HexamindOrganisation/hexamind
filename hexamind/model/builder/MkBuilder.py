@@ -6,8 +6,7 @@ from bs4 import BeautifulSoup
 class MkBuilder:
 
     @classmethod
-    def from_markdown(cls, markdown_content : str, document_title : str) -> Container:
-        htlm_content = markdown.markdown(markdown_content)
+    def from_htlm(cls, htlm_content : str, document_title : str) -> Container:
         soup = BeautifulSoup(htlm_content, features='html.parser')
         return cls._get_document_structure(soup, document_title)
 
