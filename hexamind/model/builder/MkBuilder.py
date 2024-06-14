@@ -66,7 +66,7 @@ class MkBuilder:
                     leaf_container = Container(
                         parent_uid=hierarchy[-1].uid,
                         title=hierarchy[-1].title,
-                        level=hierarchy[-1].level,
+                        level=hierarchy[-1].level ,
                         section_number=hierarchy[-1].section_number
                     )
                     block = Block(

@@ -108,7 +108,7 @@ class Document:
         
     def __str__(self) -> str:
         """Returns the string representation of the document"""
-        return str(self.root_container)
+        return self.root_container._get_structure_string()
     
     
     def save(self, filename: str) -> None:

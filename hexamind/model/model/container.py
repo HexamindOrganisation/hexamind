@@ -46,7 +46,7 @@ class Container(Element):
     def _get_structure_string(self, prefix : str ='', is_last : bool =True) -> str:
         """Returns the structure of the container."""
         structure_str = ''
-        if self.level == 0:
+        if (self.level) == 0 and (self.parent is None) and (self.parent_uid is None):
             structure_str += 'Root container, Level: 0\n'
         else:
             connector = '└── ' if is_last else '├── '
