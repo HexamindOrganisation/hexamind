@@ -8,8 +8,8 @@ from hexamind.model.chunk.tokenizer import Tokenizer
 from hexamind.model.chunk.itokenizer import ITokenizer
 
 class Document:
-    def __init__(self, markdown_content : str, title: str):
-        self.root_container : Container = MkBuilder.from_markdown(markdown_content=markdown_content, document_title=title)
+    def __init__(self, html_content : str, title: str):
+        self.root_container : Container = MkBuilder.from_htlm(htlm_content=html_content, document_title=title)
         self.title : str = title
         self.summarizer : Optional['Summarizer'] = None
         self.tokenizer : ITokenizer = Tokenizer()
@@ -109,6 +109,7 @@ class Document:
     def __str__(self) -> str:
         """Returns the string representation of the document"""
         return str(self.root_container)
+    
     
     def save(self, filename: str) -> None:
         """Save the document to the given file"""
