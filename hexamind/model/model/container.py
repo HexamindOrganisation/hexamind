@@ -101,6 +101,12 @@ class Container(Element):
     def __str__(self) -> str:
         return self._get_structure_string()
     
+    def __getitem__(self, index: int) -> Union['Container', 'Block']:
+        sliced_container = Container(self.parent_uid, self.title, self.level, self.section_number)
+        sliced_container.children = self.children[index]
+        return sliced_container
+
+    
     def to_dict(self) -> Dict[str, Any]:
         return {
             'uid': self.uid,
