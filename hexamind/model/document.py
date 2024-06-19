@@ -6,9 +6,11 @@ from hexamind.model.chunk.chunk import Chunk
 from hexamind.model.chunk.chunk_extractor import ChunkExtractor
 from hexamind.model.chunk.tokenizer import Tokenizer
 from hexamind.model.chunk.itokenizer import ITokenizer
+import uuid
 
 class Document:
     def __init__(self, html_content : str, title: str):
+        self.uid = str(uuid.uuid4())
         self.root_container : Container = MkBuilder.from_htlm(htlm_content=html_content, document_title=title)
         self.title : str = title
         self.summarizer : Optional['Summarizer'] = None
@@ -42,7 +44,11 @@ class Document:
     
     def to_dict(self) -> Dict[str, Any]:
         """Returns the document as a dictionary"""
-        return self.root_container.to_dict()
+        return {
+            'uid': self.uid,
+            'title': self.title,
+            'root_container': self.root_container.to_dict()
+        }
 
     def get_section_content(self, section_number :str) -> Optional[str]:
         """Returns the content of the section with the given section number"""
@@ -88,20 +94,23 @@ class Document:
     
     def extract_chunks(self, 
                        strategy: str = "block", 
-                       callback : Optional[Callable[[Container, str], List[Chunk]]] = None) -> List[Chunk]:
+                       callback : Optional[Callable[[Container, str], List[Chunk]]] = None,
+                       **kwargs) -> List[Chunk]:
         
         """Extract chunks from the document based on the given strategy"""
         
         if strategy == "block":
-            return ChunkExtractor.extract_by_block(self.root_container, self.title, self.tokenizer)
+            return ChunkExtractor.extract_by_block(self.root_container, self.title, self.uid, self.tokenizer)
         elif strategy == "level":
-            return ChunkExtractor.extract_by_level(self.root_container, self.title, self.tokenizer)
+            return ChunkExtractor.extract_by_level(self.root_container, self.title, self.uid, self.tokenizer)
         elif strategy == "section_number":
-            return ChunkExtractor.extract_by_section_number(self.root_container, self.title, self.tokenizer)
+            return ChunkExtractor.extract_by_section_number(self.root_container, self.title, self.uid, self.tokenizer)
+        elif strategy == "semantic":
+            return ChunkExtractor.semantic_chunking(self.root_container, self.title, self.uid, self.tokenizer, threshold=kwargs.get('threshold', 0.80))
         elif strategy == "custom":
             if callback is None:
                 raise ValueError("Callback must be provided when strategy is 'custom'")
-            return ChunkExtractor.custom_extraction(self.root_container, self.title, self.tokenizer, callback)
+            return ChunkExtractor.custom_extraction(self.root_container, self.title, self.uid, self.tokenizer, callback)
         
         else:
             raise ValueError("Invalid strategy, valid values are 'block', 'level', 'section_number', 'custom'")

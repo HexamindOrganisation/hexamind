@@ -82,6 +82,8 @@ class MkBuilder:
             
             elif element.name == 'table':
                 table_content = cls._table_to_string(element)
+                for paragraph in element.find_all('p'):
+                    table_content += '\n' + paragraph.get_text(strip=True)
 
                 leaf_container = Container(
                     parent_uid=hierarchy[-1].uid,

@@ -3,14 +3,16 @@ from hexamind.llm.llm import LlmAgent
 import uuid
 
 class Chunk:
-    def __init__(self, content: str, container_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None):
+    def __init__(self, content: str, container_uid: str, document_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None, index: Optional[int] = None):
         self.uid = str(uuid.uuid4())
         self.content = content
         self.container_uid = container_uid
+        self.document_uid = document_uid
         self.title = title
         self.level = level
         self.document_title = document_title
         self.section_number = section_number
+        self.index = index
         self.embeddings: Optional[List[float]] = None
         self.metadata: Dict[str, Any] = {}
 
@@ -24,10 +26,12 @@ class Chunk:
         return {
             'content': self.content,
             'container_uid': self.container_uid,
+            'document_uid': self.document_uid,
             'title': self.title,
             'level': self.level,
             'document_title': self.document_title,
             'section_number': self.section_number,
+            'index': self.index,
             'metadata': self.metadata
         }
     
