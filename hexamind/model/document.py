@@ -106,7 +106,7 @@ class Document:
         elif strategy == "section_number":
             return ChunkExtractor.extract_by_section_number(self.root_container, self.title, self.uid, self.tokenizer)
         elif strategy == "semantic":
-            return ChunkExtractor.semantic_chunking(self.root_container, self.title, self.uid, self.tokenizer, threshold=kwargs.get('threshold', 0.80))
+            return ChunkExtractor.semantic_chunking(self.root_container, self.title, self.uid, self.tokenizer, threshold=kwargs.get('threshold', 0.80), max_tokens=kwargs.get('max_tokens', 1500))
         elif strategy == "custom":
             if callback is None:
                 raise ValueError("Callback must be provided when strategy is 'custom'")
