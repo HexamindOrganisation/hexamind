@@ -2,8 +2,9 @@ from hexamind.database.adapters.AbstractDb import IDbClient
 from hexamind.llm.llm.LlmAgent import LlmAgent
 from hexamind.model.chunk.chunk import Chunk
 import cohere
-from typing import List
+from typing import List, Dict, Any
 import os
+import json
 
 class Retriever: 
     def __init__(self, db_client: IDbClient, llm_agent: LlmAgent):
@@ -24,7 +25,7 @@ class Retriever:
             chunks.append(chunk)
         return chunks
     
-    def reranker(self, query, chunks, top_n = 30, return_n = 10) -> List[Chunk]:
+    def reranker(self, query, chunks, top_n = 30) -> List[Chunk]:
         results = self.cohere_client.rerank(
             model="rerank-multilingual-v3.0",
             query = query, 
@@ -33,24 +34,29 @@ class Retriever:
         
         # retrurn the reranked chunks
 
-        resorted_index = []
+        resorted_results = []
         for idx, r in enumerate(results.results):
-            if (r.relevance_score > 0.85) & (len(resorted_index)< return_n):
-                resorted_index.append(r.index)
+            if (r.relevance_score > 0.85):
+                resorted_results.append((r.index, r.relevance_score))
 
-        reranked_chunks = [chunks[i] for i in resorted_index]
+        reranked_chunks = []
+        for i, result in enumerate(resorted_results):
+            chunks[result[0]].index = i+1
+            chunks[result[0]].distance = result[1]
+            reranked_chunks.append(chunks[result[0]])
 
         return reranked_chunks
 
 
-    def retrieve(self, query, condition: dict) -> List[Chunk]:
+    def retrieve(self, query, folder: str) -> List[Chunk]:
+        condition = self._create_condition(folder)
         chunks = self.similarity_search(query, condition=condition)
         reranked_chunks = self.reranker(query, chunks)
         return reranked_chunks
     
-    def _create_condition(selected_documents: List[str]) -> dict:
-        if selected_documents:
-            return {
-                'document_title': {"$in": selected_documents}
-            }
-        return {}
+    def _create_condition(self, folder: str) -> Dict[str, Any]:
+        with open("folders.json", 'r') as file:
+            json_of_folders = json.load(file)
+        files_for_folder = [f["files"] for f in json_of_folders["entries"] if f["name"] == folder]
+        condition = {"document_title": {"$in": [file for sublist in files_for_folder for file in sublist]}}
+        return condition

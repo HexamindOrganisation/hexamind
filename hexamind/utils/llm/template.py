@@ -4,7 +4,7 @@ class Template:
     """
 
     @staticmethod
-    def generate_paragraph(query: str, context: dict, histo: list[(str, str)]) -> str:
+    def generate_paragraph(query: str, context: dict, histo: list[(str, str)], language:str) -> str:
         """generates the  answer"""
 
         template = (
@@ -12,7 +12,7 @@ class Template:
             f"Here is the query to answer : {query} in french"
             f"Your answer is based on the context delimited by triple backticks :\n ``` {context} ```\n and your personal knowledge"
             f"You are consistent and avoid redundancies with the rest of the initial conversation delimited by triple backticks :\n ``` {histo} ```\n"
-            f"Your response shall be in french and shall be concise."
+            f"Your response shall be in {language} and shall be concise."
         )
         return template
 
