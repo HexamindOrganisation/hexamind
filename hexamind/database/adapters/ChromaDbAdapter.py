@@ -31,5 +31,5 @@ class ChromaDbAdapter(IDbClient):
     def get(self):
         return self.collection.get(include=['embeddings', 'documents', 'metadatas'])
     
-    def search(self, query, num_results=10):
-        return self.collection.query(query_embeddings=query, n_results=num_results)
+    def search(self, query, num_results=10, condition=None):
+        return self.collection.query(query_embeddings=query, n_results=num_results, where=condition)
