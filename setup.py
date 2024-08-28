@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hexamind',
-    version='0.1',
+    version='0.2',
     author='Julien Fresnel, Max Beales, Alexandre Fleutelot',
     author_email='julien.fresnel@hexamind.ai, max.beales@hexamind.ai, alexandre.fleutelot@hexamind.ai',
     description='Hexamind library',
