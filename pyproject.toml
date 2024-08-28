@@ -10,7 +10,11 @@ readme ={ file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 authors = [
     {name = "Julien Fresnel", email = "julien.fresnel@hexamind.ai"},
-    {name = "Max Beales", email = "max.beales@hexamind.ai"}
+    {name = "Max Beales", email = "max.beales@hexamind.ai"},
+    {name = "Alexandre Fleutelot", email = "alexandre.fleutelot@hexamind.ai"},
+    {name = "Quentin Fever", email = "quentin.fever@hexamind.ai"},
+    {name = "Louis Mucha", email = "louis.mucha@hexamind.ai"},
+    {name = "Yves Peligry", email = "yves.peligry@hexamind.ai"},
 ]
 
 dependencies = [
