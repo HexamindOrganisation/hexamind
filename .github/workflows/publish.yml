@@ -23,10 +23,9 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
       
-      - name: Update version in project files
+      - name: Update version in __init__.py
         run: |
-          sed -i "s/version = \".*\"/version = \"${{ steps.get_version.outputs.VERSION }}\"/" pyproject.toml
-          sed -i "s/version = \".*\"/version = \"${{ steps.get_version.outputs.VERSION }}\"/" setup.py
+          sed -i "s/__version__ = .*/__version__ = \"${{ steps.get_version.outputs.VERSION }}\"/" hexamind/__init__.py
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -40,6 +39,5 @@ jobs:
       
       - name: Build package
         run: python -m build
-      
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

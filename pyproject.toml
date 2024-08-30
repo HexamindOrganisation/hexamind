@@ -37,3 +37,7 @@ hexamind-env = "hexamind.cli:main"
 
 [tool.setuptools.dynamic]
 version = {attr = "hexamind.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["hexamind*"]
+exclude = ["branding*", "tutorials*"]
