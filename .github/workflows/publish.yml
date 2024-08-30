@@ -5,7 +5,7 @@ on:
     types: [created]
   push:
     tags:
-      - "v*.*.*"  # This will match tags like v0.4.1, v1.0.0, etc.
+      - "v*.*.*"
 
 jobs:
   pypi-publish:
