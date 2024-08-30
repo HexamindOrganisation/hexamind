@@ -1,35 +1,37 @@
-from setuptools import setup, find_packages
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
 
-setup(
-    name='hexamind',
-    version='v0.3',
-    author='Julien Fresnel, Max Beales, Alexandre Fleutelot',
-    author_email='julien.fresnel@hexamind.ai, max.beales@hexamind.ai, alexandre.fleutelot@hexamind.ai',
-    description='Hexamind library',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    packages=find_packages(),
-    classifiers=[
-           "Programming Language :: Python :: 3",
-           "License :: OSI Approved :: MIT License",
-           "Operating System :: OS Independent",
-       ],
-    entry_points={
-        'console_scripts': [
-            'hexamind-env=hexamind.cli:main'
-        ]
-    },
-    python_requires='>=3.10',
-    install_requires=[
-        'beautifulsoup4==4.12.3',
-        'chromadb==0.5.0',
-        'elasticsearch==8.12.1',
-        'mistralai==0.3.0',
-        'openai==1.31.0',
-        'python_docx==1.1.0',
-        'Requests==2.32.3',
-        'setuptools==68.2.2',
-        "mammoth==1.7.1"
-    ]
-)
-    
+[project]
+name = "hexamind"
+version = "0.4"
+description = "Hexamind library to implement RAG solutions"
+readme ={ file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+authors = [
+    {name = "Julien Fresnel", email = "julien.fresnel@hexamind.ai"},
+    {name = "Max Beales", email = "max.beales@hexamind.ai"},
+    {name = "Alexandre Fleutelot", email = "alexandre.fleutelot@hexamind.ai"},
+    {name = "Quentin Fever", email = "quentin.fever@hexamind.ai"},
+    {name = "Louis Mucha", email = "louis.mucha@hexamind.ai"},
+    {name = "Yves Peligry", email = "yves.peligry@hexamind.ai"},
+]
+
+dependencies = [
+        "beautifulsoup4==4.12.3",
+        "chromadb==0.5.0",
+        "elasticsearch==8.12.1",
+        "graphviz==0.20.3",
+        "mammoth==1.8.0",
+        "mistralai==0.4.1",
+        "mistral_common==1.3.4",
+        "openai==1.34.0",
+        "pytest==8.2.2",
+        "python_docx==1.1.0",
+        "Requests==2.32.3",
+        "Markdown==3.6",
+        "setuptools==68.2.2",
+]
+
+[project.scripts]
+hexamind-env = "hexamind.cli:main"
