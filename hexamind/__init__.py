@@ -1,7 +1,7 @@
 """
 This is a package property of Hexamind. It aims to provide a set of tools when developping an application using a RAG. 
 """
-__version__ = "0.4.0"  # This will be overwritten by the CI/CD process
+__version__ = "0.4.1"  # Increment this to the next version
 
 from .database.ingestion.ingestor import Ingestor
 from .initializer import Initializer

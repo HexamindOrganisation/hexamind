@@ -5,7 +5,7 @@ on:
     types: [created]
   push:
     tags:
-      - "v*.*"  # This will match tags like v0.1, v1.0, etc.
+      - "v*.*.*"  # This will match tags like v0.4.1, v1.0.0, etc.
 
 jobs:
   pypi-publish:
@@ -39,5 +39,6 @@ jobs:
       
       - name: Build package
         run: python -m build
+      
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
