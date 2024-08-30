@@ -2,6 +2,8 @@ import os
 
 from hexamind.llm.adapters.AbstractLlm import ILlmClient
 from hexamind.utils.llm.template import Template
+from transformers import AutoTokenizer, AutoModelForMaskedLM
+import torch
 
 
 class LlmAgent:
@@ -32,6 +34,8 @@ class LlmAgent:
             raise TypeError("client should be an instance of ILlmClient")
 
         self.client = client
+        self.sparse_tokenizer = AutoTokenizer.from_pretrained("naver/splade-cocondenser-ensembledistil")
+        self.sparse_model = AutoModelForMaskedLM.from_pretrained("naver/splade-cocondenser-ensembledistil")
 
     def send_request_to_llm(self, messages):
         return self.client.chat(messages=messages)
@@ -90,6 +94,21 @@ class LlmAgent:
         """
         embeddings_batch_response = self.client.embeddings(input=[text])
         return embeddings_batch_response.data[0].embedding
+    
+    def get_sparse_embedding(self, text):
+        """
+        Returns text sparse embeddings 
+        """
+        inputs = self.sparse_tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+        with torch.no_grad():
+            outputs = self.sparse_model(**inputs)
+            sparse_vector = torch.max(
+                torch.log(
+                    1 + torch.relu(outputs.logits)
+                    ) * inputs.attention_mask.unsqueeze(-1),
+                    dim=1)[0].squeeze().tolist()
+
+        return sparse_vector
 
     @staticmethod
     def print_response(self, response):

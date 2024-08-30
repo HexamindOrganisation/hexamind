@@ -5,6 +5,13 @@ from hexamind.model.chunk.chunk import Chunk
 from hexamind.model.chunk.itokenizer import ITokenizer
 from sentence_transformers import SentenceTransformer, util
 from nltk import sent_tokenize
+import re
+import spacy
+from spacy.util import get_package_path, is_package
+from transformers import pipeline
+import stanza
+
+stanza.download('fr')
 
 class ChunkExtractor:
 
@@ -154,10 +161,10 @@ class ChunkExtractor:
 
     @staticmethod
     def semantic_chunking(container: Container, document_title: str, document_uid: str, tokenizer: ITokenizer, max_tokens: int = MAX_TOKENS, threshold: float = 0.80) -> List[Chunk]:
-        """Extract chunks using semantic similarity at root_container level"""
+        """Extract chunks using semantic similarity at root_container level"""   
         chunks = []
         content = container.get_content()
-        sentences = sent_tokenize(content)
+        sentences = _split_sentences(content)
         model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
         sentence_embeddings = model.encode(sentences, convert_to_tensor=True)
 
@@ -212,3 +219,11 @@ class ChunkExtractor:
     def custom_extraction(container: Container, document_title: str, document_uid: str, tokenizer: ITokenizer, callback: Callable[[Container, str], List[Chunk]]) -> List[Chunk]:
         """Extract chunks using a custom callback function"""
         return callback(container, document_title, document_uid, tokenizer)
+
+
+
+def _split_sentences(text):
+    nlp = stanza.Pipeline('fr', processors='tokenize')
+    doc = nlp(text)
+    sentences = [sent.text for sent in doc.sentences]
+    return sentences

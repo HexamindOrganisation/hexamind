@@ -9,8 +9,11 @@ class Template:
 
         template = (
             f"You are a conversation bot designed to answer to the query from users."
+            f"You must answer the query using these context sources informations "
+            f"-----"
+            f"{context}"
+            f"-----"
             f"Here is the query to answer : {query} in french"
-            f"Your answer is based on the context delimited by triple backticks :\n ``` {context} ```\n and your personal knowledge"
             f"You are consistent and avoid redundancies with the rest of the initial conversation delimited by triple backticks :\n ``` {histo} ```\n"
             f"Your response shall be in {language} and shall be concise."
         )

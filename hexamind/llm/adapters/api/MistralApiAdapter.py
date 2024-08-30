@@ -1,9 +1,11 @@
 import os
 
 from mistralai.models.chat_completion import ChatMessage
+from mistralai.exceptions import MistralAPIException
 
 from hexamind.llm.adapters.AbstractLlm import ILlmClient
 
+import time
 
 class MistralClientAdapter(ILlmClient):
     """
@@ -61,9 +63,17 @@ class MistralClientAdapter(ILlmClient):
             raise ValueError(f"Could not create chat message for Mistral: {e}")
 
     def embeddings(self, input):
-        try:
-            return self.client.embeddings(model=self.embed_model, input=input)
-        except Exception as e:
-            raise ValueError(
-                f"Could not get embeddings from Mistral: {e}, please check the embedded model name."
-            )
+        max_retries = 3
+        retries = 0
+        while retries < max_retries:
+            try:
+                return self.client.embeddings(model=self.embed_model, input=input)
+            except MistralAPIException as e:
+                if e.http_status == 429:
+                    retries += 1
+                    retry_after = int(e.headers.get("Retry-After", 2**retries))
+                    print(f"Rate limited, retrying in {retry_after} seconds")
+                    time.sleep(retry_after)
+                else:
+                    raise e
+        raise MistralAPIException("Rate limited too many times")

@@ -3,7 +3,7 @@ from hexamind.llm.llm import LlmAgent
 import uuid
 
 class Chunk:
-    def __init__(self, content: str, container_uid: str, document_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None, index: Optional[int] = None, distance: Optional[float] = None) -> None:
+    def __init__(self, content: str, container_uid: str, document_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None, index: Optional[int] = None, distance: Optional[float] = None, metadata : Optional[Dict[str, Any] | str] = None) -> None:
         self.uid = str(uuid.uuid4())
         self.content = content
         self.container_uid = container_uid
@@ -14,14 +14,22 @@ class Chunk:
         self.section_number = section_number
         self.index = index
         self.distance = distance
-        self.embeddings: Optional[List[float]] = None
+        self.dense_embeddings: Optional[List[float]] = None
+        self.sparse_embeddings: Optional[List[float]] = None
         self.metadata: Dict[str, Any] = {}
 
     def add_metadata(self, key: str, value: Any) -> None:
         self.metadata[key] = value
 
+    def generate_dense_embeddings(self, ll_agent: LlmAgent) -> None:
+        self.dense_embeddings = ll_agent.get_embedding(self.content)
+    
+    def generate_sparse_embeddings(self, ll_agent: LlmAgent) -> None:
+        self.sparse_embeddings = ll_agent.get_sparse_embedding(self.content)
+
     def generate_embeddings(self, ll_agent: LlmAgent) -> None:
-        self.embeddings = ll_agent.get_embedding(self.content)
+        self.generate_dense_embeddings(ll_agent)
+        self.generate_sparse_embeddings(ll_agent)
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -40,7 +48,8 @@ class Chunk:
     def to_vectorizzed_dict(self) -> Dict[str, Any]:
         return {
             'content': self.content,
-            'embeddings': self.embeddings,
+            'dense_embeddings': self.dense_embeddings,
+            'sparse_embeddings': self.sparse_embeddings,
             'id': self.uid,
             'metadata': {
                 'document_title': self.document_title if self.document_title is not None else '',
