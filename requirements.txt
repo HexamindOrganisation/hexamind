@@ -10,4 +10,8 @@ pytest==8.2.2
 python_docx==1.1.0
 Requests==2.32.3
 Markdown==3.6
+<<<<<<< HEAD
 setuptools==68.2.2
+=======
+setuptools==68.2.2
+>>>>>>> 80e7e48d8764e0f95284665c6eac5a3924876575
