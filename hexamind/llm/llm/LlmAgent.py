@@ -41,10 +41,11 @@ class LlmAgent:
         return self.client.chat(messages=messages)
 
     def generate_paragraph(
-        self, query: str, context: dict, histo: list[(str, str)], language="fr"
+        self, query: str, context: dict, histo: list[(str, str)], glossary: str, language: str = 'fr'
     ) -> str:
         """generates the  answer"""
-        template = Template.generate_paragraph(query, context, histo, language=language)
+        template = Template.generate_paragraph(query, context, histo, glossary=glossary, language=language)
+        print("template \n", template)
         messages = [self.client.create_chat_message("user", template)]
         response = self.send_request_to_llm(messages)
         return str(response)

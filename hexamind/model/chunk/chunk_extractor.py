@@ -26,6 +26,7 @@ class ChunkExtractor:
                                   level: int,
                                   document_title: str,
                                   section_number: str,
+                                  metadata: Optional[List[Dict[str, Any]]],
                                   tokenizer: ITokenizer,
                                   overlap: int = OVERLAP_TOKENS) -> List[Chunk]:
         """Split the content into chunks of at most MAX_TOKENS tokens"""
@@ -46,7 +47,8 @@ class ChunkExtractor:
                 level=level,
                 document_title=document_title,
                 section_number=section_number,
-                index=i
+                index=i,
+                metadatas=metadata
             )
             chunks.append(chunk)
         return chunks
@@ -66,7 +68,8 @@ class ChunkExtractor:
                     title=container.title,
                     level=container.level,
                     document_title=document_title,
-                    section_number=container.section_number,
+                    section_number=child.section_number,
+                    metadata=child.metadatas,
                     tokenizer=tokenizer
                 )
                 chunks.extend(block_chunks)
@@ -117,6 +120,7 @@ class ChunkExtractor:
                 level=container.level,
                 document_title=document_title,
                 section_number=container.section_number,
+                metadata=container.metadatas,
                 tokenizer=tokenizer
             )
             chunks.extend(container_chunks)
@@ -150,6 +154,7 @@ class ChunkExtractor:
                 level=container.level,
                 document_title=document_title,
                 section_number=container.section_number,
+                metadata=container.metadatas,
                 tokenizer=tokenizer
             )
             chunks.extend(container_chunks)
@@ -167,7 +172,6 @@ class ChunkExtractor:
         sentences = _split_sentences(content)
         model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
         sentence_embeddings = model.encode(sentences, convert_to_tensor=True)
-
         current_chunk = ""
         current_tokens = 0
         current_embedding = None 
@@ -185,7 +189,8 @@ class ChunkExtractor:
                     level=container.level,
                     document_title=document_title,
                     section_number=container.section_number,
-                    index=i
+                    index=i,
+                    metadatas=container.metadatas
                 )
                 chunks.append(chunk)
                 current_chunk = sentence
@@ -208,7 +213,8 @@ class ChunkExtractor:
                 level=container.level,
                 document_title=document_title,
                 section_number=container.section_number,
-                index=len(sentences)
+                index=len(sentences),
+                metadatas=container.metadatas
             )
             chunks.append(chunk)
         

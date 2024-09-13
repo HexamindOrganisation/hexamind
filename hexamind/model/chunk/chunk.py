@@ -3,7 +3,7 @@ from hexamind.llm.llm import LlmAgent
 import uuid
 
 class Chunk:
-    def __init__(self, content: str, container_uid: str, document_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None, index: Optional[int] = None, distance: Optional[float] = None, metadata : Optional[Dict[str, Any] | str] = None) -> None:
+    def __init__(self, content: str, container_uid: str, document_uid: str, title: Optional[str] = None, level: Optional[int] = None, document_title : Optional[str] = None, section_number: Optional[str] = None, index: Optional[int] = None, distance: Optional[float] = None, metadatas : Optional[List[Dict[str, Any] | str]] = None) -> None:
         self.uid = str(uuid.uuid4())
         self.content = content
         self.container_uid = container_uid
@@ -16,7 +16,7 @@ class Chunk:
         self.distance = distance
         self.dense_embeddings: Optional[List[float]] = None
         self.sparse_embeddings: Optional[List[float]] = None
-        self.metadata: Dict[str, Any] = {}
+        self.metadatas = metadatas if metadatas else []
 
     def add_metadata(self, key: str, value: Any) -> None:
         self.metadata[key] = value
@@ -42,7 +42,7 @@ class Chunk:
             'section_number': self.section_number,
             'index': self.index,
             'distance': self.distance,
-            'metadata': self.metadata
+            'metadatas': self.metadatas
         }
     
     def to_vectorizzed_dict(self) -> Dict[str, Any]:
@@ -61,7 +61,7 @@ class Chunk:
                 'section_number': self.section_number if self.section_number is not None else '',
                 'index': self.index if self.index is not None else 0,
                 'distance': self.distance if self.distance is not None else 0,
-                'metadata': self.metadata if self.metadata else ''
+                'metadatas': self.metadatas if self.metadatas else ''
             }
 
         }

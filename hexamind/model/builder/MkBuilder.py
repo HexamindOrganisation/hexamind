@@ -2,13 +2,14 @@ import markdown
 from hexamind.model.model.container import Container
 from hexamind.model.model.block import Block
 from bs4 import BeautifulSoup
+from typing import List, Dict, Any, Optional
 
 class MkBuilder:
 
     @classmethod
-    def from_htlm(cls, htlm_content : str, document_title : str) -> Container:
+    def from_htlm(cls, htlm_content : str, document_title : str, metadatas : Optional[List[Dict[str, Any]]]) -> Container:
         soup = BeautifulSoup(htlm_content, features='html.parser')
-        return cls._get_document_structure(soup, document_title)
+        return cls._get_document_structure(soup, document_title, metadatas)
 
     @staticmethod
     def _table_to_string(table):
@@ -19,13 +20,14 @@ class MkBuilder:
         return table_content.strip()
     
     @classmethod
-    def _get_document_structure(cls, soup : str, document_title: str) -> Container:
+    def _get_document_structure(cls, soup : str, document_title: str, metadatas : Optional[List[Dict[str, Any]]]) -> Container:
 
         root_container = Container(
             parent_uid=None,
             title=document_title,
             level=0,
-            section_number='1'
+            section_number='1',
+            metadatas=metadatas
         )
 
         hierarchy = [root_container]
@@ -53,7 +55,8 @@ class MkBuilder:
                     parent_uid=hierarchy[-1].uid,
                     title=title,
                     level=level,
-                    section_number=section_number
+                    section_number=section_number,
+                    metadatas=metadatas
                 )
 
                 hierarchy[-1].add_child(new_container)
@@ -67,14 +70,16 @@ class MkBuilder:
                         parent_uid=hierarchy[-1].uid,
                         title=hierarchy[-1].title,
                         level=hierarchy[-1].level ,
-                        section_number=hierarchy[-1].section_number
+                        section_number=hierarchy[-1].section_number,
+                        metadatas=metadatas
                     )
                     block = Block(
                         parent_uid=leaf_container.uid,
                         title=leaf_container.title,
                         level=leaf_container.level,
                         section_number=leaf_container.section_number,
-                        content=text
+                        content=text,
+                        metadatas=metadatas
                     )
 
                     leaf_container.add_child(block)
@@ -89,7 +94,8 @@ class MkBuilder:
                     parent_uid=hierarchy[-1].uid,
                     title=hierarchy[-1].title,
                     level=hierarchy[-1].level + 1,
-                    section_number=hierarchy[-1].section_number
+                    section_number=hierarchy[-1].section_number,
+                    metadatas=metadatas
                 )
 
                 block = Block(
@@ -97,7 +103,8 @@ class MkBuilder:
                     title=leaf_container.title,
                     level=leaf_container.level,
                     section_number=leaf_container.section_number,
-                    content=table_content
+                    content=table_content,
+                    metadatas=metadatas
                 )
 
                 leaf_container.add_child(block)

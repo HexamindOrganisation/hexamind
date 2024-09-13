@@ -13,11 +13,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class QdrantDbAdapter(IDbClient):
-    def __init__(self, url = os.getenv("QDRANT_URL"), collection_name="qdrant_collection", dense_dim=1024, sparse_dim=30522):
+    def __init__(self, url = os.getenv('QDRANT_URL'), collection_name="qdrant_collection", dense_dim=1024, sparse_dim=30522):
         self.collection_name = collection_name
         self.dense_dim = dense_dim
         self.sparse_dim = sparse_dim
-        # Connect to Qdrant
         self.client = QdrantClient(url=url)
 
         # Check if the collection exists, if not, create it
@@ -119,7 +118,7 @@ class QdrantDbAdapter(IDbClient):
                     ),
                     with_payload=True,
                     filter=condition,
-                    limit=num_results,
+                    limit=num_results/2,
                 ),
                 SearchRequest(
                     vector=NamedVector(
@@ -128,7 +127,7 @@ class QdrantDbAdapter(IDbClient):
                     ),
                     with_payload=True,
                     filter=condition,
-                    limit=num_results,
+                    limit=num_results/2,
                 ),
             ]
         )
@@ -139,6 +138,7 @@ class QdrantDbAdapter(IDbClient):
         sparse_results = search_result[1]
 
         combined_results = dense_results + sparse_results
+        print(combined_results)
 
         chunks = []
         for result in combined_results:

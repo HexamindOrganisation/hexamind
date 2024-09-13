@@ -4,17 +4,21 @@ class Template:
     """
 
     @staticmethod
-    def generate_paragraph(query: str, context: dict, histo: list[(str, str)], language:str) -> str:
+    def generate_paragraph(query: str, context: dict, histo: list[(str, str)], glossary : str, language:str) -> str:
         """generates the  answer"""
 
         template = (
-            f"You are a conversation bot designed to answer to the query from users."
-            f"You must answer the query using these context sources informations "
-            f"-----"
-            f"{context}"
-            f"-----"
-            f"Here is the query to answer : {query} in french"
+            f"You are a conversation bot designed to answer to the query from users.\n"
+            f"You must answer the query using these context sources informations \n"
+            f"-----\n"
+            f"{context}\n"
+            f"-----\n"
+            f"Here is the query to answer : {query} in french\n"
             f"You are consistent and avoid redundancies with the rest of the initial conversation delimited by triple backticks :\n ``` {histo} ```\n"
+            f"To help you answer the query, you can use the glossary information : \n"
+            f"*****\n"
+            f"{glossary}\n"
+            f"*****\n"
             f"Your response shall be in {language} and shall be concise."
         )
         return template

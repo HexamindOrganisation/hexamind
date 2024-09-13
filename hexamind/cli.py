@@ -9,4 +9,4 @@ def main():
     setup_env_file(destination_directory=args.destination)
 
 if __name__ == "__main__":
-    main()
+    main() 

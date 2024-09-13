@@ -9,9 +9,9 @@ from hexamind.model.chunk.itokenizer import ITokenizer
 import uuid
 
 class Document:
-    def __init__(self, uid, html_content : str, title: str):
+    def __init__(self, uid, html_content : str, title: str, metadatas: Optional[List[Dict[str, Any]]] = None) -> None:
         self.uid = uid if uid else str(uuid.uuid4())
-        self.root_container : Container = MkBuilder.from_htlm(htlm_content=html_content, document_title=title)
+        self.root_container : Container = MkBuilder.from_htlm(htlm_content=html_content, document_title=title, metadatas=metadatas)
         self.title : str = title
         self.summarizer : Optional['Summarizer'] = None
         self.tokenizer : ITokenizer = Tokenizer()

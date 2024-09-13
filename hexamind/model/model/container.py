@@ -6,8 +6,8 @@ import platform
 import os
 
 class Container(Element):
-    def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str):
-        super().__init__(parent_uid, title, level, section_number)
+    def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str, metadatas: Optional[List[Dict[str, Any]]] = []):
+        super().__init__(parent_uid, title, level, section_number, metadatas)
         self.children: List[Union['Container', 'Block']] = []
         self.parent : Optional['Container'] = None
         self.content: str = ''
