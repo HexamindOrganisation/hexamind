@@ -6,6 +6,7 @@ import cohere
 from typing import List, Dict, Any
 import os
 from collections import defaultdict
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +16,7 @@ class Retriever:
         self.llm_agent = llm_agent
         self.cohere_client = cohere.Client(os.getenv("COHERE_API_KEY"))
         logger.info("Retriever initialized with db_client and llm_agent")
+
 
     def similarity_search(self, query, condition) -> List[Chunk]:
         logger.info(f"Performing similarity search for query: {query}")
@@ -78,6 +80,27 @@ class Retriever:
         logger.debug(f"Reranker returned {len(reranked_chunks)} reranked chunks")
         return reranked_chunks
 
+    def peloton_selection(self, chunks: List[Chunk], alpha: float = 0.15, beta: float = 0.3) -> List[Chunk]:
+        if not chunks:
+            return []
+
+        sorted_chunks = sorted(chunks, key=lambda x: x.distance, reverse=True)
+        scores = np.array([chunk.distance for chunk in sorted_chunks])
+        n = len(scores)
+        
+        diffs = np.diff(scores)
+        mean_diff = np.mean(diffs)
+        std_diff = np.std(diffs)
+        
+        threshold = mean_diff + beta * std_diff
+        cut_index = next((i for i, diff in enumerate(diffs) if diff > threshold), n-1)
+        
+        min_size = max(int(alpha * n), 1)
+        cut_index = max(cut_index, min_size)
+        
+        logger.info(f"Peloton algorithm selected {cut_index} chunks out of {n}")
+        return sorted_chunks[:cut_index]
+
     def retrieve(self, query, condition: Dict[str, Any]) -> List[Chunk]:
         logger.info(f"Retrieving chunks for query: {query}")
         query_dense_embedding = self.llm_agent.get_embedding(query)
@@ -92,9 +115,10 @@ class Retriever:
         
         if hybrid_results:
             reranked_chunks = self.reranker(query, hybrid_results)
+            selected_chunks = self.peloton_selection(reranked_chunks)
         else:
             logger.warning("No hybrid results found")
-            reranked_chunks = []
+            selected_chunks = []
         
-        logger.info(f"Retrieved and reranked {len(reranked_chunks)} chunks")
-        return reranked_chunks
+        logger.info(f"Retrieved, reranked, and selected {len(selected_chunks)} chunks using peloton algorithm")
+        return selected_chunks
