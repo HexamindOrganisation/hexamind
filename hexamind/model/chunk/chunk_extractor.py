@@ -4,11 +4,7 @@ from hexamind.model.model.block import Block
 from hexamind.model.chunk.chunk import Chunk
 from hexamind.model.chunk.itokenizer import ITokenizer
 from sentence_transformers import SentenceTransformer, util
-from nltk import sent_tokenize
-import re
-import spacy
-from spacy.util import get_package_path, is_package
-from transformers import pipeline
+
 import stanza
 
 stanza.download('fr')
