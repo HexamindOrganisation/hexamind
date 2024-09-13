@@ -1,15 +1,11 @@
+import logging
 from qdrant_client import QdrantClient
-from qdrant_client.http.models import Distance, VectorParams, PointStruct, CollectionStatus, SearchRequest, NamedVector, NamedSparseVector
+from qdrant_client.http.models import Distance, VectorParams, PointStruct, NamedVector
 from qdrant_client.http.models import Filter, FieldCondition, MatchValue, FilterSelector
 from .AbstractDb import IDbClient
 from hexamind.model.chunk.chunk import Chunk
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import ranx
 import os
-import logging
-import asyncio
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class QdrantDbAdapter(IDbClient):
@@ -18,22 +14,25 @@ class QdrantDbAdapter(IDbClient):
         self.dense_dim = dense_dim
         self.sparse_dim = sparse_dim
         self.client = QdrantClient(url=url)
+        logger.info(f"QdrantDbAdapter initialized with collection: {collection_name}")
 
-        # Check if the collection exists, if not, create it
-    
     def get_collections(self):
-        return self.client.get_collections()
+        collections = self.client.get_collections()
+        logger.debug(f"Retrieved {len(collections.collections)} collections")
+        return collections
     
     def create_collection(self):
-          self.client.create_collection(
-                collection_name=self.collection_name,
-                vectors_config={
-                    "sparse": VectorParams(size=self.sparse_dim, distance=Distance.COSINE),
-                    "dense" :VectorParams(size=self.dense_dim, distance=Distance.COSINE)}
-
-            )
+        logger.info(f"Creating collection: {self.collection_name}")
+        self.client.create_collection(
+            collection_name=self.collection_name,
+            vectors_config={
+                "sparse": VectorParams(size=self.sparse_dim, distance=Distance.COSINE),
+                "dense" :VectorParams(size=self.dense_dim, distance=Distance.COSINE)}
+        )
+        logger.info(f"Collection {self.collection_name} created successfully")
 
     def add_document(self, document, dense_embedding, sparse_embedding, ids, metadatas):
+        logger.info(f"Adding document with id: {ids}")
         points = [
             PointStruct(
                 id=ids,
@@ -45,14 +44,19 @@ class QdrantDbAdapter(IDbClient):
             )
         ]
         self.client.upsert(collection_name=self.collection_name, points=points)
+        logger.debug(f"Document added successfully: {ids}")
 
     def get_document(self, document_id):
+        logger.info(f"Retrieving document with id: {document_id}")
         result = self.client.retrieve(collection_name=self.collection_name, ids=[document_id])
         if result:
+            logger.debug(f"Document retrieved: {document_id}")
             return result[0]
+        logger.warning(f"Document not found: {document_id}")
         return None
 
     def delete_document(self, document_id):
+        logger.info(f"Deleting document with id: {document_id}")
         self.client.delete(collection_name=self.collection_name, 
                            points_selector=FilterSelector(
                                filter=Filter(
@@ -64,103 +68,29 @@ class QdrantDbAdapter(IDbClient):
                                       ]
                                  )
                            )
-
         )
+        logger.debug(f"Document deleted: {document_id}")
 
     def update_document(self, document, embedding, ids, metadatas):
+        logger.info(f"Updating document with id: {ids}")
         self.add_document(document, embedding, ids, metadatas)
+        logger.debug(f"Document updated: {ids}")
 
     def get(self):
-        # Retrieve all points (not efficient for large collections)
+        logger.info("Retrieving all points")
         scroll_result = self.client.scroll(collection_name=self.collection_name, limit=100)
+        logger.debug(f"Retrieved {len(scroll_result['points'])} points")
         return scroll_result["points"]
-
-    def search(self, query_dense_vector, query_sparse_vector, num_results=10, condition=None):
-        condition = self._translate_condition(condition)
-        print(condition)
-        search_result = self.client.search(
-            collection_name=self.collection_name,
-            query_vector={
-                NamedVector(
-                    name="sparse",
-                    vector=query_sparse_vector
-                ),
-                NamedVector(
-                    name="dense",
-                    vector=query_dense_vector
-                )
-            },
-            limit=num_results,
-            query_filter=condition,
-            with_payload=True
-        )
-
-        return search_result
-
-        """chunks = []
-        for result in search_result:
-            dict_chunk = result.payload['metadata']
-            chunk = Chunk(**dict_chunk)
-            chunks.append(chunk)
-
-        return chunks """
     
-    def hybrid_search(self, query_dense_vector, query_sparse_vector, num_results=10, condition=None):
-        condition = self._translate_condition(condition)
-        search_result = self.client.search_batch(
-            collection_name=self.collection_name,
-            
-            requests=[
-                SearchRequest(
-                    vector=NamedVector(
-                        name="dense",
-                        vector=query_dense_vector
-                    ),
-                    with_payload=True,
-                    filter=condition,
-                    limit=num_results/2,
-                ),
-                SearchRequest(
-                    vector=NamedVector(
-                        name="sparse",
-                        vector=query_sparse_vector
-                    ),
-                    with_payload=True,
-                    filter=condition,
-                    limit=num_results/2,
-                ),
-            ]
-        )
-
-        logger.info(f"Got result from hybrid search")
-
-        dense_results = search_result[0]
-        sparse_results = search_result[1]
-
-        combined_results = dense_results + sparse_results
-        print(combined_results)
-
-        chunks = []
-        for result in combined_results:
-            dict_chunk = result.payload['metadata']
-            chunk = Chunk(**dict_chunk)
-            chunks.append(chunk)
-        
-        logger.info(f"Created chunks from combined results")
-        
-        return chunks
-
     def _translate_condition(self, condition=None):
         if condition is None:
             return None
         
+        logger.debug(f"Translating condition: {condition}")
         should_conditions = []
         for field, criteria in condition.items():
-            print(field, criteria)
             for operator, value in criteria.items():
-                print(operator, value)
                 if operator == "$in":
-                    print(value)
                     for v in value:
                         should_conditions.append(
                             FieldCondition(
@@ -171,4 +101,34 @@ class QdrantDbAdapter(IDbClient):
                             )
                         )
 
-            return Filter(should=should_conditions)
+        logger.debug(f"Translated condition: {should_conditions}")
+        return Filter(should=should_conditions)
+
+    def search(self, query_vector, vector_name, num_results=10, condition=None):
+        logger.info(f"Performing search with vector_name: {vector_name}, num_results: {num_results}")
+        condition = self._translate_condition(condition)
+        search_result = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=NamedVector(
+                name=vector_name,
+                vector=query_vector
+            ),
+            limit=num_results,
+            query_filter=condition,
+            with_payload=True
+        )
+
+        chunks = []
+        for result in search_result:
+            dict_chunk = result.payload['metadata']
+            chunk = Chunk(**dict_chunk)
+            chunk.id = result.id
+            chunk.distance = result.score
+            chunks.append(chunk)
+
+        logger.debug(f"Search returned {len(chunks)} chunks")
+        return chunks
+
+    def hybrid_search(self, query_dense_vector, query_sparse_vector, num_results=10, condition=None):
+        logger.warning("The hybrid_search method in QdrantDbAdapter is deprecated. Use the Retriever class for hybrid search.")
+        return []
