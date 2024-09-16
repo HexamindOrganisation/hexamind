@@ -14,3 +14,8 @@ setuptools==68.2.2
 pydantic
 sentence_transformers
 stanza
+cohere
+pytest
+pytest-cov
+
+

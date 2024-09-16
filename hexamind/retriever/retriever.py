@@ -49,18 +49,33 @@ class Retriever:
         rrf_scores = defaultdict(float)
 
         for rank, result in enumerate(dense_results + sparse_results):
-            chunk_id = result.id
-            rrf_scores[chunk_id] += 1 / (self.config.rrf_k + rank)
+            chunk_id = f"{result.document_uid}_{result.index}"
+            rrf_score = 1 / (self.config.rrf_k + rank)
+            rrf_scores[chunk_id] += rrf_score
+            logger.debug(f"Chunk {chunk_id} got RRF score: {rrf_score}")
 
         sorted_chunks = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
+        logger.debug(f"Sorted chunks: {sorted_chunks}")
 
         top_chunks = []
-        for chunk_id, _ in sorted_chunks[:self.config.max_hybrid_search_results]:
-            chunk = next(
-                (c for c in dense_results + sparse_results if c.id == chunk_id), None
-            )
-            if chunk:
-                top_chunks.append(chunk)
+        for chunk_id, score in sorted_chunks[:self.config.max_hybrid_search_results]:
+            parts = chunk_id.rsplit('_', 1)
+            if len(parts) == 2:
+                doc_uid, index = parts
+                try:
+                    index = int(index)
+                    chunk = next(
+                        (c for c in dense_results + sparse_results if c.document_uid == doc_uid and c.index == index),
+                        None
+                    )
+                    if chunk:
+                        chunk.distance = score  # Update the distance with the RRF score
+                        top_chunks.append(chunk)
+                        logger.debug(f"Added chunk {chunk_id} with score {score}")
+                except ValueError:
+                    logger.warning(f"Invalid index in chunk_id: {chunk_id}")
+            else:
+                logger.warning(f"Invalid chunk_id format: {chunk_id}")
 
         logger.info(f"Hybrid search returned {len(top_chunks)} top chunks")
         return top_chunks
