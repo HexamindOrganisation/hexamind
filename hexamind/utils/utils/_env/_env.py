@@ -6,6 +6,7 @@ import pkg_resources
 
 logger = logging.getLogger(__name__)
 
+
 def setup_env_file(destination_directory=None):
     if destination_directory is None:
         destination_directory = Path.cwd()
@@ -13,9 +14,7 @@ def setup_env_file(destination_directory=None):
         destination_directory = Path(destination_directory)
         destination_directory.mkdir(parents=True, exist_ok=True)
 
-    template_file = pkg_resources.resource_filename(
-        __name__, ".env.template"
-    )
+    template_file = pkg_resources.resource_filename(__name__, ".env.template")
     env_file = destination_directory / ".env"
 
     if not env_file.exists():

@@ -3,8 +3,7 @@ import os
 import chromadb
 
 from hexamind.database.adapters.ChromaDbAdapter import ChromaDbAdapter
-from hexamind.database.adapters.ElasticSearchAdapter import \
-    ElasticSearchAdapter
+from hexamind.database.adapters.ElasticSearchAdapter import ElasticSearchAdapter
 
 
 class DbAdapterFactory:
@@ -20,12 +19,11 @@ class DbAdapterFactory:
         database_path = kwargs.get("database_path") or os.getenv("DATABASE_PATH")
         if not database_path:
             raise ValueError("Missing environment variable for database path.")
-        
+
         collection_name = collection_name or os.getenv("COLLECTION_NAME", "default")
 
         if db_name == "chroma":
             try:
-  
 
                 return ChromaDbAdapter(
                     chromadb.PersistentClient(database_path), collection_name

@@ -7,12 +7,21 @@ from hexamind.llm.adapters.AbstractLlm import ILlmClient
 
 logger = logging.getLogger(__name__)
 
+
 class MistralClientAdapter(ILlmClient):
     def __init__(self, client, model=None, embed_model=None):
         logger.debug("MistralClientAdapter initialization...")
         self.client = client
-        self.model = model if model is not None else os.getenv("LLM_MODEL", "mistral-large-latest")
-        self.embed_model = embed_model if embed_model is not None else os.getenv("LLM_EMBED_MODEL", "mistral-embed")
+        self.model = (
+            model
+            if model is not None
+            else os.getenv("LLM_MODEL", "mistral-large-latest")
+        )
+        self.embed_model = (
+            embed_model
+            if embed_model is not None
+            else os.getenv("LLM_EMBED_MODEL", "mistral-embed")
+        )
 
         if not isinstance(self.model, str):
             raise TypeError("model should be a string")

@@ -10,26 +10,29 @@ from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
+
 class Ingestor:
     def __init__(self, db_client: IDbClient, llm_agent: LlmAgent):
         self.db_client = db_client
         self.llm_agent = llm_agent
-    
+
     def ingest_content(self, document: Document, chunking: str = "semantic"):
-        logger.info(f'Ingesting document: {document}')
-        chunks = document.extract_chunks(strategy=chunking, max_tokens = 1500, threshold = 0.5)
-        logger.debug('Chunk extraction completed')
-        logger.info(f'Ingesting {len(chunks)} chunks')
+        logger.info(f"Ingesting document: {document}")
+        chunks = document.extract_chunks(
+            strategy=chunking, max_tokens=1500, threshold=0.5
+        )
+        logger.debug("Chunk extraction completed")
+        logger.info(f"Ingesting {len(chunks)} chunks")
         for i, chunk in enumerate(chunks):
-            logger.debug(f'Processing chunk: {i}')
+            logger.debug(f"Processing chunk: {i}")
             chunk.generate_embeddings(self.llm_agent)
             dict_chunk = chunk.to_vectorizzed_dict()
             logger.debug(f"Chunk metadata: {chunk.metadatas}")
             self.db_client.add_document(
-                document=dict_chunk['content'],
-                dense_embedding=dict_chunk['dense_embeddings'],
-                sparse_embedding=dict_chunk['sparse_embeddings'],
-                ids=dict_chunk['id'],
-                metadatas=dict_chunk['metadata']
+                document=dict_chunk["content"],
+                dense_embedding=dict_chunk["dense_embeddings"],
+                sparse_embedding=dict_chunk["sparse_embeddings"],
+                ids=dict_chunk["id"],
+                metadatas=dict_chunk["metadata"],
             )
-        logger.info('Chunk ingestion completed')
+        logger.info("Chunk ingestion completed")

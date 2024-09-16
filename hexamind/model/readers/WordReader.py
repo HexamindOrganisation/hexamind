@@ -1,5 +1,4 @@
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 
@@ -13,11 +12,12 @@ from hexamind.model.readers.IReader import IReader
 from collections import Counter
 import mammoth
 
+
 class WordReader(IReader):
     def __init__(self, path: str):
         self.path = path
-        
+
     def convert_to_htlm(self) -> str:
-        with open(self.path, 'rb') as docx_file:
+        with open(self.path, "rb") as docx_file:
             result = mammoth.convert_to_html(docx_file)
             return result.value
