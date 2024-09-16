@@ -1,45 +1,18 @@
 import os
-
+import logging
+import time
 from mistralai.models.chat_completion import ChatMessage
 from mistralai.exceptions import MistralAPIException
-
 from hexamind.llm.adapters.AbstractLlm import ILlmClient
 
-import time
+logger = logging.getLogger(__name__)
 
 class MistralClientAdapter(ILlmClient):
-    """
-    Adapater class for using the Mistral client.
-    This class implements the ILlmClient interface.
-
-    Attributes:
-    client : MistralClient
-        The client to use for the LLM.
-    model : str
-        The model to use for the LLM. (e.g. "mistral-large-latest" if using Mistral)
-    embed_model : str
-        The model to use for the embeddings. (e.g. "mistral-embed" if using Mistral)
-    
-    Methods: 
-    chat(self, model, messages, temperature=0)
-        Send a request to the LLM and get the response. 
-    create_chat_message(self, role, content)
-        Create a chat message according to the client's message format. Here is the specific format for Mistral.
-    """
-
     def __init__(self, client, model=None, embed_model=None):
-
+        logger.debug("MistralClientAdapter initialization...")
         self.client = client
-        self.model = (
-            model
-            if model is not None
-            else os.getenv("LLM_MODEL", "mistral-large-latest")
-        )
-        self.embed_model = (
-            embed_model
-            if embed_model is not None
-            else os.getenv("LLM_EMBED_MODEL", "mistral-embed")
-        )
+        self.model = model if model is not None else os.getenv("LLM_MODEL", "mistral-large-latest")
+        self.embed_model = embed_model if embed_model is not None else os.getenv("LLM_EMBED_MODEL", "mistral-embed")
 
         if not isinstance(self.model, str):
             raise TypeError("model should be a string")
@@ -54,12 +27,14 @@ class MistralClientAdapter(ILlmClient):
             )
             return chat_response.choices[0].message.content
         except Exception as e:
+            logger.error(f"Could not chat with Mistral: {e}")
             raise ValueError(f"Could not chat with Mistral: {e}")
 
     def create_chat_message(self, role, content):
         try:
             return ChatMessage(role=role, content=content)
         except Exception as e:
+            logger.error(f"Could not create chat message for Mistral: {e}")
             raise ValueError(f"Could not create chat message for Mistral: {e}")
 
     def embeddings(self, input):
@@ -72,8 +47,10 @@ class MistralClientAdapter(ILlmClient):
                 if e.http_status == 429:
                     retries += 1
                     retry_after = int(e.headers.get("Retry-After", 2**retries))
-                    print(f"Rate limited, retrying in {retry_after} seconds")
+                    logger.warning(f"Rate limited, retrying in {retry_after} seconds")
                     time.sleep(retry_after)
                 else:
+                    logger.error(f"Mistral API Exception: {e}")
                     raise e
+        logger.error("Rate limited too many times")
         raise MistralAPIException("Rate limited too many times")

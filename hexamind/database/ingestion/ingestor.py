@@ -1,3 +1,4 @@
+import logging
 from hexamind.model.model.element import Element
 from hexamind.model.model.container import Container
 from hexamind.model.model.block import Block
@@ -7,21 +8,23 @@ from hexamind.llm.llm.LlmAgent import LlmAgent
 from hexamind.model.chunk.chunk import Chunk
 from typing import List, Dict, Any, Optional
 
+logger = logging.getLogger(__name__)
+
 class Ingestor:
     def __init__(self, db_client: IDbClient, llm_agent: LlmAgent):
         self.db_client = db_client
         self.llm_agent = llm_agent
     
     def ingest_content(self, document: Document, chunking: str = "semantic"):
-        print(f'Document: {document}')
+        logger.info(f'Ingesting document: {document}')
         chunks = document.extract_chunks(strategy=chunking, max_tokens = 1500, threshold = 0.5)
-        print(f'Chunks done')
-        print(f'Ingesting {len(chunks)} chunks')
+        logger.debug('Chunk extraction completed')
+        logger.info(f'Ingesting {len(chunks)} chunks')
         for i, chunk in enumerate(chunks):
-            print(f'Chunk: {i}')
+            logger.debug(f'Processing chunk: {i}')
             chunk.generate_embeddings(self.llm_agent)
             dict_chunk = chunk.to_vectorizzed_dict()
-            print(f"Metadata chunk : {chunk.metadatas}")
+            logger.debug(f"Chunk metadata: {chunk.metadatas}")
             self.db_client.add_document(
                 document=dict_chunk['content'],
                 dense_embedding=dict_chunk['dense_embeddings'],
@@ -29,5 +32,4 @@ class Ingestor:
                 ids=dict_chunk['id'],
                 metadatas=dict_chunk['metadata']
             )
-        print(f'Chunks stored')
-
+        logger.info('Chunk ingestion completed')

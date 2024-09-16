@@ -1,5 +1,8 @@
+import logging
 from .AbstractDb import IDbClient
 from hexamind.model.chunk.chunk import Chunk
+
+logger = logging.getLogger(__name__)
 
 class ChromaDbAdapter(IDbClient):
     def __init__(self, client, collection_name):
@@ -34,7 +37,7 @@ class ChromaDbAdapter(IDbClient):
     def search(self, query, num_results=10, condition=None):
         condition = self._translate_condition(condition)
         results = self.collection.query(query_embeddings=query, n_results=num_results, where=condition)
-        print(results)
+        logger.debug(f"Search query results:\n{results}")
         contents = results['documents'][0]
         metadatas = results['metadatas'][0]
 

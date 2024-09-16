@@ -4,6 +4,9 @@ from hexamind.model.model.block import Block
 from graphviz import Digraph
 import platform
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Container(Element):
     def __init__(self, parent_uid: Optional[str], title: str, level: int, section_number: str, metadatas: Optional[List[Dict[str, Any]]] = []):
@@ -95,8 +98,8 @@ class Container(Element):
             elif current_os == 'Linux':
                 os.system(f'xdg-open {rendered_path}')
         except Exception as e:
-            print(f'Error opening the rendered graph: {e}')
-            print('please open the file manually')
+            logger.error(f'Error opening the rendered graph: {e}')
+            logger.info('Please open the file manually')
     
     def __str__(self) -> str:
         return self._get_structure_string()
