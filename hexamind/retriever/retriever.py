@@ -12,14 +12,21 @@ from hexamind.utils.config.retriever import RetrieverConfig
 logger = logging.getLogger(__name__)
 
 class Retriever:
-    def __init__(self, db_client: IDbClient, llm_agent: LlmAgent, config: RetrieverConfig):
+    def __init__(self, 
+                 db_client: IDbClient, 
+                 llm_agent: LlmAgent, 
+                 config: RetrieverConfig = None
+                 ):
         self.db_client = db_client
         self.llm_agent = llm_agent
-        self.cohere_client = cohere.Client(config.cohere_api_key)
-        self.config = config
+        self.config = config or RetrieverConfig()
+        self.cohere_client = cohere.Client(self.config.cohere_api_key)
         logger.info("Retriever initialized with db_client, llm_agent, and config")
 
-    def similarity_search(self, query, condition) -> List[Chunk]:
+    def similarity_search(self, 
+                          query, 
+                          condition
+                          ) -> List[Chunk]:
         logger.info(f"Performing similarity search for query: {query}")
         query_dense_embedding = self.llm_agent.get_embedding(query)
         query_sparse_embedding = self.llm_agent.get_sparse_embedding(query)
@@ -33,7 +40,10 @@ class Retriever:
         return chunks
 
     def hybrid_search(
-        self, query_dense_vector, query_sparse_vector, condition=None
+        self, 
+        query_dense_vector, 
+        query_sparse_vector, 
+        condition=None
     ) -> List[Chunk]:
         logger.info(f"Performing hybrid search with num_results={self.config.max_hybrid_search_results}")
         dense_results = self.db_client.search(
@@ -80,7 +90,10 @@ class Retriever:
         logger.info(f"Hybrid search returned {len(top_chunks)} top chunks")
         return top_chunks
 
-    def reranker(self, query, chunks) -> List[Chunk]:
+    def reranker(self, 
+                 query, 
+                 chunks
+                 ) -> List[Chunk]:
         logger.info(f"Reranking {len(chunks)} chunks")
         if not chunks:
             logger.warning("No chunks to rerank")
@@ -103,7 +116,9 @@ class Retriever:
         logger.debug(f"Reranker returned {len(reranked_chunks)} reranked chunks")
         return reranked_chunks
 
-    def peloton_selection(self, chunks: List[Chunk]) -> List[Chunk]:
+    def peloton_selection(self, 
+                          chunks: List[Chunk]
+                          ) -> List[Chunk]:
         if not chunks:
             return []
 
@@ -125,7 +140,10 @@ class Retriever:
         logger.info(f"Peloton algorithm selected {cut_index} chunks out of {n}")
         return sorted_chunks[:cut_index]
 
-    def retrieve(self, query, condition: Dict[str, Any]) -> List[Chunk]:
+    def retrieve(self, 
+                 query, 
+                 condition: Dict[str, Any]
+                 ) -> List[Chunk]:
         logger.info(f"Retrieving chunks for query: {query}")
         query_dense_embedding = self.llm_agent.get_embedding(query)
         query_sparse_embedding = self.llm_agent.get_sparse_embedding(query)
