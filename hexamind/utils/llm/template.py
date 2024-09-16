@@ -4,7 +4,9 @@ class Template:
     """
 
     @staticmethod
-    def generate_paragraph(query: str, context: dict, histo: list[(str, str)], glossary : str, language:str) -> str:
+    def generate_paragraph(
+        query: str, context: dict, histo: list[(str, str)], glossary: str, language: str
+    ) -> str:
         """generates the  answer"""
 
         template = (

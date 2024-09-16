@@ -10,6 +10,7 @@ from openai import OpenAI
 from hexamind.llm.adapters.op.LlmOpAdapter import LlmOpAdapter
 from hexamind.llm.adapters.ChatMessageFactory import ChatMessageFactory
 
+
 class LlmAdapterFactory:
     """
     This factory class is used to create the adaptater for the LLM client.
@@ -35,14 +36,22 @@ class LlmAdapterFactory:
                 raise ValueError(f"Could not create LlmOpAdapter: {e}")
         else:
 
-            if llm_name == 'mistral':
+            if llm_name == "mistral":
                 try:
-                    return MistralClientAdapter(MistralClient(api_key = kwargs["api_key"]), kwargs["model"], kwargs["embed_model"])
+                    return MistralClientAdapter(
+                        MistralClient(api_key=kwargs["api_key"]),
+                        kwargs["model"],
+                        kwargs["embed_model"],
+                    )
                 except Exception as e:
                     raise ValueError(f"Could not create MistralClientAdapter: {e}")
-            elif llm_name == 'openai':
+            elif llm_name == "openai":
                 try:
-                    return OpenAiClientAdapter(OpenAI(api_key = kwargs["api_key"]), kwargs["model"], kwargs["embed_model"])
+                    return OpenAiClientAdapter(
+                        OpenAI(api_key=kwargs["api_key"]),
+                        kwargs["model"],
+                        kwargs["embed_model"],
+                    )
                 except Exception as e:
                     raise ValueError(f"Could not create OpenAiClientAdapter: {e}")
             else:

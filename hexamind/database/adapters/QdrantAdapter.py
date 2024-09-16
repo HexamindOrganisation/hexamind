@@ -8,8 +8,15 @@ import os
 
 logger = logging.getLogger(__name__)
 
+
 class QdrantDbAdapter(IDbClient):
-    def __init__(self, url = os.getenv('QDRANT_URL'), collection_name="qdrant_collection", dense_dim=1024, sparse_dim=30522):
+    def __init__(
+        self,
+        url=os.getenv("QDRANT_URL"),
+        collection_name="qdrant_collection",
+        dense_dim=1024,
+        sparse_dim=30522,
+    ):
         self.collection_name = collection_name
         self.dense_dim = dense_dim
         self.sparse_dim = sparse_dim
@@ -20,14 +27,15 @@ class QdrantDbAdapter(IDbClient):
         collections = self.client.get_collections()
         logger.debug(f"Retrieved {len(collections.collections)} collections")
         return collections
-    
+
     def create_collection(self):
         logger.info(f"Creating collection: {self.collection_name}")
         self.client.create_collection(
             collection_name=self.collection_name,
             vectors_config={
                 "sparse": VectorParams(size=self.sparse_dim, distance=Distance.COSINE),
-                "dense" :VectorParams(size=self.dense_dim, distance=Distance.COSINE)}
+                "dense": VectorParams(size=self.dense_dim, distance=Distance.COSINE),
+            },
         )
         logger.info(f"Collection {self.collection_name} created successfully")
 
@@ -37,10 +45,7 @@ class QdrantDbAdapter(IDbClient):
             PointStruct(
                 id=ids,
                 vector={"sparse": sparse_embedding, "dense": dense_embedding},
-                payload={
-                    "document": document,
-                    "metadata": metadatas
-                }
+                payload={"document": document, "metadata": metadatas},
             )
         ]
         self.client.upsert(collection_name=self.collection_name, points=points)
@@ -48,7 +53,9 @@ class QdrantDbAdapter(IDbClient):
 
     def get_document(self, document_id):
         logger.info(f"Retrieving document with id: {document_id}")
-        result = self.client.retrieve(collection_name=self.collection_name, ids=[document_id])
+        result = self.client.retrieve(
+            collection_name=self.collection_name, ids=[document_id]
+        )
         if result:
             logger.debug(f"Document retrieved: {document_id}")
             return result[0]
@@ -57,17 +64,18 @@ class QdrantDbAdapter(IDbClient):
 
     def delete_document(self, document_id):
         logger.info(f"Deleting document with id: {document_id}")
-        self.client.delete(collection_name=self.collection_name, 
-                           points_selector=FilterSelector(
-                               filter=Filter(
-                                      must=[
-                                        FieldCondition(
-                                             key="metadata.document_uid",
-                                             match=MatchValue(value=document_id)
-                                        )
-                                      ]
-                                 )
-                           )
+        self.client.delete(
+            collection_name=self.collection_name,
+            points_selector=FilterSelector(
+                filter=Filter(
+                    must=[
+                        FieldCondition(
+                            key="metadata.document_uid",
+                            match=MatchValue(value=document_id),
+                        )
+                    ]
+                )
+            ),
         )
         logger.debug(f"Document deleted: {document_id}")
 
@@ -78,14 +86,16 @@ class QdrantDbAdapter(IDbClient):
 
     def get(self):
         logger.info("Retrieving all points")
-        scroll_result = self.client.scroll(collection_name=self.collection_name, limit=100)
+        scroll_result = self.client.scroll(
+            collection_name=self.collection_name, limit=100
+        )
         logger.debug(f"Retrieved {len(scroll_result['points'])} points")
         return scroll_result["points"]
-    
+
     def _translate_condition(self, condition=None):
         if condition is None:
             return None
-        
+
         logger.debug(f"Translating condition: {condition}")
         should_conditions = []
         for field, criteria in condition.items():
@@ -94,10 +104,7 @@ class QdrantDbAdapter(IDbClient):
                     for v in value:
                         should_conditions.append(
                             FieldCondition(
-                                key=f"metadata.{field}",
-                                match=MatchValue(
-                                    value=v
-                                )
+                                key=f"metadata.{field}", match=MatchValue(value=v)
                             )
                         )
 
@@ -105,22 +112,21 @@ class QdrantDbAdapter(IDbClient):
         return Filter(should=should_conditions)
 
     def search(self, query_vector, vector_name, num_results=10, condition=None):
-        logger.info(f"Performing search with vector_name: {vector_name}, num_results: {num_results}")
+        logger.info(
+            f"Performing search with vector_name: {vector_name}, num_results: {num_results}"
+        )
         condition = self._translate_condition(condition)
         search_result = self.client.search(
             collection_name=self.collection_name,
-            query_vector=NamedVector(
-                name=vector_name,
-                vector=query_vector
-            ),
+            query_vector=NamedVector(name=vector_name, vector=query_vector),
             limit=num_results,
             query_filter=condition,
-            with_payload=True
+            with_payload=True,
         )
 
         chunks = []
         for result in search_result:
-            dict_chunk = result.payload['metadata']
+            dict_chunk = result.payload["metadata"]
             chunk = Chunk(**dict_chunk)
             chunk.id = result.id
             chunk.distance = result.score
@@ -129,6 +135,10 @@ class QdrantDbAdapter(IDbClient):
         logger.debug(f"Search returned {len(chunks)} chunks")
         return chunks
 
-    def hybrid_search(self, query_dense_vector, query_sparse_vector, num_results=10, condition=None):
-        logger.warning("The hybrid_search method in QdrantDbAdapter is deprecated. Use the Retriever class for hybrid search.")
+    def hybrid_search(
+        self, query_dense_vector, query_sparse_vector, num_results=10, condition=None
+    ):
+        logger.warning(
+            "The hybrid_search method in QdrantDbAdapter is deprecated. Use the Retriever class for hybrid search."
+        )
         return []

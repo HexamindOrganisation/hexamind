@@ -11,5 +11,11 @@ python_docx==1.1.0
 Requests==2.32.3
 Markdown==3.6
 setuptools==68.2.2
+pydantic
 sentence_transformers
 stanza
+cohere
+pytest
+pytest-cov
+
+

@@ -15,10 +15,10 @@ class OpenAiClientAdapter(ILlmClient):
         The model to use for the LLM. (e.g. "gpt-3.5-turbo" if using OpenAI)
     embed_model : str
         The model to use for the embeddings. (e.g. "text-embedding-3-large" if using OpenAI)
-    
-    Methods: 
+
+    Methods:
     chat(self, model, messages, temperature=0)
-        Send a request to the LLM and get the response. 
+        Send a request to the LLM and get the response.
     create_chat_message(self, role, content)
         Create a chat message according to the client's message format. Here is the specific format for OpenAI.
     """
@@ -43,7 +43,8 @@ class OpenAiClientAdapter(ILlmClient):
     def chat(self, messages, temperature=0):
         try:
             chat_response = self.client.chat.completion.create(
-                model=self.model, messages=[messages],
+                model=self.model,
+                messages=[messages],
             )
             return chat_response.choices[0].message.content
         except Exception as e:

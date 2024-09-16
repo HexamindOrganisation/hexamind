@@ -5,7 +5,6 @@ from hexamind.model.chunk.chunk import Chunk
 from typing import List
 
 
-
 class IDbClient(ABC):
     """
     Abstract class for database client
@@ -35,5 +34,7 @@ class IDbClient(ABC):
     def _translate_condition(self, condition=None):
         pass
 
-    def hybrid_search(self, query_dense_vector, query_sparse_vector, num_results=10, condition=None):
+    def hybrid_search(
+        self, query_dense_vector, query_sparse_vector, num_results=10, condition=None
+    ):
         pass
