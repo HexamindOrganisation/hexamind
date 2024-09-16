@@ -157,11 +157,16 @@ class Retriever:
         if hybrid_results:
             reranked_chunks = self.reranker(query, hybrid_results)
             selected_chunks = self.peloton_selection(reranked_chunks)
+            
+            # Filter chunks based on the relevance threshold from config
+            relevant_chunks = [chunk for chunk in selected_chunks if chunk.distance >= self.config.relevance_threshold]
+            
+            if relevant_chunks:
+                logger.info(f"Retrieved, reranked, and selected {len(relevant_chunks)} relevant chunks")
+                return relevant_chunks
+            else:
+                logger.warning(f"No chunks met the relevance threshold of {self.config.relevance_threshold}")
+                return []
         else:
             logger.warning("No hybrid results found")
-            selected_chunks = []
-
-        logger.info(
-            f"Retrieved, reranked, and selected {len(selected_chunks)} chunks using peloton algorithm"
-        )
-        return selected_chunks
+            return []

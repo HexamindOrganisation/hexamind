@@ -9,8 +9,9 @@ class RetrieverConfig(BaseModel):
     max_rerank_results: int = Field(default=30, description="Maximum number of results to return from reranking")
     peloton_alpha: float = Field(default=0.15, description="Alpha parameter for peloton selection")
     peloton_beta: float = Field(default=0.3, description="Beta parameter for peloton selection")
-    min_chunks_to_return: int = Field(default=1, description="Minimum number of chunks to return")
-    max_chunks_to_return: int = Field(default=30, description="Maximum number of chunks to return")
+    min_chunks_to_return: int = Field(default=2, description="Minimum number of chunks to return")
+    max_chunks_to_return: int = Field(default=8, description="Maximum number of chunks to return")
+    relevance_threshold: float = Field(default=0.05, description="Minimum relevance score for a chunk to be considered relevant")
 
     class Config:
         env_file = ".env"
