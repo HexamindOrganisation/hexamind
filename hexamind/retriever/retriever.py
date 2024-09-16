@@ -7,16 +7,17 @@ from typing import List, Dict, Any
 import os
 from collections import defaultdict
 import numpy as np
+from hexamind.utils.config.retriever import RetrieverConfig
 
 logger = logging.getLogger(__name__)
 
-
 class Retriever:
-    def __init__(self, db_client: IDbClient, llm_agent: LlmAgent):
+    def __init__(self, db_client: IDbClient, llm_agent: LlmAgent, config: RetrieverConfig):
         self.db_client = db_client
         self.llm_agent = llm_agent
-        self.cohere_client = cohere.Client(os.getenv("COHERE_API_KEY"))
-        logger.info("Retriever initialized with db_client and llm_agent")
+        self.cohere_client = cohere.Client(config.cohere_api_key)
+        self.config = config
+        logger.info("Retriever initialized with db_client, llm_agent, and config")
 
     def similarity_search(self, query, condition) -> List[Chunk]:
         logger.info(f"Performing similarity search for query: {query}")
@@ -25,37 +26,36 @@ class Retriever:
         chunks = self.db_client.hybrid_search(
             query_dense_vector=query_dense_embedding,
             query_sparse_vector=query_sparse_embedding,
-            num_results=50,
+            num_results=self.config.max_hybrid_search_results,
             condition=condition,
         )
         logger.debug(f"Similarity search returned {len(chunks)} chunks")
         return chunks
 
     def hybrid_search(
-        self, query_dense_vector, query_sparse_vector, num_results=50, condition=None
+        self, query_dense_vector, query_sparse_vector, condition=None
     ) -> List[Chunk]:
-        logger.info(f"Performing hybrid search with num_results={num_results}")
+        logger.info(f"Performing hybrid search with num_results={self.config.max_hybrid_search_results}")
         dense_results = self.db_client.search(
-            query_dense_vector, "dense", num_results, condition
+            query_dense_vector, "dense", self.config.max_hybrid_search_results, condition
         )
         sparse_results = self.db_client.search(
-            query_sparse_vector, "sparse", num_results, condition
+            query_sparse_vector, "sparse", self.config.max_hybrid_search_results, condition
         )
 
         logger.debug(f"Dense search returned {len(dense_results)} results")
         logger.debug(f"Sparse search returned {len(sparse_results)} results")
 
         rrf_scores = defaultdict(float)
-        k = 60  # RRF constant
 
         for rank, result in enumerate(dense_results + sparse_results):
             chunk_id = result.id
-            rrf_scores[chunk_id] += 1 / (k + rank)
+            rrf_scores[chunk_id] += 1 / (self.config.rrf_k + rank)
 
         sorted_chunks = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
 
         top_chunks = []
-        for chunk_id, _ in sorted_chunks[:num_results]:
+        for chunk_id, _ in sorted_chunks[:self.config.max_hybrid_search_results]:
             chunk = next(
                 (c for c in dense_results + sparse_results if c.id == chunk_id), None
             )
@@ -65,17 +65,17 @@ class Retriever:
         logger.info(f"Hybrid search returned {len(top_chunks)} top chunks")
         return top_chunks
 
-    def reranker(self, query, chunks, top_n=30) -> List[Chunk]:
-        logger.info(f"Reranking {len(chunks)} chunks with top_n={top_n}")
+    def reranker(self, query, chunks) -> List[Chunk]:
+        logger.info(f"Reranking {len(chunks)} chunks")
         if not chunks:
             logger.warning("No chunks to rerank")
             return []
 
         results = self.cohere_client.rerank(
-            model="rerank-multilingual-v3.0",
+            model=self.config.rerank_model,
             query=query,
             documents=[chunk.content for chunk in chunks],
-            top_n=top_n,
+            top_n=self.config.max_rerank_results,
         )
 
         reranked_chunks = []
@@ -88,9 +88,7 @@ class Retriever:
         logger.debug(f"Reranker returned {len(reranked_chunks)} reranked chunks")
         return reranked_chunks
 
-    def peloton_selection(
-        self, chunks: List[Chunk], alpha: float = 0.15, beta: float = 0.3
-    ) -> List[Chunk]:
+    def peloton_selection(self, chunks: List[Chunk]) -> List[Chunk]:
         if not chunks:
             return []
 
@@ -102,11 +100,12 @@ class Retriever:
         mean_diff = np.mean(diffs)
         std_diff = np.std(diffs)
 
-        threshold = mean_diff + beta * std_diff
+        threshold = mean_diff + self.config.peloton_beta * std_diff
         cut_index = next((i for i, diff in enumerate(diffs) if diff > threshold), n - 1)
 
-        min_size = max(int(alpha * n), 1)
-        cut_index = max(cut_index, min_size)
+        min_size = max(int(self.config.peloton_alpha * n), self.config.min_chunks_to_return)
+        max_size = min(self.config.max_chunks_to_return, n)
+        cut_index = max(min(cut_index, max_size), min_size)
 
         logger.info(f"Peloton algorithm selected {cut_index} chunks out of {n}")
         return sorted_chunks[:cut_index]
@@ -119,7 +118,6 @@ class Retriever:
         hybrid_results = self.hybrid_search(
             query_dense_vector=query_dense_embedding,
             query_sparse_vector=query_sparse_embedding,
-            num_results=50,
             condition=condition,
         )
 
