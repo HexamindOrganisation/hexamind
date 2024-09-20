@@ -7,19 +7,28 @@ from hexamind.database.adapters.AbstractDb import IDbClient
 from hexamind.llm.llm.LlmAgent import LlmAgent
 from hexamind.model.chunk.chunk import Chunk
 from typing import List, Dict, Any, Optional
+from hexamind.utils.config.ingestor import IngestorConfig
 
 logger = logging.getLogger(__name__)
 
 
 class Ingestor:
-    def __init__(self, db_client: IDbClient, llm_agent: LlmAgent):
+    def __init__(self, db_client: IDbClient, 
+                 llm_agent: LlmAgent,
+                 config: IngestorConfig = None):
         self.db_client = db_client
         self.llm_agent = llm_agent
+        self.config = config or IngestorConfig()
 
-    def ingest_content(self, document: Document, chunking: str = "semantic"):
+    def ingest_content(self, 
+                       document: Document, 
+                       chunking: str = "semantic" #TODO: unused, need to remove after verification
+                       ):
         logger.info(f"Ingesting document: {document}")
         chunks = document.extract_chunks(
-            strategy=chunking, max_tokens=500, threshold=0.5
+            strategy=self.config.chunking_strategy, 
+            max_tokens=self.config.max_tokens_per_chunk, 
+            threshold=self.config.semantic_chunking_threshold
         )
         logger.debug("Chunk extraction completed")
         logger.info(f"Ingesting {len(chunks)} chunks")
