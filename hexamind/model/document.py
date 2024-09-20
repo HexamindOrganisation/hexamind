@@ -145,8 +145,8 @@ class Document:
                 self.title,
                 self.uid,
                 self.tokenizer,
-                threshold=kwargs.get("threshold", 0.80),
-                max_tokens=kwargs.get("max_tokens", 1500),
+                threshold=kwargs.get("threshold", 0.50),
+                max_tokens=kwargs.get("max_tokens", 500),
             )
         elif strategy == "custom":
             if callback is None:

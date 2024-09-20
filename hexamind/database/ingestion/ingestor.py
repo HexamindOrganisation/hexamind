@@ -19,7 +19,7 @@ class Ingestor:
     def ingest_content(self, document: Document, chunking: str = "semantic"):
         logger.info(f"Ingesting document: {document}")
         chunks = document.extract_chunks(
-            strategy=chunking, max_tokens=1500, threshold=0.5
+            strategy=chunking, max_tokens=500, threshold=0.5
         )
         logger.debug("Chunk extraction completed")
         logger.info(f"Ingesting {len(chunks)} chunks")
